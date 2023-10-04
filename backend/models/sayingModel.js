@@ -26,8 +26,9 @@ const sayingSchema = new Schema({
     }
 
     
-}, {timestamps: true}) 
 
+    
+}, {timestamps: true}) 
 
 
 module.exports = mongoose.model('Saying', sayingSchema);
