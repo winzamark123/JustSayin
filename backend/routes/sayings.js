@@ -1,7 +1,8 @@
 const express = require('express');
-const sayingModel = require('../models/sayingModel');
-
 const router = express.Router();
+
+const { createSaying } = require('../controllers/sayingController');
+
 
 //GET all sayings
 router.get('/', (req, res) => {
