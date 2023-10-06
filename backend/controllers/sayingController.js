@@ -10,6 +10,9 @@ const createSaying = async (req, res) => {
     }
 }
 
+const updateSaying = async (req, res) => {
+
+}
 
 //GET all sayings
 const getAllSayings = async (req, res) => {
