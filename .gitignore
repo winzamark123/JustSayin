@@ -5,4 +5,7 @@
 .env.test.local
 .env.production.local
 src/.env
-.env
+*.env
+*.env.example
+*.env.local
+*.env.staging
