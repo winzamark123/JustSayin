@@ -1,27 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-const { createSaying } = require('../controllers/sayingController');
+const { postSaying, getAllSayings, getSayingByID } = require('../controllers/sayingController');
 
 
 //GET all sayings
-router.get('/', (req, res) => {
-
-})
+router.get('/', getAllSayings)
 
 //GET saying by id
-router.get('/:id', (req, res) => {
-    res.send('Hello World! sayings.js');
-})
+router.get('/:id', getSayingByID)
 
-//POST a saying by id
-router.post('/:id', async (req, res) => {
-    try {
-        const saying = await sayingModel.create(req.body);
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-    }
-})
+//POST a saying 
+router.post('/', postSaying);
 
 //DELETE a saying by id
 router.delete('/:id', (req, res) => {
