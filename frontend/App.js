@@ -3,13 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 import Logo from "./components/Logo";
+import LoginSignup  from './pages/LoginSignup';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello IOS Simulator!</Text>
+      {/* <Logo /> */}
+      <LoginSignup />
       <StatusBar style="auto" />
-      <Logo />
     </View>
   );
 }
