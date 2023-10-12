@@ -7,7 +7,14 @@ export const colorPalette = {
 }
 
 export const fontSize = {
+    title: 64,
     large: 24,
     medium: 18,
     small: 12,
+
+}
+
+export const fontFamily = {
+    loginTitle: "Orelega One",
+    loginText: "Slackside One"
 }
