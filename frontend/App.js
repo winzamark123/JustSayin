@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import * as Font from 'expo-font';
 
 import Logo from "./components/Logo";
 import LoginSignup from './pages/LoginSignup';
