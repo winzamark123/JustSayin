@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, Image, Dimensions } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, Dimensions, Button } from "react-native";
 import { colorPalette, fontFamily, fontSize } from "../components/theme";
 import Logo from "../components/Logo";
 
@@ -13,7 +13,7 @@ export default function LoginSignup() {
 
     return (
         < View style={styles.main_container} >
-            <View style={styles.title}>
+            <View style={title.container}>
                 {/* <Logo logoSize={100} /> */}
                 <Image style={styles.quoteFront} source={QuoteFrontPNG} />
                 <View style={styles.title_text}>
@@ -30,14 +30,16 @@ export default function LoginSignup() {
             </View>
 
             <View style={styles.loginForm}>
-                    <Text style={styles.loginForm_text}>Log In</Text>
-                    <View style={styles.loginForm_form}>
-                        <Text style={styles.loginForm_form_text}>Email</Text>
-                        <TextInput style={styles.loginForm_form_input}></TextInput>
-                        <Text style={styles.loginForm_form_text}>Password</Text>
-                        <TextInput style={styles.loginForm_form_input}></TextInput>
-                    </View>
+                <Text style={styles.loginForm_text}>Log In</Text>
+                <View style={styles.loginForm_form}>
+                    <Text style={styles.loginForm_form_text}>Email</Text>
+                    <TextInput style={styles.loginForm_form_input}></TextInput>
+                    <Text style={styles.loginForm_form_text}>Password</Text>
+                    <TextInput style={styles.loginForm_form_input}></TextInput>
                 </View>
+                {/* <View> style = {}</View> */}
+
+            </View>
 
 
         </View >
@@ -47,7 +49,16 @@ export default function LoginSignup() {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+title = StyleSheet.create({
+    container: {
+        width: windowWidth - 40,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
 
+        marginTop: 150,
+    },
+});
 styles = StyleSheet.create({
     loginForm: {
         marginTop: 70,
@@ -58,7 +69,7 @@ styles = StyleSheet.create({
 
         alignItems: 'center',
         // justifyContent: 'center',
-    }, 
+    },
 
     loginForm_text: {
         color: colorPalette.secondaryColor,
