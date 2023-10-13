@@ -12,6 +12,8 @@ export default function App() {
   const loadFonts = async () => {
     await Font.loadAsync({
       'OrelegaOne': require('./assets/fonts/OrelegaOne-Regular.ttf'),
+      'Average': require('./assets/fonts/Average-Regular.ttf'),
+      'AveriaSerifLibre': require('./assets/fonts/AveriaSerifLibre-Bold.ttf'),
     });
     setFontsLoaded(true);
   };

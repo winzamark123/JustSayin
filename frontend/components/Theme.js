@@ -16,5 +16,7 @@ export const fontSize = {
 
 export const fontFamily = {
     loginTitle: "Orelega One",
-    loginText: "Slackside One"
+    Average: "Average",
+    AveriaSerifLibre: "AveriaSerifLibre",
+
 }
