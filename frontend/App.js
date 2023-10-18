@@ -1,10 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
-
-import Logo from "./components/Logo";
 import LoginSignup from './pages/LoginSignup';
+
+const Stack = createNativeStackNavigator();
+
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -28,11 +31,16 @@ export default function App() {
 
 
   return (
-    <View style={styles.container}>
-      {/* <Logo /> */}
-      <LoginSignup />
-      <StatusBar style="auto" />
-    </View>
+    // <View style={styles.container}>
+    //   {/* <Logo /> */}
+    //   <LoginSignup />
+    //   <StatusBar style="auto" />
+    // </View>
+    <NavigationContainer>
+      <Stack.Navigator initalRouteName = "LoginSignup">
+        <Stack.Screen name="LoginSignup" component={LoginSignup} options={{headerShown: false}} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

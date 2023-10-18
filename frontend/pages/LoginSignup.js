@@ -1,15 +1,43 @@
-import { StyleSheet, Text, TextInput, View, Image, Dimensions, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TextInput, View, Image, Dimensions, TouchableOpacity, Alert } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
 import { colorPalette, fontFamily, fontSize } from "../components/theme";
-import Logo from "../components/Logo";
-
 import JPNG from "../assets/LoginSignupPage/J.png";
 import QuoteBackPNG from "../assets/LoginSignupPage/QuotationBack.png";
 import QuoteFrontPNG from "../assets/LoginSignupPage/QuotationFront.png";
-import SayingPNG from "../assets/LoginSignupPage/Sayin.png";
-import ustPNG from "../assets/LoginSignupPage/ust.png";
+import { FIREBASE_AUTH } from "../firebaseConfig";
+import { useState } from "react";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+
 
 
 export default function LoginSignup() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const auth = FIREBASE_AUTH;
+
+    const signIn = async () => {
+        setLoading(true);
+        try {
+            const response = await signInWithEmailAndPassword(auth, email, password);
+            console.log(response);
+        } catch (e) {
+            alert(e.message);
+        }
+        setLoading(false);
+    }
+
+    const signUp = async () => {
+        setLoading(true);
+        try {
+            const response = await createUserWithEmailAndPassword(auth, email, password);
+            console.log(response);
+            Alert('Check Your Email!');
+        } catch (e) {
+            alert(e.message);
+        }
+        setLoading(false);
+    }
 
     return (
         < View style={styles.main_container} >
@@ -33,15 +61,35 @@ export default function LoginSignup() {
                 <Text style={loginForm.LoginText}>Log In</Text>
                 <View style={loginForm.form}>
                     <Text style={loginForm.form_text}>Email</Text>
-                    <TextInput style={loginForm.form_input}></TextInput>
+                    <TextInput style={loginForm.form_input}
+                        value={email}
+                        onChangeText={(text) => setEmail(text)}
+                    ></TextInput>
                     <Text style={loginForm.form_text}>Password</Text>
-                    <TextInput style={loginForm.form_input}></TextInput>
+                    <TextInput style={loginForm.form_input}
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                    ></TextInput>
                     <View style={loginForm.loginBTN_Container}>
 
-                        <TouchableOpacity style={loginForm.loginBTN} onPress={() => console.log("LoginBTN Pressed")}>
+                        <TouchableOpacity style={loginForm.loginBTN} onPress={() => signIn()}>
                             <Text style={loginForm.loginBTN_text}>Log In</Text>
                         </TouchableOpacity>
                     </View>
+                </View>
+            </View>
+
+            <View style={signUpForgotPassword.container}>
+                <View style={signUpForgotPassword.signUp}>
+                    <TouchableOpacity style={signUpForgotPassword.signUpBTN} onPress={() => signUp()}>
+                        <Text style={signUpForgotPassword.signUpBTN_text}>Sign Up</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={signUpForgotPassword.forgotPassword}>
+                    <TouchableOpacity style={signUpForgotPassword.forgotPasswordBTN} onPress={() => signUp()}>
+                        <Text style={signUpForgotPassword.forgotPasswordBTN_text}>Forgot Password?</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -53,6 +101,41 @@ export default function LoginSignup() {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+signUpForgotPassword = StyleSheet.create({
+    container: {
+        // borderColor: 'blue',
+        // borderWidth: 2,
+        position: 'absolute',
+        bottom: 140,
+        left: 70,
+        width: 300,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'space-between',
+    },
+
+    signUpBTN: {
+        marginRight: 50,
+    },
+
+    forgotPasswordBTN: {
+        marginLeft: 50,
+    },
+
+    signUpBTN_text: {
+        color: 'whitesmoke',
+        fontFamily: fontFamily.Average,
+        fontSize: 15,
+    },
+
+    forgotPasswordBTN_text: {
+        color: 'whitesmoke',
+        fontFamily: fontFamily.Average,
+        fontSize: 15,
+    },
+
+});
 loginForm = StyleSheet.create({
     container: {
         marginTop: 70,
@@ -90,8 +173,10 @@ loginForm = StyleSheet.create({
         borderBottomColor: 'white',
         borderWidth: 1,
         width: 300,
+        color: 'white',
         // paddingBottom: 5,
     },
+
     loginBTN_Container: {
         display: 'flex',
         marginTop: 30,
