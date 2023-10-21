@@ -1,5 +1,4 @@
 import { StyleSheet, Text, TextInput, View, Image, Dimensions, TouchableOpacity, Alert } from "react-native";
-import { NavigationContainer } from '@react-navigation/native';
 import { colorPalette, fontFamily, fontSize } from "../components/theme";
 import JPNG from "../assets/LoginSignupPage/J.png";
 import QuoteBackPNG from "../assets/LoginSignupPage/QuotationBack.png";
@@ -10,7 +9,7 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "fire
 
 
 
-export default function LoginSignup() {
+export default function Login({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -26,18 +25,10 @@ export default function LoginSignup() {
         }
         setLoading(false);
     }
-
-    const signUp = async () => {
-        setLoading(true);
-        try {
-            const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response);
-            Alert('Check Your Email!');
-        } catch (e) {
-            alert(e.message);
-        }
-        setLoading(false);
+    const goToSignUp = () => {
+        navigation.navigate("SignUp");
     }
+ 
 
     return (
         < View style={styles.main_container} >
@@ -82,12 +73,12 @@ export default function LoginSignup() {
 
             <View style={signUpForgotPassword.container}>
                 <View style={signUpForgotPassword.signUp}>
-                    <TouchableOpacity style={signUpForgotPassword.signUpBTN} onPress={() => signUp()}>
+                    <TouchableOpacity style={signUpForgotPassword.signUpBTN} onPress={() => goToSignUp()}>
                         <Text style={signUpForgotPassword.signUpBTN_text}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={signUpForgotPassword.forgotPassword}>
-                    <TouchableOpacity style={signUpForgotPassword.forgotPasswordBTN} onPress={() => signUp()}>
+                    <TouchableOpacity style={signUpForgotPassword.forgotPasswordBTN} onPress={() => goToSignUp()}>
                         <Text style={signUpForgotPassword.forgotPasswordBTN_text}>Forgot Password?</Text>
                     </TouchableOpacity>
                 </View>
