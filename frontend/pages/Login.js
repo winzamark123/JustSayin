@@ -6,6 +6,7 @@ import QuoteFrontPNG from "../assets/LoginSignupPage/QuotationFront.png";
 import { FIREBASE_AUTH } from "../firebaseConfig";
 import { useState } from "react";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import 'firebase/auth';
 
 
 
@@ -14,21 +15,29 @@ export default function Login({ navigation }) {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const auth = FIREBASE_AUTH;
+    const [userToken, setUserToken] = useState("");
 
     const signIn = async () => {
         setLoading(true);
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
             console.log(response);
+
+            const TempToken = await response.user.getIdToken();
+
+            setUserToken(TempToken);
+            console.log("User Token ID", userToken);
         } catch (e) {
             alert(e.message);
         }
         setLoading(false);
     }
+
+
     const goToSignUp = () => {
         navigation.navigate("SignUp");
     }
- 
+
 
     return (
         < View style={styles.main_container} >
