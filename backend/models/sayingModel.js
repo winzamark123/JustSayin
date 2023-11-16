@@ -19,16 +19,14 @@ const sayingSchema = new Schema({
         required: true
     },
 
-    source : {
+    category: {
         type: String,
-        required: true,
-        enum : ['book', 'movie', 'speech', 'tv', 'anime', 'other']
-    }
+        required: true
+    },
 
-    
 
-    
-}, {timestamps: true}) 
+
+}, { timestamps: true })
 
 
 module.exports = mongoose.model('Saying', sayingSchema);
