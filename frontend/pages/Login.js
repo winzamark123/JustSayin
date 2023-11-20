@@ -5,7 +5,7 @@ import QuoteBackPNG from "../assets/LoginSignupPage/QuotationBack.png";
 import QuoteFrontPNG from "../assets/LoginSignupPage/QuotationFront.png";
 import { FIREBASE_AUTH } from "../firebaseConfig";
 import { useState } from "react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import 'firebase/auth';
 
 
@@ -36,6 +36,10 @@ export default function Login({ navigation }) {
 
     const goToSignUp = () => {
         navigation.navigate("SignUp");
+    }
+
+    const goToForgotPassword = () => {
+        navigation.navigate("ForgotPassword");
     }
 
 
@@ -87,7 +91,7 @@ export default function Login({ navigation }) {
                     </TouchableOpacity>
                 </View>
                 <View style={signUpForgotPassword.forgotPassword}>
-                    <TouchableOpacity style={signUpForgotPassword.forgotPasswordBTN} onPress={() => goToSignUp()}>
+                    <TouchableOpacity style={signUpForgotPassword.forgotPasswordBTN} onPress={() => goToForgotPassword()}>
                         <Text style={signUpForgotPassword.forgotPasswordBTN_text}>Forgot Password?</Text>
                     </TouchableOpacity>
                 </View>
