@@ -5,5 +5,9 @@
 .env.test.local
 .env.production.local
 src/.env
+dataProcessing/*
+dataProcessing/
 
 *.pem
+dataProcessing/rawData/quotes.csv
+dataProcessing/sayings.json
