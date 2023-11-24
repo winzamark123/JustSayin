@@ -14,13 +14,9 @@ const sayingSchema = new Schema({
         required: true
     },
 
-    genreID: {
-        type: Schema.Types.ObjectId,
-        required: true
-    },
-
     categoryID: {
         type: Schema.Types.ObjectId,
+        ref: 'Category',
         required: true
     },
 
@@ -29,4 +25,4 @@ const sayingSchema = new Schema({
 }, { timestamps: true })
 
 
-module.exports = mongoose.model('Saying', sayingSchema);
+module.exports = mongoose.model('Saying', sayingSchema, "collection2");

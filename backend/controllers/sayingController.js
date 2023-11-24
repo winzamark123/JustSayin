@@ -26,6 +26,18 @@ const getAllSayings = async (req, res) => {
     res.status(200).json(sayings);
 }
 
+//GET random Saying
+const getRandomSaying = async (req, res) => {
+    try {
+        const count = await sayingModel.countDocuments();
+        const random = Math.floor(Math.random() * count);
+        const saying = await sayingModel.findOne().skip(random);
+        res.send(saying);
+    } catch (error) {
+        res.status(500).send('Error occurred: ' + error.message);
+    }
+}
+
 //GET saying by id
 const getSayingByID = async (req, res) => {
 
@@ -72,6 +84,7 @@ const deleteSaying = async (req, res) => {
 
 
 module.exports = {
+    getRandomSaying,
     postSaying,
     getAllSayings,
     getSayingByID

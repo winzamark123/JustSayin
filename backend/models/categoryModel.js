@@ -3,10 +3,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const categorySchema = new Schema({
-    category: {
+    name: {
         type: String,
         required: true,
-        unique: true
     },
+    // Other fields as needed...
+}, { timestamps: true });
 
-}, { timestamps: true })
+module.exports = mongoose.model('Category', categorySchema, 'categories');
