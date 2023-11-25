@@ -1,11 +1,14 @@
 const express = require('express');
+const { getRandomSaying, postSaying, getAllSayings, getSayingByID } = require('../controllers/sayingController');
+
 const router = express.Router();
-
-const { postSaying, getAllSayings, getSayingByID } = require('../controllers/sayingController');
-
 
 //GET all sayings
 router.get('/', getAllSayings)
+
+
+//GET random Saying
+router.get('/random', getRandomSaying);
 
 //GET saying by id
 router.get('/:id', getSayingByID)
@@ -22,6 +25,7 @@ router.delete('/:id', (req, res) => {
 router.patch('/:id', (req, res) => {
     res.send('Hello World! by sayings.js');
 })
+
 
 
 

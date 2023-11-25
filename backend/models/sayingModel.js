@@ -1,28 +1,20 @@
 const mongoose = require('mongoose');
-
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const sayingSchema = new Schema({
-    saying: {
+    quote: {  // Changed from 'saying' to 'quote' to match your document structure
         type: String,
         required: true,
         unique: true
     },
-
     author: {
         type: String,
         required: true
     },
-
-    categoryID: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
+    category: {  // Changed from 'categoryID' to 'category' and type from ObjectId to String
+        type: String,
         required: true
-    },
-
-
-
-}, { timestamps: true })
-
+    }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Saying', sayingSchema, "collection2");

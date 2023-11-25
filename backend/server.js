@@ -1,6 +1,6 @@
 const express = require('express');
 
-const sayingsRouter = require('./routes/sayings.js');
+const sayingRouter = require('./routes/sayings.js');
 const mongoose = require('mongoose');
 
 // require('dotenv').config();
@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 
 //routes 
-app.use('/api/sayings', sayingsRouter);
+app.use('/api/sayings', sayingRouter);
 
 //connect to db (mongoose)
 mongoose.connect(process.env.MONGO_URI)
