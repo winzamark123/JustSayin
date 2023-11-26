@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const sayingSchema = new Schema({
-    quote: {  // Changed from 'saying' to 'quote' to match your document structure
+    quote: {  // This matches the 'quote' field in your documents
         type: String,
         required: true,
         unique: true
     },
-    author: {
+    author: {  // This matches the 'author' field in your documents
         type: String,
         required: true
     },
-    category: {  // Changed from 'categoryID' to 'category' and type from ObjectId to String
+    category: {  // This matches the 'category' field in your documents
         type: String,
         required: true
     }
