@@ -1,84 +1,151 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, Dimensions } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Dimensions, TouchableOpacity } from "react-native";
 import { colorPalette, fontFamily, fontSize } from '../components/theme';
+import { useState } from "react";
 
-export default function SignUp() {
-    const signUp = async () => {
-        setLoading(true);
-        try {
-            const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response);
-            Alert('Check Your Email!');
-        } catch (e) {
-            alert(e.message);
-        }
-        setLoading(false);
+export default function Signup({ navigation }) {
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState(''); // [username, setUsername
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const goToLogin = () => {
+        navigation.navigate("Login");
     }
 
     return (
-        <View style={signUpMain.container}>
-            <View style={QUOTE}>
+        <View style={signup.background}>
+            <Text style={title.text}>Create an Account</Text>
 
-            </View>
             <View style={signUpForm.container}>
-                <Text style={signUpForm.title}> Create an Account </Text>
-                <View style={signUpForm.form}></View>
+                <View style={signUpForm.form}>
+                    <Text style={signUpForm.form_text}>Username</Text>
+                    <TextInput style={signUpForm.form_input}
+                        value={username}
+                        onChangeText={(text) => setUsername(text)}
+                    ></TextInput>
+                    <Text style={signUpForm.form_text}>Password</Text>
+                    <TextInput style={signUpForm.form_input}
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                    ></TextInput>
+                    <Text style={signUpForm.form_text}>Email</Text>
+                    <TextInput style={signUpForm.form_input}
+                        value={email}
+                        onChangeText={(text) => setEmail(text)}
+                    ></TextInput>
+
+
+                    <View style={signUpForm.signUpBTN_Container}>
+
+                        <TouchableOpacity style={signUpForm.signUpBTN} onPress={() => signIn()}>
+                            <Text style={signUpForm.signUpBTN_text}>Create Account</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-            <Text> This is SignUp Page</Text>
+            <TouchableOpacity style={login.BTN} onPress={() => goToLogin()}>
+                <Text style={login.text}>Login</Text>
+            </TouchableOpacity>
         </View>
+
+
     )
-}
+};
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const signUpMain = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        width: '100%',
-        height: '100%',
-        backgroundColor: "#BBE3FF",
-    }
-
-
-})
-
-const QUOTE = StyleSheet.create({
-
-})
-
-const signUpForm = StyleSheet.create({
-    container: {
-        flex: 1,
-
+signup = StyleSheet.create({
+    background: {
         width: windowWidth,
-        height: windowHeight - 100,
-        backgroundColor: "#BBBBBB",
+        height: windowHeight,
+        backgroundColor: colorPalette.yellowColor,
+        flex: 1,
+        alignItems: 'center',
     },
+});
 
-    title: {
-        color: "#FFF",
-        // font-family: "Crimson Pro",
-        fontFamily: fontFamily.CrimsonProBold,
-        fontSize: 32,
-        fontStyle: "normal",
-        fontWeight: "800",
+login = StyleSheet.create({
+    BTN: {
+        position: 'absolute',
+        top: 520,
+        right: 70,
+        alignItems: 'center',
+    },
+    text: {
+        position: 'relative',
+        fontSize: 15,
+        color: colorPalette.blackColor,
+        fontFamily: fontFamily.Poppins,
+        textDecorationLine: 'underline',
+    },
+});
 
+title = StyleSheet.create({
+    text: {
+        position: 'relative',
+        fontSize: 30,
+        color: colorPalette.mainColor,
+        fontFamily: fontFamily.Poppins,
+        marginTop: 200,
+    },
+});
+
+signUpForm = StyleSheet.create({
+    container: {
+        position: 'relative',
+        width: 350,
+        height: 200,
+
+        alignItems: 'center',
     },
     form: {
-        flex: 1,
-        borderColor: '#000',
-        borderWidth: 2,
-        // border: '2px solid black',
-        justifyContent: "center",
-        alignItems: "center",
-        width: '300px',
-        height: '100px'
+        marginTop: 20,
+        width: 300,
+        height: 150,
     },
-    input_form: {
 
-    }
+    form_text: {
+        color: colorPalette.blackColor,
+        fontFamily: fontFamily.Poppins,
+        fontSize: 14,
+        marginTop: 40,
+    },
+    form_input: {
+        borderColor: 'transparent',
+        borderBottomColor: colorPalette.blackColor,
+        borderWidth: 1,
+        width: 300,
+        color: colorPalette.blackColor,
+    },
 
-})
+    signUpBTN_Container: {
+        display: 'flex',
+        marginTop: 150,
+        width: 300,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    signUpBTN: {
+        backgroundColor: colorPalette.forestGreenColor,
+        borderRadius: 25,
+        borderColor: 'transparent',
+        borderWidth: 1,
+        width: 277,
+        height: 72,
+
+        alignItems: 'center',
+        justifyContent: 'center',
+
+    },
+    signUpBTN_text: {
+        color: colorPalette.blackColor,
+        fontFamily: fontFamily.Average,
+        fontSize: fontSize.medium,
+    },
+
+});

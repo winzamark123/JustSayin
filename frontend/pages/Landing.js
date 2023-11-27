@@ -15,7 +15,7 @@ export default function Landing({ navigation }) {
         <View style={landing.background}>
             <Text style={landing.Welcome}>Welcome to</Text>
             <Image source={JustSayinPNG} style={landing.JustSayinPNG} resizeMode='contain' />
-            <Text style={landing.body}>Get your quote of the day here!</Text>
+            <Text style={landing.body}>Your Quote of the Day</Text>
             <TouchableOpacity style={landing.BTN} onPress={() => goToLogin()}></TouchableOpacity>
 
         </View>

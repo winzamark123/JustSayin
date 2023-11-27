@@ -1,8 +1,5 @@
-import { StyleSheet, Text, TextInput, View, Image, Dimensions, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, TextInput, View, Dimensions, TouchableOpacity } from "react-native";
 import { colorPalette, fontFamily, fontSize } from "../components/theme";
-import JPNG from "../assets/LoginSignupPage/J.png";
-import QuoteBackPNG from "../assets/LoginSignupPage/QuotationBack.png";
-import QuoteFrontPNG from "../assets/LoginSignupPage/QuotationFront.png";
 import { FIREBASE_AUTH } from "../firebaseConfig";
 import { useState } from "react";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
@@ -44,25 +41,13 @@ export default function Login({ navigation }) {
 
 
     return (
-        < View style={styles.main_container} >
-            <View style={title.container}>
-                {/* <Logo logoSize={100} /> */}
-                <Image style={title.quoteFront} source={QuoteFrontPNG} />
-                <View style={title.text}>
-                    <View style={title.text_just}>
-                        <Image style={styles.J} source={JPNG} />
-                        <Text style={title.text_ust}>ust</Text>
-                    </View>
+        < View style={login.background} >
 
-                    <View style={title.text_sayContainer}>
-                        <Text style={title.text_saying}>Sayin</Text>
-                    </View>
-                </View>
-                <Image style={title.quoteBack} source={QuoteBackPNG}></Image>
-            </View>
+            <Text style={title.welcome}>Welcome Back</Text>
+            <Text style={title.welcome2}>We missed you!</Text>
+
 
             <View style={loginForm.container}>
-                <Text style={loginForm.LoginText}>Log In</Text>
                 <View style={loginForm.form}>
                     <Text style={loginForm.form_text}>Email</Text>
                     <TextInput style={loginForm.form_input}
@@ -75,6 +60,7 @@ export default function Login({ navigation }) {
                         value={password}
                         onChangeText={(text) => setPassword(text)}
                     ></TextInput>
+
                     <View style={loginForm.loginBTN_Container}>
 
                         <TouchableOpacity style={loginForm.loginBTN} onPress={() => signIn()}>
@@ -84,18 +70,12 @@ export default function Login({ navigation }) {
                 </View>
             </View>
 
-            <View style={signUpForgotPassword.container}>
-                <View style={signUpForgotPassword.signUp}>
-                    <TouchableOpacity style={signUpForgotPassword.signUpBTN} onPress={() => goToSignUp()}>
-                        <Text style={signUpForgotPassword.signUpBTN_text}>Sign Up</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={signUpForgotPassword.forgotPassword}>
-                    <TouchableOpacity style={signUpForgotPassword.forgotPasswordBTN} onPress={() => goToForgotPassword()}>
-                        <Text style={signUpForgotPassword.forgotPasswordBTN_text}>Forgot Password?</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            <TouchableOpacity style={signUp.BTN} onPress={() => goToSignUp()}>
+                <Text style={signUp.text}>Sign Up</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={forgotPassword.BTN} onPress={() => goToForgotPassword()}>
+                <Text style={forgotPassword.text}>Forgot Password?</Text>
+            </TouchableOpacity>
 
 
         </View >
@@ -105,44 +85,71 @@ export default function Login({ navigation }) {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-signUpForgotPassword = StyleSheet.create({
-    container: {
-        // borderColor: 'blue',
-        // borderWidth: 2,
-        position: 'absolute',
-        bottom: 140,
-        left: 70,
-        width: 300,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'space-between',
+login = StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: colorPalette.yellowColor,
+        alignItems: 'center',
+        // justifyContent: 'center',
+        width: '100%',
+        height: '100%',
     },
-
-    signUpBTN: {
-        marginRight: 50,
-    },
-
-    forgotPasswordBTN: {
-        marginLeft: 50,
-    },
-
-    signUpBTN_text: {
-        color: 'whitesmoke',
-        fontFamily: fontFamily.Average,
-        fontSize: 15,
-    },
-
-    forgotPasswordBTN_text: {
-        color: 'whitesmoke',
-        fontFamily: fontFamily.Average,
-        fontSize: 15,
-    },
-
 });
+
+title = StyleSheet.create({
+    welcome: {
+        position: 'relative',
+        marginTop: 200,
+        left: 30,
+        width: 300,
+        fontSize: 30,
+        color: colorPalette.mainColor,
+    },
+    welcome2: {
+        position: 'relative',
+        left: 30,
+        width: 300,
+        fontSize: 30,
+        color: colorPalette.mainColor,
+    },
+});
+
+
+signUp = StyleSheet.create({
+    BTN: {
+        position: 'absolute',
+        top: 480,
+        right: 70,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        color: colorPalette.blackColor,
+        fontFamily: fontFamily.Poppins,
+        fontSize: 15,
+        textDecorationLine: 'underline',
+    },
+});
+
+forgotPassword = StyleSheet.create({
+    BTN: {
+        position: 'relative',
+        top: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        color: colorPalette.blackColor,
+        fontFamily: fontFamily.Poppins,
+        textDecorationLine: 'underline',
+        fontSize: 15,
+    },
+});
+
+
 loginForm = StyleSheet.create({
     container: {
-        marginTop: 70,
+        position: 'relative',
         // borderColor: 'blue',
         // borderWidth: 2,
         width: 350,
@@ -150,11 +157,6 @@ loginForm = StyleSheet.create({
 
         alignItems: 'center',
         // justifyContent: 'center',
-    },
-    LoginText: {
-        color: colorPalette.secondaryColor,
-        fontSize: fontSize.large,
-        fontFamily: fontFamily.AveriaSerifLibre,
     },
     form: {
         // borderColor: 'red',
@@ -165,139 +167,48 @@ loginForm = StyleSheet.create({
     },
 
     form_text: {
-        color: 'white',
-        fontFamily: fontFamily.Average,
-        fontSize: fontSize.medium,
+        color: colorPalette.blackColor,
+        fontFamily: fontFamily.Poppins,
+        fontSize: 14,
         // paddingTop: 5,
         // paddingBottom: 5,
         marginTop: 40,
     },
     form_input: {
         borderColor: 'transparent',
-        borderBottomColor: 'white',
+        borderBottomColor: colorPalette.blackColor,
         borderWidth: 1,
         width: 300,
-        color: 'white',
+        color: colorPalette.blackColor,
         // paddingBottom: 5,
     },
 
     loginBTN_Container: {
         display: 'flex',
-        marginTop: 30,
+        marginTop: 150,
         width: 300,
         height: 50,
         alignItems: 'center',
         justifyContent: 'center',
     },
     loginBTN: {
-        backgroundColor: 'rgba(210, 76, 73, 0.47)',
-        borderRadius: 9,
-        borderColor: 'white',
+        backgroundColor: colorPalette.forestGreenColor,
+        borderRadius: 25,
+        borderColor: 'transparent',
         borderWidth: 1,
-        width: 130,
-        height: 40,
+        width: 277,
+        height: 72,
 
         alignItems: 'center',
         justifyContent: 'center',
 
     },
     loginBTN_text: {
-        color: 'white',
+        color: colorPalette.blackColor,
         fontFamily: fontFamily.Average,
         fontSize: fontSize.medium,
     },
 
 });
 
-title = StyleSheet.create({
-    container: {
-        width: windowWidth - 40,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
 
-        marginTop: 150,
-    },
-    text: {
-        // borderColor: 'green',
-        // borderWidth: 2,
-        flexDirection: 'column',
-    },
-
-    text_just: {
-        // borderColor: 'yellow',
-        // borderWidth: 2,
-        width: 270,
-        height: 100,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        marginTop: 20,
-    },
-
-    text_ust: {
-        color: colorPalette.primaryColor,
-        fontSize: fontSize.title,
-        fontFamily: 'OrelegaOne',
-        marginLeft: 10,
-    },
-
-    text_sayContainer: {
-        // borderColor: 'red',
-        // borderWidth: 2,
-        width: 270,
-        height: 70,
-        // justifyContent: 'flex-end',
-        alignItems: 'center',
-    },
-
-    text_saying: {
-        transform: [{ scaleY: -1 }],
-        color: colorPalette.secondaryColor,
-        fontSize: fontSize.title,
-        fontFamily: 'OrelegaOne',
-
-    },
-
-    quoteFront: {
-        position: 'absolute',
-        top: 0,
-        left: 30,
-    },
-    quoteBack: {
-        position: 'absolute',
-        bottom: 50,
-        right: 40,
-    },
-
-});
-
-
-styles = StyleSheet.create({
-    loginForm: {
-        marginTop: 70,
-        // borderColor: 'blue',
-        // borderWidth: 2,
-        width: 350,
-        height: 200,
-
-        alignItems: 'center',
-        // justifyContent: 'center',
-    },
-
-    main_container: {
-        flex: 1,
-        backgroundColor: colorPalette.backgroundColor,
-        alignItems: 'center',
-        // justifyContent: 'center',
-        width: '100%',
-        height: '100%',
-    },
-
-    logo_container: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 100,
-        height: 100,
-    },
-
-});
