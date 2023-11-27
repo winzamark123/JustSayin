@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
@@ -33,13 +34,9 @@ export default function App() {
 
 
   return (
-    // <View style={styles.container}>
-    //   {/* <Logo /> */}
-    //   <LoginSignup />
-    //   <StatusBar style="auto" />
-    // </View>
     <NavigationContainer>
-      <Stack.Navigator initalRouteName="Login">
+      <Stack.Navigator initalRouteName="Landing">
+        <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />

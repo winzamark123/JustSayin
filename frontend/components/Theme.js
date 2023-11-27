@@ -1,9 +1,12 @@
 export const colorPalette = {
-    backgroundColor: '#181818',
-    primaryColor: '#567B57',
-    secondaryColor: '#A9BDA1',
-    lightColor: '#EEC7A3',
-    popColor: '#D24C4A'
+    mainColor: '#D33F48',
+    pinkColor: '#D5808C',
+    purpleColor: '#D7C0D0',
+    yellowColor: '#F0F0D1',
+    lightGreenColor: '#B4D4B5',
+    forestGreenColor: '#77BA99',
+    blackColor: '#272732',
+    whiteColor: '#F6F6F6',
 }
 
 export const fontSize = {
