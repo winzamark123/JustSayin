@@ -16,12 +16,16 @@ export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   const loadFonts = async () => {
-    await Font.loadAsync({
-      'OrelegaOne': require('./assets/fonts/OrelegaOne-Regular.ttf'),
-      'Average': require('./assets/fonts/Average-Regular.ttf'),
-      'AveriaSerifLibre': require('./assets/fonts/AveriaSerifLibre-Bold.ttf'),
-    });
-    setFontsLoaded(true);
+    try {
+      await Font.loadAsync({
+        'Poppins': require('./assets/fonts/Poppins/Poppins-Regular.ttf'),
+      });
+      setFontsLoaded(true);
+    } catch (e) {
+      console.log(e);
+      // Handle font loading error, maybe set an error state here
+    }
+
   };
 
   useEffect(() => {
@@ -35,7 +39,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initalRouteName="Landing">
+      <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />

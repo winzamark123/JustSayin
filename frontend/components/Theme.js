@@ -18,8 +18,6 @@ export const fontSize = {
 }
 
 export const fontFamily = {
-    loginTitle: "Orelega One",
-    Average: "Average",
-    AveriaSerifLibre: "AveriaSerifLibre",
+    Poppins: "Poppins",
 
 }
