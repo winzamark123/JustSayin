@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, TextInput, View, Dimensions, TouchableOpacity } from "react-native";
 import { colorPalette, fontFamily, fontSize } from '../components/theme';
 import { useState } from "react";
+import firebase from '../firebaseConfig';
 
 export default function Signup({ navigation }) {
     const [email, setEmail] = useState('');
@@ -12,6 +13,19 @@ export default function Signup({ navigation }) {
     const goToLogin = () => {
         navigation.navigate("Login");
     }
+
+    const handleSignUp = () => {
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredentials => {
+                // Signed in 
+                console.log(userCredentials);
+            })
+            .catch(error => {
+                setErrorMessage(error.message);
+            });
+    };
 
     return (
         <View style={signup.background}>
@@ -39,7 +53,7 @@ export default function Signup({ navigation }) {
 
                     <View style={signUpForm.signUpBTN_Container}>
 
-                        <TouchableOpacity style={signUpForm.signUpBTN} onPress={() => signIn()}>
+                        <TouchableOpacity style={signUpForm.signUpBTN} onPress={() => handleSignUp()}>
                             <Text style={signUpForm.signUpBTN_text}>Create Account</Text>
                         </TouchableOpacity>
                     </View>
