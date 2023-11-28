@@ -32,7 +32,7 @@ export default function Login({ navigation }) {
 
 
     const goToSignUp = () => {
-        navigation.navigate("SignUp");
+        navigation.navigate("SignUpPage");
     }
 
     const goToForgotPassword = () => {

@@ -8,7 +8,7 @@ import JustSayinPNG from '../assets/LandingPage/JustSayin.png';
 export default function Landing({ navigation }) {
 
     const goToLogin = () => {
-        navigation.navigate("Login");
+        navigation.navigate("LoginPage");
     }
 
     return (

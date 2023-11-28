@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, TextInput, View, Dimensions, TouchableOpacity } from "react-native";
 import { colorPalette, fontFamily, fontSize } from '../components/theme';
 import { useState } from "react";
-import firebase from '../firebaseConfig';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { FIREBASE_AUTH } from '../firebaseConfig';
+
 
 export default function Signup({ navigation }) {
     const [email, setEmail] = useState('');
@@ -11,20 +13,34 @@ export default function Signup({ navigation }) {
     const [loading, setLoading] = useState(false);
 
     const goToLogin = () => {
-        navigation.navigate("Login");
+        navigation.navigate("LoginPage");
     }
 
-    const handleSignUp = () => {
-        firebase
-            .auth()
-            .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                // Signed in 
-                console.log(userCredentials);
-            })
-            .catch(error => {
-                setErrorMessage(error.message);
-            });
+    const goToCategory = () => {
+        navigation.navigate("CategoryPage");
+    }
+
+    const handleSignUp = async () => {
+        console.log("Email:", email, "Password:", password);
+
+        try {
+            const userCred = createUserWithEmailAndPassword(FIREBASE_AUTH, email, password)
+                .then(userCredential => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    console.log("USER ID (UID):", user.uid);
+                    goToCategory();
+                    // ...
+                })
+                .catch(error => {
+                    console.error(error);
+                    // ..
+                });
+            console.log(userCred);
+        } catch (error) {
+            console.log(error);
+        }
+
     };
 
     return (
@@ -47,7 +63,7 @@ export default function Signup({ navigation }) {
                     <Text style={signUpForm.form_text}>Email</Text>
                     <TextInput style={signUpForm.form_input}
                         value={email}
-                        onChangeText={(text) => setEmail(text)}
+                        onChangeText={(text) => setEmail(text.trim())}
                     ></TextInput>
 
 
