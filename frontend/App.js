@@ -8,6 +8,7 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import ForgotPassword from './pages/ForgotPassword';
+import CategoryPage from './pages/CategoryPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,8 @@ export default function App() {
         <Stack.Screen name="LoginPage" component={LoginPage} options={{ headerShown: false }} />
         <Stack.Screen name="SignUpPage" component={SignUpPage} options={{ headerShown: false }} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
+        <Stack.Screen name="CategoryPage" component={CategoryPage} options={{ headerShown: false }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

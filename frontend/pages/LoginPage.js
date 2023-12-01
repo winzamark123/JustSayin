@@ -17,13 +17,15 @@ export default function Login({ navigation }) {
     const signIn = async () => {
         setLoading(true);
         try {
-            const response = await signInWithEmailAndPassword(auth, email, password);
-            console.log(response);
+            // const response = await signInWithEmailAndPassword(auth, email, password);
+            // console.log(response);
+            navigation.navigate("CategoryPage");
+            // const TempToken = await response.user.getIdToken();
 
-            const TempToken = await response.user.getIdToken();
+            // setUserToken(TempToken);
+            // console.log("User Token ID", userToken);
 
-            setUserToken(TempToken);
-            console.log("User Token ID", userToken);
+            // navigation.navigate("CategoryPage", { userToken: userToken });
         } catch (e) {
             alert(e.message);
         }
@@ -91,8 +93,8 @@ login = StyleSheet.create({
         backgroundColor: colorPalette.yellowColor,
         alignItems: 'center',
         // justifyContent: 'center',
-        width: '100%',
-        height: '100%',
+        width: windowWidth,
+        height: windowHeight
     },
 });
 
