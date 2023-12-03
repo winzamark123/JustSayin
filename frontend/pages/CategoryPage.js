@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FIREBASE_AUTH } from '../firebaseConfig';
 import { getAllCategories } from '../api/categoriesAPI';
 import { useEffect } from 'react';
+// import { set } from 'mongoose';
 
 const categoriesCard = (category) => {
     return (
@@ -39,12 +40,30 @@ export default function CategoryPage({ userID }) {
     });
 
     const renderCategory = ({ item }) => {
+        const isSelected = selectedCategories.some(category => category._id === item._id);
         return (
-            <TouchableOpacity onPress={() => console.log(item)}>
-                {categoriesCard(item.name)}
+            <TouchableOpacity onPress={() => toggleCategory(item)}>
+                <View style={isSelected ? categoryCard.selectedCard : categoryCard.card}>
+                    <Text style={categoryCard.cardText}>{item.name}</Text>
+                    {/* {categoriesCard(item.name)} */}
+                </View>
             </TouchableOpacity>
         );
     }
+
+
+    const toggleCategory = (item) => {
+        if (selectedCategories.includes(item)) {
+            // Remove from selected categories
+            setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
+        } else {
+            // Add to selected categories
+            if (selectedCategories.length < 4) {
+                setSelectedCategories([...selectedCategories, item]);
+            }
+        }
+        console.log(selectedCategories);
+    };
 
     return (
         <View style={categoryPage.background}>
@@ -148,6 +167,21 @@ const categoryCard = StyleSheet.create({
         width: 372,
         height: 77,
         borderRadius: 20,
+    },
+    selectedCard: {
+        flex: 1,
+        backgroundColor: colorPalette.forestGreenColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 372,
+        height: 77,
+        borderRadius: 20,
+
+    },
+    cardText: {
+        fontFamily: fontFamily.Poppins,
+        fontSize: 16,
+        color: colorPalette.blackColor,
     },
 
 });
