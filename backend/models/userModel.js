@@ -14,10 +14,23 @@ const userSchema = new Schema({
         unique: true
     },
 
-    password: {
+    passwordHash: {
         type: String,
         required: true
-    }
+    },
+    savedSayings: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Saying'
+    }],
+    savedCategories: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Category'
+    }],
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+
 
 
 
