@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
+import HomePage from './pages/HomePage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
@@ -46,6 +47,7 @@ export default function App() {
         <Stack.Screen name="SignUpPage" component={SignUpPage} options={{ headerShown: false }} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
         <Stack.Screen name="CategoryPage" component={CategoryPage} options={{ headerShown: false }} />
+        <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
 
       </Stack.Navigator>
     </NavigationContainer>

@@ -16,9 +16,13 @@ export default function Signup({ navigation }) {
         navigation.navigate("LoginPage");
     }
 
-    const goToCategory = () => {
-        navigation.navigate("CategoryPage");
+    const goToCategory = (userID) => {
+        navigation.navigate("CategoryPage", { userID: userID });
     }
+
+    // const async function saveUserToMongoDB(){
+    
+    // }
 
     const handleSignUp = async () => {
         console.log("Email:", email, "Password:", password);
@@ -26,15 +30,12 @@ export default function Signup({ navigation }) {
         try {
             const userCred = createUserWithEmailAndPassword(FIREBASE_AUTH, email, password)
                 .then(userCredential => {
-                    // Signed in 
                     const user = userCredential.user;
                     console.log("USER ID (UID):", user.uid);
-                    goToCategory();
-                    // ...
+                    goToCategory(user.uid);
                 })
                 .catch(error => {
                     console.error(error);
-                    // ..
                 });
             console.log(userCred);
         } catch (error) {

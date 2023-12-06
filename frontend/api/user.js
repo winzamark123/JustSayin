@@ -1,9 +1,7 @@
 import axios from 'axios';
 import { getUserToken } from './firebase';
 
-const api = axios.create({
-    baseURL: 'YOUR_BACKEND_BASE_URL',  // for example: 'http://localhost:5000'
-});
+const BASE_URL = "http://localhost:4000";
 
 export const setAuthToken = async () => {
     const token = await getUserToken();
@@ -13,5 +11,10 @@ export const setAuthToken = async () => {
         delete api.defaults.headers.common['Authorization'];
     }
 };
+
+export const createUser = async (userData) => {
+    const response = await axios.post(`${BASE_URL}/api/users`, userData);
+    return response.data;
+}
 
 export default api;

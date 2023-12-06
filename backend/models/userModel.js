@@ -3,20 +3,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
-    email: {
+    firebaseID: {
         type: String,
         required: true,
         unique: true
-    },
-    username: {
-        type: String,
-        required: true,
-        unique: true
-    },
-
-    passwordHash: {
-        type: String,
-        required: true
     },
     savedSayings: [{
         type: Schema.Types.ObjectId,

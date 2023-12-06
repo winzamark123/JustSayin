@@ -17,15 +17,12 @@ export default function Login({ navigation }) {
     const signIn = async () => {
         setLoading(true);
         try {
-            // const response = await signInWithEmailAndPassword(auth, email, password);
-            // console.log(response);
-            navigation.navigate("CategoryPage");
-            // const TempToken = await response.user.getIdToken();
+            const response = await signInWithEmailAndPassword(auth, email, password);
+            const uid = response.user.uid;
 
-            // setUserToken(TempToken);
-            // console.log("User Token ID", userToken);
+            console.log("User Logged In with UID:", uid);
+            navigation.navigate("HomePage", { userID: uid });
 
-            // navigation.navigate("CategoryPage", { userToken: userToken });
         } catch (e) {
             alert(e.message);
         }
