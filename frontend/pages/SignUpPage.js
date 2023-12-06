@@ -20,12 +20,13 @@ export default function Signup({ navigation }) {
     const handleSignUp = async (email, password) => {
 
         try {
-            const userCred = createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+            const userCred = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
             console.log("UserCred:", userCred);
             const user = userCred.user;
             return user;
 
         } catch (error) {
+            console.log("Error at handleSignUp");
             console.log(error);
         }
 
@@ -36,12 +37,14 @@ export default function Signup({ navigation }) {
         try {
             const user = await handleSignUp(email, password);
             const uid = user.uid;
-            await SaveUserToBackend(user);
+            const response = await saveUserToBackend(user);
+            console.log("HandleCompleteSignUp:", response);
 
             //navigates to the CategoryPage of the User
-            navigation.navigate("CategoryPage", { userID: userID });
+            navigation.navigate("CategoryPage", { userID: uid });
 
         } catch (error) {
+            console.log("Error at handleCompleteSignUp");
             console.error("SignUp Failed:", error);
         }
     }

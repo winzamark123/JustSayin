@@ -1,9 +1,9 @@
 const express = require('express');
-const { saveUserToMongoDB } = require('../controllers/userController');
-
+const { createUser } = require('../controllers/userController');
+const { verifyToken } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.get('/', saveUserToMongoDB);
+router.post('/', verifyToken, createUser);
 
 module.exports = router;
