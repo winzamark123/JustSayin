@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextInput, View, Dimensions, FlatList, TouchableOpaci
 import { colorPalette, fontFamily, fontSize } from '../components/theme';
 import { useState } from "react";
 import { FIREBASE_AUTH } from '../firebaseConfig';
-import { getAllCategories } from '../api/categoriesAPI';
+import { fetchAllCategories } from '../api/categoriesAPI';
 import { useEffect } from 'react';
 // import { set } from 'mongoose';
 
@@ -24,7 +24,7 @@ export default function CategoryPage({ userID }) {
         // Fetch categories when the component mounts
         const fetchCategories = async () => {
             try {
-                const fetchedCategories = await getAllCategories();
+                const fetchedCategories = await fetchAllCategories();
                 setCategories(fetchedCategories);
                 console.log(fetchedCategories);
             } catch (error) {

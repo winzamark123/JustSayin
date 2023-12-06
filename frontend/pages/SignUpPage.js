@@ -4,6 +4,7 @@ import { colorPalette, fontFamily, fontSize } from '../components/theme';
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../firebaseConfig';
+import { saveUserToBackend } from '../api/userAPI';
 
 
 export default function Signup({ navigation }) {
@@ -16,33 +17,34 @@ export default function Signup({ navigation }) {
         navigation.navigate("LoginPage");
     }
 
-    const goToCategory = (userID) => {
-        navigation.navigate("CategoryPage", { userID: userID });
-    }
-
-    // const async function saveUserToMongoDB(){
-    
-    // }
-
-    const handleSignUp = async () => {
-        console.log("Email:", email, "Password:", password);
+    const handleSignUp = async (email, password) => {
 
         try {
-            const userCred = createUserWithEmailAndPassword(FIREBASE_AUTH, email, password)
-                .then(userCredential => {
-                    const user = userCredential.user;
-                    console.log("USER ID (UID):", user.uid);
-                    goToCategory(user.uid);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-            console.log(userCred);
+            const userCred = createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+            console.log("UserCred:", userCred);
+            const user = userCred.user;
+            return user;
+
         } catch (error) {
             console.log(error);
         }
 
     };
+
+    const handleCompleteSignUp = async () => {
+        console.log("Email:", email, "Password:", password);
+        try {
+            const user = await handleSignUp(email, password);
+            const uid = user.uid;
+            await SaveUserToBackend(user);
+
+            //navigates to the CategoryPage of the User
+            navigation.navigate("CategoryPage", { userID: userID });
+
+        } catch (error) {
+            console.error("SignUp Failed:", error);
+        }
+    }
 
     return (
         <View style={signup.background}>
@@ -70,7 +72,7 @@ export default function Signup({ navigation }) {
 
                     <View style={signUpForm.signUpBTN_Container}>
 
-                        <TouchableOpacity style={signUpForm.signUpBTN} onPress={() => handleSignUp()}>
+                        <TouchableOpacity style={signUpForm.signUpBTN} onPress={() => handleCompleteSignUp()}>
                             <Text style={signUpForm.signUpBTN_text}>Create Account</Text>
                         </TouchableOpacity>
                     </View>
