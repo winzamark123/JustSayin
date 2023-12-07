@@ -52,7 +52,7 @@ export default function Signup({ navigation }) {
             console.log("HandleCompleteSignUp:", response);
 
             //navigates to the CategoryPage of the User
-            // navigation.navigate("CategoryPage", { userID: uid });
+            navigation.navigate("CategoryPage", { userID: uid });
 
         } catch (error) {
             console.log("Error at handleCompleteSignUp");
