@@ -26,8 +26,19 @@ export default function Signup({ navigation }) {
             return user;
 
         } catch (error) {
-            console.log("Error at handleSignUp");
-            console.log(error);
+            console.log("Error at handleSignUp", error);
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                console.log("Error Data:", error.response.data);
+                console.log("Error Status:", error.response.status);
+                console.log("Error Headers:", error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.log("Error Request:", error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log("Error Message:", error.message);
+            }
         }
 
     };
@@ -41,7 +52,7 @@ export default function Signup({ navigation }) {
             console.log("HandleCompleteSignUp:", response);
 
             //navigates to the CategoryPage of the User
-            navigation.navigate("CategoryPage", { userID: uid });
+            // navigation.navigate("CategoryPage", { userID: uid });
 
         } catch (error) {
             console.log("Error at handleCompleteSignUp");

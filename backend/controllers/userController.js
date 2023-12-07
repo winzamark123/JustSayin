@@ -6,9 +6,11 @@ const BASE_URL = "http://localhost:4000";
 
 exports.createUser = async (req, res) => {
     try {
-        const { idToken } = req.body;
-        const decodedToken = await admin.auth().verifyIdToken(idToken);
-        const uid = decodedToken.uid;
+        const uid = req.uid;
+        // const decodedToken = await admin.auth().verifyIdToken(idToken);
+        // const uid = decodedToken.uid;
+
+
 
         // Check if user already exists
         let user = await userModel.findOne({ firebaseID: uid });
@@ -28,22 +30,8 @@ exports.createUser = async (req, res) => {
 
         res.status(201).json({ message: 'User Created Successfully!', user });
     } catch (error) {
-        res.status(500).json({ message: "Error Creating User", error });
+        res.status(500).json({ message: "Error Creating User", error: error.message });
     }
 }
 
 
-
-// exports.saveUser = async (user) => {
-//     const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
-
-//     try {
-//         const response = await axios.post(`${BASE_URL}/api/users`, {
-//             user: user,
-//             idToken: idToken
-//         });
-//         return response.data;
-//     } catch (error) {
-//         console.error(error)
-//     }
-// }

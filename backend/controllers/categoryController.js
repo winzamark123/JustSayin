@@ -14,18 +14,18 @@ exports.getAllCategories = async (req, res) => {
     res.status(200).json(categories);
 }
 
-exports.saveUserCategories = async (categories) => {
-    const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+// exports.saveUserCategories = async (categories) => {
+//     const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
 
-    try {
-        const response = await axios.post(`${BASE_URL}/api/categories`, {
-            categories: categories,
-            idToken: idToken
-        });
-        return response.data;
-    } catch (error) {
-        console.error(error)
-    }
+//     try {
+//         const response = await axios.post(`${BASE_URL}/api/categories`, {
+//             categories: categories,
+//             idToken: idToken
+//         });
+//         return response.data;
+//     } catch (error) {
+//         console.error(error)
+//     }
 
-}
+// }
 
