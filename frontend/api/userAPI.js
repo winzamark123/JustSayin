@@ -23,21 +23,17 @@ export const saveUserToBackend = async (user) => {
             }
         });
 
+        if (response.status === 201) {
+            console.log("User Saved to Backend");
+        }
+
         return response.data;
     } catch (error) {
         console.log("Error Saving User to Backend", error);
 
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            console.log("Error Data:", error.response.data);
-            console.log("Error Status:", error.response.status);
-            console.log("Error Headers:", error.response.headers);
-        } else if (error.request) {
-            // The request was made but no response was received
-            console.log("Error Request:", error.request);
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error Message:", error.message);
+        if (error.response && error.response.status == 409) {
+            alert("User already exists");
+            // console.log("User already exists");
         }
     }
 }
