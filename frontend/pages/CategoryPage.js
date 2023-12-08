@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Dimensions, FlatList, TouchableOpacity } from "react-native";
 import { colorPalette, fontFamily, fontSize } from '../components/theme';
 import { useState } from "react";
-import { FIREBASE_AUTH } from '../firebaseConfig';
-import { fetchAllCategories } from '../api/categoriesAPI';
+import { fetchAllCategories, saveUserCategories } from '../api/categoriesAPI';
 import { useEffect } from 'react';
-// import { set } from 'mongoose';
+
 
 const categoriesCard = (category) => {
     return (
@@ -19,6 +18,12 @@ export default function CategoryPage({ userID }) {
     const [categories, setCategories] = useState([]);
     const [searchBarText, setSearchBarText] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const handleSaveCategories = async () => {
+        const selectedCategoriesIDs = selectedCategories.map(category => category._id);
+        const response = await saveUserCategories(userID, selectedCategoriesIDs);
+        console.log(response);
+    }
 
     useEffect(() => {
         // Fetch categories when the component mounts
@@ -51,15 +56,22 @@ export default function CategoryPage({ userID }) {
         );
     }
 
+    const removeSelectedCategory = (item) => {
+        setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
+    }
 
     const toggleCategory = (item) => {
         if (selectedCategories.includes(item)) {
             // Remove from selected categories
-            setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
+            // setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
+            removeSelectedCategory(item);
         } else {
             // Add to selected categories
             if (selectedCategories.length < 4) {
                 setSelectedCategories([...selectedCategories, item]);
+            } else {
+                // setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
+                removeSelectedCategory(item);
             }
         }
         console.log(selectedCategories);
@@ -87,6 +99,8 @@ export default function CategoryPage({ userID }) {
                 contentContainerStyle={categoryPage.categoriesContainer}
             />
 
+            <TouchableOpacity style={categoriesContinue.BTN} onPress={() => handleSaveCategories()}></TouchableOpacity>
+
         </View>
     );
 
@@ -94,6 +108,27 @@ export default function CategoryPage({ userID }) {
 
 
 const { width, height } = Dimensions.get('window');
+
+const categoriesContinue = StyleSheet.create({
+    BTN: {
+        position: 'absolute',
+        top: 750,
+        right: 30,
+        width: 88,
+        height: 88,
+        borderRadius: 44,
+        backgroundColor: colorPalette.forestGreenColor,
+        borderColor: colorPalette.blackColor,
+
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,  // Horizontal shadow
+            height: 2, // Vertical shadow
+        },
+        shadowOpacity: 0.25, // The opacity of the shadow
+        shadowRadius: 3.84,
+    }
+});
 
 const searchBar = StyleSheet.create({
     container: {

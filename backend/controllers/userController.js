@@ -34,4 +34,25 @@ exports.createUser = async (req, res) => {
     }
 }
 
+exports.saveUserCategories = async (req, res) => {
+    const { categories } = req.body; // Get the category IDs array from the request body
+    const uid = req.uid;
+
+    try {
+        const user = await userModel.findOne({firebaseID: uid}); // Find the user by userID
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.savedCategories = categories; // Assign the new categories to the user
+        await user.save(); // Save the user with the updated categories
+
+        res.status(200).json({ message: "Categories updated successfully", user });
+    } catch (error) {
+        console.error("Error occurred in saveUserCategories:", error);
+        res.status(500).json({ message: "Error updating user categories", error: error.message });
+    }
+}
+
 
