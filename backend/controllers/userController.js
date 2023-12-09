@@ -7,10 +7,6 @@ const BASE_URL = "http://localhost:4000";
 exports.createUser = async (req, res) => {
     try {
         const uid = req.uid;
-        // const decodedToken = await admin.auth().verifyIdToken(idToken);
-        // const uid = decodedToken.uid;
-
-
 
         // Check if user already exists
         let user = await userModel.findOne({ firebaseID: uid });
@@ -39,7 +35,7 @@ exports.saveUserCategories = async (req, res) => {
     const uid = req.uid;
 
     try {
-        const user = await userModel.findOne({firebaseID: uid}); // Find the user by userID
+        const user = await userModel.findOne({ firebaseID: uid }); // Find the user by userID
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
