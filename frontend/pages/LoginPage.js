@@ -69,8 +69,8 @@ export default function Login({ navigation }) {
                 </View>
             </View>
 
-            <TouchableOpacity style={signUp.BTN} onPress={() => goToSignUp()}>
-                <Text style={signUp.text}>Sign Up</Text>
+            <TouchableOpacity style={signUptext.BTN} onPress={() => goToSignUp()}>
+                <Text style={signUptext.text}>Sign Up</Text>
             </TouchableOpacity>
             <TouchableOpacity style={forgotPassword.BTN} onPress={() => goToForgotPassword()}>
                 <Text style={forgotPassword.text}>Forgot Password?</Text>
@@ -114,7 +114,7 @@ title = StyleSheet.create({
 });
 
 
-signUp = StyleSheet.create({
+signUptext = StyleSheet.create({
     BTN: {
         position: 'absolute',
         top: 480,
