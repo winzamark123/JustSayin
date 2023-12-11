@@ -1,10 +1,18 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+// import { NavBar } from "../components/navBar";
 
-export default function Home({ userID }) {
+export default function Home(props) {
+    // console.log("Home Page - UserID:", userID)
+    console.log("Home Page - Props:", props.route.params.userID)
+    const userID = props.route.params.userID;
+
+
     return (
-        <View>
-            <Text>Home Page</Text>
+        <View style={homeStyles.container}>
+            <Text>Home Page - UserID: {userID}</Text>
+
+            {/* <NavBar /> */}
         </View>
     )
 }

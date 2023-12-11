@@ -48,7 +48,7 @@ export default function App() {
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
         <Stack.Screen name="CategoryPage" component={CategoryPage} options={{ headerShown: false }} />
         <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
-
+      
       </Stack.Navigator>
     </NavigationContainer>
   );
