@@ -8,7 +8,7 @@
 
 Still under development~! JustSayin is a mobile applicaton that generates daily quotes displayed on your IOS widgets based on your categories and preferences. Coming SOON!
 
-![Landing Page](./promoteAssets/Frame1.png)
+![Landing Page](./promoteAssets/Frame.png)
 ![Category Page](./promoteAssets/Frame2.png)
 ![Home Page](./promoteAssets/Frame3.png)
 ![Friend Page](./promoteAssets/Frame4.png)
