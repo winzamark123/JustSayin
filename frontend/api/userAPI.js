@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getUserToken } from './firebase';
+import { FIREBASE_AUTH } from '../firebaseConfig';
 
 const BASE_URL = "http://localhost:4000";
 
@@ -29,6 +29,28 @@ export const saveUserToBackend = async (user, username) => {
         }
     }
 }
+
+export const fetchUserFromBackend = async (userID) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+        console.log("ID TOKEN: ", idToken);
+
+        const response = await axios.get(`${BASE_URL}/api/users/${userID}`, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+
+        if (response.status === 200) {
+            console.log("User Fetched from Backend");
+        }
+
+        return response.data;
+    } catch (error) {
+        console.log("Error Fetching User from Backend", error);
+    }
+}
+
 
 
 

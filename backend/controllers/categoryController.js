@@ -11,7 +11,7 @@ exports.getAllCategories = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 
-    res.status(200).json(categories);
+    return res.status(200).json(categories);
 }
 
 // exports.saveUserCategories = async (categories) => {

@@ -53,4 +53,19 @@ exports.saveUserCategories = async (req, res) => {
     }
 }
 
+exports.getUser = async (req, res) => {
+    const uid = req.uid;
+    const user = await userModel.findOne({ firebaseID: uid });
+    try {
+        if (!user) {
+            return res.status(400).json({ message: err.message + "No User" })
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+
+    return res.status(200).json(user);
+
+}
+
 
