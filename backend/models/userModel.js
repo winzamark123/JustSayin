@@ -8,6 +8,10 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    username: {
+        type: String,
+        required: true,
+    },
     savedSayings: [{
         type: Schema.Types.ObjectId,
         ref: 'Saying'

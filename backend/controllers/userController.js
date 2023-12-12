@@ -7,6 +7,7 @@ const BASE_URL = "http://localhost:4000";
 exports.createUser = async (req, res) => {
     try {
         const uid = req.uid;
+        const username = req.body.username;
 
         // Check if user already exists
         let user = await userModel.findOne({ firebaseID: uid });
@@ -17,6 +18,7 @@ exports.createUser = async (req, res) => {
         // Create new user
         user = new userModel({
             firebaseID: uid,
+            username: username,
             categories: [],
             sayings: []
         });

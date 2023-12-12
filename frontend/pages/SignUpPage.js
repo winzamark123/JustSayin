@@ -36,11 +36,13 @@ export default function Signup({ navigation }) {
     };
 
     const handleCompleteSignUp = async () => {
-        console.log("Email:", email, "Password:", password);
+        const fixedUsername = username.trim(); //remove spaces from username
+        console.log("Email:", email, "Password:", password, "Username:", fixedUsername);
+
         try {
             const user = await handleSignUp(email, password);
             const uid = user.uid;
-            const response = await saveUserToBackend(user);
+            const response = await saveUserToBackend(user, fixedUsername);
 
 
             console.log("HandleCompleteSignUp:", response);
