@@ -3,6 +3,7 @@ import { colorPalette, fontFamily, fontSize } from "../components/theme";
 import { FIREBASE_AUTH } from "../firebaseConfig";
 import { useState } from "react";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { useUser } from '../context/UserContext';
 import 'firebase/auth';
 
 
@@ -12,7 +13,10 @@ export default function Login({ navigation }) {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const auth = FIREBASE_AUTH;
-    const [userToken, setUserToken] = useState("");
+
+    const { updateUser } = useUser();
+
+
 
     const signIn = async () => {
         setLoading(true);
@@ -21,6 +25,9 @@ export default function Login({ navigation }) {
             const uid = response.user.uid;
 
             console.log("User Logged In with UID:", uid);
+
+            updateUser(uid);
+            console.log("Update Successful");
             navigation.navigate("HomePage", { userID: uid });
 
         } catch (e) {

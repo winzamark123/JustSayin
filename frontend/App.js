@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import ForgotPassword from './pages/ForgotPassword';
 import CategoryPage from './pages/CategoryPage';
+import SettingsPage from './pages/SettingsPage';
 
 import { UserProvider } from './context/UserContext';
 
@@ -52,7 +53,7 @@ export default function App() {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
           <Stack.Screen name="CategoryPage" component={CategoryPage} options={{ headerShown: false }} />
           <Stack.Screen name="HomePage" component={HomePage} options={{ headerShown: false }} />
-
+          <Stack.Screen name="SettingsPage" component={SettingsPage} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

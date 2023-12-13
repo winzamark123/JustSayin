@@ -5,13 +5,15 @@ import { fetchUserFromBackend } from '../api/userAPI';
 import tempUserIMG from '../assets/tempUser.png';
 import { colorPalette } from "../components/theme";
 import NavBar from "../components/navBar";
+import { useUser } from "../context/UserContext";
 
 
 export default function Home(props) {
     // console.log("Home Page - UserID:", userID)
     console.log("Home Page - userID:", props.route.params.userID)
     const userID = props.route.params.userID;
-    const [user, updateUser] = useState({});
+    // const [user, updateUser] = useState({});
+    const {user} = useUser();
 
     useEffect(() => {
 

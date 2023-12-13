@@ -16,10 +16,10 @@ function NavBar() {
     const uid = user ? user.id : null; // Replace 'id' with your actual user ID attribute
 
     console.log("NavBar - userID:", uid);
-    
+
     return (
         <View style={navBarStyles.container}>
-            <TouchableOpacity title="Home" onPress={() => uid && navigation.navigate('HomePage', { userID: uid })}>
+            <TouchableOpacity title="Home" onPress={() => navigation.navigate('HomePage', { userID: uid })}>
                 <Icon name="home" size={40} color="#000"></Icon>
             </TouchableOpacity>
             <TouchableOpacity title="Friends" onPress={() => navigation.navigate('FriendsPage')}>

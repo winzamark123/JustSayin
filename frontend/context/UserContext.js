@@ -1,5 +1,6 @@
 // UserContext.js
 import React, { createContext, useState, useContext } from 'react';
+import { fetchUserFromBackend } from '../api/userAPI';
 
 const UserContext = createContext(null);
 
@@ -10,6 +11,7 @@ export const UserProvider = ({ children }) => {
     const updateUser = async (userID) => {
         const fetchedUser = await fetchUserFromBackend(userID);
         setUser(fetchedUser);
+        console.log("Set User Successful");
     };
 
     return (
