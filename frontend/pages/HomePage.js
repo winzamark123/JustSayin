@@ -4,26 +4,31 @@ import { useEffect, useState } from "react";
 import { fetchUserFromBackend } from '../api/userAPI';
 import tempUserIMG from '../assets/tempUser.png';
 import { colorPalette } from "../components/theme";
-// import { NavBar } from "../components/navBar";
+import NavBar from "../components/navBar";
+
 
 export default function Home(props) {
     // console.log("Home Page - UserID:", userID)
     console.log("Home Page - userID:", props.route.params.userID)
     const userID = props.route.params.userID;
-    const [user, setUser] = useState({});
+    const [user, updateUser] = useState({});
 
     useEffect(() => {
+
         const fetchUser = async () => {
             try {
                 const fetchedUser = await fetchUserFromBackend(userID);
-                setUser(fetchedUser);
+                updateUser(fetchedUser);
                 console.log("User:", user);
             } catch (error) {
                 console.error("Error at fetchUser", error);
             }
         };
 
-        fetchUser();
+        if (!user) {
+            console.log("User is null, fetching user")
+            fetchUser();
+        }
     }, []);
 
 
@@ -49,7 +54,7 @@ export default function Home(props) {
                     {/* <Text>{JSON.stringify(user, null, 2)}</Text> */}
                     {/* <Text>{user.username}</Text> */}
                 </View>
-                {/* <NavBar /> */}
+                <NavBar />
             </View>
         </SafeAreaView>
     )
