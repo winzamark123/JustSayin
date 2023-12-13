@@ -8,31 +8,16 @@ import NavBar from "../components/navBar";
 import { useUser } from "../context/UserContext";
 
 
-export default function Home(props) {
-    // console.log("Home Page - UserID:", userID)
-    console.log("Home Page - userID:", props.route.params.userID)
-    const userID = props.route.params.userID;
-    // const [user, updateUser] = useState({});
-    const {user} = useUser();
+export default function Home() {
+    const { user } = useUser();
+
 
     useEffect(() => {
-
-        const fetchUser = async () => {
-            try {
-                const fetchedUser = await fetchUserFromBackend(userID);
-                updateUser(fetchedUser);
-                console.log("User:", user);
-            } catch (error) {
-                console.error("Error at fetchUser", error);
-            }
-        };
-
         if (!user) {
-            console.log("User is null, fetching user")
-            fetchUser();
+            console.log("User is null");
+            // Optionally, handle the situation when user data is not available
         }
-    }, []);
-
+    }, [user]);
 
     return (
         <SafeAreaView style={homeStyles.safeArea}>
@@ -51,7 +36,7 @@ export default function Home(props) {
 
                         </View>
                     </View>
-                    <Text>Home Page - UserID: {userID}</Text>
+                    <Text>Home Page - UserID: {user.firebaseID}</Text>
                     <View style={savedQuotes.container}></View>
                     {/* <Text>{JSON.stringify(user, null, 2)}</Text> */}
                     {/* <Text>{user.username}</Text> */}

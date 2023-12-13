@@ -42,12 +42,12 @@ export const fetchUserFromBackend = async (userID) => {
         });
 
         if (response.status === 200) {
-            console.log("User Fetched from Backend");
+            console.log("UserAPI: User Fetched from Backend");
         }
 
         return response.data;
     } catch (error) {
-        console.log("Error Fetching User from Backend", error);
+        console.log("UserAPI: Error Fetching User from Backend", error);
     }
 }
 

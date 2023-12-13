@@ -5,13 +5,17 @@ import { fetchUserFromBackend } from '../api/userAPI';
 const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState({});
 
     // Function to update user data
     const updateUser = async (userID) => {
-        const fetchedUser = await fetchUserFromBackend(userID);
-        setUser(fetchedUser);
-        console.log("Set User Successful");
+        try {
+            const fetchedUser = await fetchUserFromBackend(userID);
+            setUser(fetchedUser);
+            console.log("UserContext: Set User Successful", user.username);
+        } catch (error) {
+            console.error("UserContext: Error at fetchUser", error);
+        }
     };
 
     return (
