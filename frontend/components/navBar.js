@@ -3,23 +3,16 @@ import { useNavigation } from '@react-navigation/native'
 import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import { colorPalette } from './theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useUser } from '../context/UserContext';
 
 
 
 
 function NavBar() {
     const navigation = useNavigation();
-    const { user } = useUser();
-
-    // Check if user data is available and get userID
-    const uid = user ? user.id : null; // Replace 'id' with your actual user ID attribute
-
-    console.log("NavBar - userID:", uid);
 
     return (
         <View style={navBarStyles.container}>
-            <TouchableOpacity title="Home" onPress={() => navigation.navigate('HomePage', { userID: uid })}>
+            <TouchableOpacity title="Home" onPress={() => navigation.navigate('HomePage')}>
                 <Icon name="home" size={40} color="#000"></Icon>
             </TouchableOpacity>
             <TouchableOpacity title="Friends" onPress={() => navigation.navigate('FriendsPage')}>

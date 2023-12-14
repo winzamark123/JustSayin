@@ -1,7 +1,6 @@
 import React from "react";
 import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
 import { useEffect, useState } from "react";
-import { fetchUserFromBackend } from '../api/userAPI';
 import tempUserIMG from '../assets/tempUser.png';
 import { colorPalette } from "../components/theme";
 import NavBar from "../components/navBar";
