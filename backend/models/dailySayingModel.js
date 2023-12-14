@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.scheme;
+const Schema = mongoose.Schema;
 
 const dailySayingSchema = new Schema({
     firbaseID: {

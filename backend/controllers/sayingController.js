@@ -1,6 +1,6 @@
 const sayingModel = require('../models/sayingModel');
 const { getUserCategories } = require('./userController'); // import the function
-const sayingModel = require('../models/sayingModel');
+
 
 
 
