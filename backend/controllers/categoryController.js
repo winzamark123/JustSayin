@@ -1,4 +1,6 @@
 const categoryModel = require('../models/categoryModel');
+const userModel = require('../models/userModel');
+
 const mongoose = require('mongoose');
 
 exports.getAllCategories = async (req, res) => {
@@ -14,18 +16,5 @@ exports.getAllCategories = async (req, res) => {
     return res.status(200).json(categories);
 }
 
-// exports.saveUserCategories = async (categories) => {
-//     const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
 
-//     try {
-//         const response = await axios.post(`${BASE_URL}/api/categories`, {
-//             categories: categories,
-//             idToken: idToken
-//         });
-//         return response.data;
-//     } catch (error) {
-//         console.error(error)
-//     }
-
-// }
 

@@ -1,9 +1,11 @@
 const sayingModel = require('../models/sayingModel');
-const mongoose = require('mongoose');
+const { getUserCategories } = require('./userController'); // import the function
+const sayingModel = require('../models/sayingModel');
+
 
 
 //GET all sayings
-const getAllSayings = async (req, res) => {
+exports.getAllSayings = async (req, res) => {
     // const sayings = await sayingModel.find({}).sort({ createdAt: -1 });
 
     const sayings = await sayingModel.find({});
@@ -22,7 +24,7 @@ const getAllSayings = async (req, res) => {
 }
 
 //GET random Saying
-const getRandomSaying = async (req, res) => {
+exports.getRandomSaying = async (req, res) => {
     const count = await sayingModel.countDocuments();
     if (count === 0) {
         return res.status(404).send({ error: 'No Counts at All' });
@@ -47,11 +49,26 @@ const getRandomSaying = async (req, res) => {
     }
 }
 
+exports.getSayingByCategories = async (req, res) => {
+    try {
+        const uid = req.uid;
+        // Use getUserCategories to get the user's saved category IDs
+        const categoryIds = await getUserCategories(uid);
+        // Find sayings that match the user's categories
+        const matchingSayings = await sayingModel.find({ category: { $in: categoryIds } });
 
+        // Handle no sayings found
+        if (!matchingSayings.length) {
+            return res.status(404).json({ message: "No sayings found for the selected categories" });
+        }
 
+        // Randomly select a saying
+        const randomSaying = matchingSayings[Math.floor(Math.random() * matchingSayings.length)];
 
-
-module.exports = {
-    getRandomSaying,
-    getAllSayings,
+        // Send the saying as a response
+        res.status(200).json(randomSaying);
+    } catch (error) {
+        console.error("Error occurred in getSayingByCategories:", error);
+        res.status(500).json({ message: "Error getting saying by categories", error: error.message });
+    }
 }

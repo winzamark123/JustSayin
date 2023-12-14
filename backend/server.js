@@ -6,6 +6,7 @@ const serviceAccount = require('../backend/firebase/serviceAccountKey.json');
 const sayingRouter = require('./routes/sayingRoutes.js');
 const categoryRouter = require('./routes/categoryRoutes.js');
 const userRouter = require('./routes/userRoutes.js');
+const dailySayingRouter = require('./routes/dailySayingRoutes.js');
 // require('dotenv').config();
 require('dotenv').config({ path: "../.env.local" });
 
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use('/api/users', userRouter);
 app.use('/api/sayings', sayingRouter);
 app.use('/api/categories', categoryRouter);
+app.use('/api/dailySayings', dailySayingRouter);
 
 //connect to db (mongoose)
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
