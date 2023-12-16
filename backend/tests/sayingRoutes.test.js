@@ -9,13 +9,12 @@ const mongoose = require('mongoose');
 
 app.use(express.json());
 app.get('/api/sayings/random', sayingController.getRandomSaying);
-// app.use('/api/sayings/', sayingController.getAllSayings);
+app.get('/api/sayings/', sayingController.getAllSayings);
 
 
 //Connect to MONGODB
 beforeAll(async () => {
     // Connect to MongoDB Atlas
-    console.log(process.env.MONGO_URI);
     await mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -29,10 +28,8 @@ afterAll(async () => {
 
 
 
-
-//Get Random Saying
-describe('GET /api/sayings/random', () => {
-    it('responds with json', async () => {
+describe('Get Saying Routes', () => {
+    test('should get a random saying', async () => {
         const res = await request(app)
             .get('/api/sayings/random')
             .set('Accept', 'application/json')
@@ -43,25 +40,19 @@ describe('GET /api/sayings/random', () => {
         expect(res.body).toHaveProperty('quote');
         expect(res.body).toHaveProperty('author');
         expect(res.body).toHaveProperty('category');
-
-        // Add more assertions about the response here if needed
     }, 10000);
-});
 
-//Get All Sayings
-describe('GET /api/sayings/', () => {
-    it('responds with json', async () => {
+    test('should get all sayings', async () => {
         const res = await request(app)
-            .get('/api/sayings/random')
+            .get('/api/sayings/')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200);
 
-        expect(res.body).toHaveProperty('_id');
-        expect(res.body).toHaveProperty('quote');
-        expect(res.body).toHaveProperty('author');
-        expect(res.body).toHaveProperty('category');
-
-        // Add more assertions about the response here if needed
+        expect(Array.isArray(res.body)).toBeTruthy();
+        expect(res.body[0]).toHaveProperty('_id');
+        expect(res.body[0]).toHaveProperty('quote');
+        expect(res.body[0]).toHaveProperty('author');
+        expect(res.body[0]).toHaveProperty('category');
     }, 10000);
 });

@@ -12,3 +12,6 @@ backend/firebase/*
 *.pem
 dataProcessing/rawData/quotes.csv
 dataProcessing/sayings.json
+
+# for mongodb memory server testing
+backend/node_modules/.cache/mongodb-memory-server/*
