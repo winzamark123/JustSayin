@@ -8,9 +8,11 @@ const mongoose = require('mongoose');
 
 
 app.use(express.json());
-app.use('/api/sayings/random', sayingController.getRandomSaying);
-app.use('/api/sayings/', sayingController.getAllSayings);
+app.get('/api/sayings/random', sayingController.getRandomSaying);
+// app.use('/api/sayings/', sayingController.getAllSayings);
 
+
+//Connect to MONGODB
 beforeAll(async () => {
     // Connect to MongoDB Atlas
     console.log(process.env.MONGO_URI);
@@ -24,6 +26,9 @@ beforeAll(async () => {
 afterAll(async () => {
     await mongoose.disconnect();
 });
+
+
+
 
 //Get Random Saying
 describe('GET /api/sayings/random', () => {
