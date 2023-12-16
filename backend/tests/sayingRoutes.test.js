@@ -77,7 +77,7 @@ describe('Get Saying Routes', () => {
             .expect('Content-Type', /json/)
             .expect(200);
 
-        console.log(res.body);
+        console.log("GET all sayings:", res.body);
         expect(Array.isArray(res.body)).toBeTruthy();
         expect(res.body[0]).toHaveProperty('_id');
         expect(res.body[0]).toHaveProperty('quote');
