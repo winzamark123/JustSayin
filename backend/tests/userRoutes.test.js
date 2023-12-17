@@ -65,10 +65,12 @@ const insertMockData = async () => {
         savedCategories: categoryIds
     }));
 
-    for (const user of mockUsers) {
-        const newUser = new userModel(user);
-        await newUser.save();
-    }
+    //for more specific 
+    // for (const user of mockUsers) {
+    //     const newUser = new userModel(user);
+    //     await newUser.save();
+    // }
+    await userModel.insertMany(mockUsers);
     // Repeat for other collections/models as necessary
 };
 

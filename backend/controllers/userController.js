@@ -1,8 +1,4 @@
 const userModel = require('../models/userModel');
-// const mongoose = require('mongoose');
-// const admin = require('firebase-admin');
-
-// const BASE_URL = "http://localhost:4000";
 
 exports.createUser = async (req, res) => {
     try {
@@ -68,13 +64,13 @@ exports.getUser = async (req, res) => {
 
 }
 
-// for dailySayingController (Internal)
+// for getRandomSayingByCategories (Internal)
 exports.getUserCategoriesInternal = async (uid) => {
     const user = await userModel.findOne({ firebaseID: uid }).populate('savedCategories');
     if (!user) {
         throw new Error("User not found");
     }
-    return user.savedCategories.map(category => category._id);
+    return user.savedCategories.map(category => category.name);
 };
 
 //for Routes (for HTTP requests)
@@ -91,7 +87,7 @@ exports.getUserCategories = async (req, res) => {
         }
 
         // Respond with the user's saved categories
-        res.status(200).json(user.savedCategories);
+        res.status(200).json(user.savedCategories.map(category => category.name));
     } catch (error) {
         console.error("Error occurred in getUserCategories BACKEND:", error);
         res.status(500).json({ message: "Error getting user categories", error: error.message });

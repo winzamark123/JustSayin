@@ -1,5 +1,5 @@
 const sayingModel = require('../models/sayingModel');
-const { getUserCategories } = require('./userController'); // import the function
+const { getUserCategories, getUserCategoriesInternal } = require('./userController'); // import the function
 
 
 
@@ -49,21 +49,27 @@ exports.getRandomSaying = async (req, res) => {
     }
 }
 
-exports.getSayingByCategories = async (req, res) => {
+
+
+exports.getRandomSayingByCategories = async (req, res) => {
     try {
         const uid = req.uid;
         // Use getUserCategories to get the user's saved category IDs
-        const categoryIds = await getUserCategories(uid);
+        const categoryNames = await getUserCategoriesInternal(uid);
         // Find sayings that match the user's categories
-        const matchingSayings = await sayingModel.find({ category: { $in: categoryIds } });
+        const matchingSayings = await sayingModel.find({ category: { $in: categoryNames } });
 
         // Handle no sayings found
         if (!matchingSayings.length) {
             return res.status(404).json({ message: "No sayings found for the selected categories" });
         }
 
+        const randomIndex = Math.floor(Math.random() * matchingSayings.length);
+        console.log("GET RandomSayingByCategories Controller: Matching Sayings:", matchingSayings);
+        console.log("GET RandomSayingByCategories Controller: Random Index:", randomIndex);
+
         // Randomly select a saying
-        const randomSaying = matchingSayings[Math.floor(Math.random() * matchingSayings.length)];
+        const randomSaying = matchingSayings[randomIndex];
 
         // Send the saying as a response
         res.status(200).json(randomSaying);
