@@ -10,7 +10,7 @@ router.get('/', getAllSayings)
 router.get('/random', getRandomSaying);
 
 //GET randomSaying by Categories
-router.get('/:userID', verifyToken, getRandomSayingByCategories);
+router.get('/:userID', verifyToken, getRandomSaying);
 
 
 

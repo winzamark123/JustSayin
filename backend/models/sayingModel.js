@@ -18,3 +18,5 @@ const sayingSchema = new Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model('Saying', sayingSchema, "collection2");
+
+//testing out wakatime 
