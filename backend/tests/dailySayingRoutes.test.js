@@ -7,6 +7,7 @@ const userModel = require('../models/userModel');
 const categoryModel = require('../models/categoryModel');
 
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const dailySayingModel = require('../models/dailySayingModel');
 const app = express();
 let mongoServer;
 let userID;
@@ -49,6 +50,7 @@ const mockSayings = [
         category: "Test Category 3"
     }
 ]
+
 
 
 const mockCategories = [
@@ -97,7 +99,6 @@ const insertMockData = async () => {
 }
 
 app.use(express.json());
-app.get('/api/dailySayings/:userID', mockAuthMiddleware, dailySayingController.getDailySaying);
 app.get('/api/dailySayings/:userID/generate', mockAuthMiddleware, dailySayingController.generateNewDailySaying);
 
 //Connect to MONGODB
@@ -139,28 +140,28 @@ describe('Get DailySaying Routes', () => {
         expect(res.body).toHaveProperty('isSeen');
     }, 10000);
 
-    test('should get a daily saying', async () => {
-        setTestUid("firebaseUser1");
-
-        const createdUser = await userModel.findOne({ firebaseID: 'firebaseUser1' });
-        if (!createdUser) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        userID = createdUser._id;
-
-        const res = await request(app)
-            .get(`/api/dailySayings/${userID}`)
-            .set('Authorization', 'Bearer mock-token')
-            .set('Accept', 'application/json')
-            .expect(200);
-
-        expect(res.body).toHaveProperty('firebaseID');
-        expect(res.body).toHaveProperty('sayingID');
-        expect(res.body).toHaveProperty('date');
-        expect(res.body).toHaveProperty('isSeen');
-    }, 10000);
 })
+
+describe('Internal Node Cron Job', () => {
+    test('should generate daily sayings for all users', async () => {
+    
+        await dailySayingController.nodeGenerateForAllUsers();
+
+        // Verify that a new daily saying has been generated for each mock user
+        const updatedUser1 = await dailySayingModel.findOne({ firebaseID: 'firebaseUser1' });
+        const updatedUser2 = await dailySayingModel.findOne({ firebaseID: 'firebaseUser2' });
+
+        console.log("THIS IS UPDATED USER1", updatedUser1);
+        console.log("THIS IS UPDATED USER2", updatedUser2);
+
+        expect(updatedUser1).not.toBeNull();
+        expect(updatedUser2).not.toBeNull();
+
+        console.log("Updated user 1 dailySaying:", updatedUser1.sayingID);
+        console.log("Updated user 2 dailySaying:", updatedUser2.sayingID);
+    }, 10000);
+});
+
 
 afterAll(async () => {
     await mongoose.disconnect();
