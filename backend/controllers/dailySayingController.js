@@ -15,11 +15,12 @@ exports.generateNewDailySaying = async (req, res) => {
         let randomSayingByCategories = await sayingController.getRandomSayingByCategoriesInternal(uid);
         let newDailySaying = new dailySayingModel({
             firebaseID: uid,
-            sayingID: randomSayingByCategories,
+            sayingID: randomSayingByCategories._id,
+            quote: randomSayingByCategories.quote,
             date: today,
             isSeen: true //default to true
         });
-        console.log("THIS IS NEW DAILY SAYING", newDailySaying);
+        // console.log("THIS IS NEW DAILY SAYING", newDailySaying);
 
         await newDailySaying.save();
         return res.status(201).json(newDailySaying);
@@ -62,12 +63,13 @@ exports.nodeGenerateForAllUsers = async () => {
     try {
         //get all users
         const users = await userModel.find();
-        console.log("THIS IS USERS", users);
+        // console.log("THIS IS USERS", users);
 
-        const promises = users.map(user => this.nodeGenerateNewDailySaying(user._id));
+        const promises = users.map(user => {
+            return this.nodeGenerateNewDailySaying(user.firebaseID)
+        });
+
         await Promise.all(promises);
-
-        console.log("Generated new daily sayings for all users")
 
     } catch (error) {
         console.error("Error occurred in generateForAllUsers BACKEND:", error);
@@ -77,6 +79,7 @@ exports.nodeGenerateForAllUsers = async () => {
 
 exports.nodeGenerateNewDailySaying = async (uid) => {
     try {
+        // console.log("UserID", uid);
         const today = moment().format('YYYY-MM-DD');
         const existingSaying = await dailySayingModel.findOne({ firebaseID: uid, date: today });
 
@@ -87,13 +90,15 @@ exports.nodeGenerateNewDailySaying = async (uid) => {
 
         //new saying
         let randomSayingByCategories = await sayingController.getRandomSayingByCategoriesInternal(uid);
+        console.log("THIS IS RANDOM SAYING BY CATEGORIES", randomSayingByCategories);
         let newDailySaying = new dailySayingModel({
             firebaseID: uid,
-            sayingID: randomSayingByCategories,
+            sayingID: randomSayingByCategories._id,
+            quote: randomSayingByCategories.quote,
             date: today,
             isSeen: true //default to true
         });
-        console.log("THIS IS NEW DAILY SAYING", newDailySaying);
+        // console.log("THIS IS NEW DAILY SAYING", newDailySaying);
 
         await newDailySaying.save();
         return newDailySaying;

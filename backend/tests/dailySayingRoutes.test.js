@@ -70,14 +70,14 @@ let mockUsers = [
         firebaseID: 'firebaseUser1',
         username: 'TestUser1',
         savedSayings: [],
-        savedCategories: [],
+        savedCategories: ["Test Category 1", "Test Category 2", "Test Category 3"],
         friends: []
     },
     {
         firebaseID: 'firebaseUser2',
         username: 'TestUser2',
         savedSayings: [],
-        savedCategories: [],
+        savedCategories: ["Test Category 1"],
         friends: []
     },
 ]
@@ -87,10 +87,11 @@ const insertMockData = async () => {
     const insertedCategories = await categoryModel.insertMany(mockCategories);
     const categoryIds = insertedCategories.map((category) => category._id);
 
-    mockUsers = mockUsers.map(user => ({
-        ...user,
-        savedCategories: categoryIds
-    }));
+    //Different Categories for each user
+    mockUsers[0].savedCategories = [categoryIds[0], categoryIds[1], categoryIds[2]];
+    mockUsers[1].savedCategories = [categoryIds[0]];
+
+
 
     await userModel.insertMany(mockUsers);
     await sayingModel.insertMany(mockSayings);
@@ -144,21 +145,25 @@ describe('Get DailySaying Routes', () => {
 
 describe('Internal Node Cron Job', () => {
     test('should generate daily sayings for all users', async () => {
-    
+        let user1 = await userModel.findOne({ firebaseID: 'firebaseUser1' });
+        let user2 = await userModel.findOne({ firebaseID: 'firebaseUser2' });
+
+        console.log("THIS IS USER1", user1);
+        console.log("THIS IS USER2", user2);
         await dailySayingController.nodeGenerateForAllUsers();
 
         // Verify that a new daily saying has been generated for each mock user
         const updatedUser1 = await dailySayingModel.findOne({ firebaseID: 'firebaseUser1' });
         const updatedUser2 = await dailySayingModel.findOne({ firebaseID: 'firebaseUser2' });
 
-        console.log("THIS IS UPDATED USER1", updatedUser1);
-        console.log("THIS IS UPDATED USER2", updatedUser2);
+        // console.log("THIS IS UPDATED USER1", updatedUser1);
+        // console.log("THIS IS UPDATED USER2", updatedUser2);
 
         expect(updatedUser1).not.toBeNull();
         expect(updatedUser2).not.toBeNull();
 
-        console.log("Updated user 1 dailySaying:", updatedUser1.sayingID);
-        console.log("Updated user 2 dailySaying:", updatedUser2.sayingID);
+        console.log("Updated user 1 dailySaying:", updatedUser1.quote);
+        console.log("Updated user 2 dailySaying:", updatedUser2.quote);
     }, 10000);
 });
 

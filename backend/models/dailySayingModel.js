@@ -12,6 +12,10 @@ const dailySayingSchema = new Schema({
         ref: 'Saying',
         required: true,
     },
+    quote: {
+        type: String,
+        required: true,
+    },
     date: {
         type: Date,
         required: true,
