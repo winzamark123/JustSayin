@@ -2,29 +2,26 @@ const dailySayingModel = require('../models/dailySayingModel');
 const sayingModel = require('../models/sayingModel');
 const userModel = require('../models/userModel');
 const moment = require('moment');
+const sayingController = require('./sayingController');
+const { response } = require('express');
 
 exports.generateNewDailySaying = async (req, res) => {
     try {
         const uid = req.uid;
         const today = moment().format('YYYY-MM-DD');
 
-        //check if theres already a daily saying for today
-        let dailySaying = await dailySayingModel.findOne({
+        //new saying
+        let randomSayingByCategories = await sayingController.getRandomSayingByCategoriesInternal(uid);
+        let newDailySaying = new dailySayingModel({
             firebaseID: uid,
-            date: today
-        });
-
-        if (dailySaying) {
-            return res.status(409).json({ message: "Daily saying already exists for today" });
-        }
-
-        dailySaying = new dailySayingModel({
-            firebaseID: uid,
+            sayingID: randomSayingByCategories,
             date: today,
-            isSeen: false
+            isSeen: true //default to true
         });
+        console.log("THIS IS NEW DAILY SAYING", newDailySaying);
 
-
+        await newDailySaying.save();
+        return res.status(201).json(newDailySaying);
 
     } catch (error) {
         console.error("Error occurred in generateNewDailySaying BACKEND:", error);
@@ -32,6 +29,7 @@ exports.generateNewDailySaying = async (req, res) => {
 
     }
 }
+
 exports.getDailySaying = async (req, res) => {
     try {
         const uid = req.uid;
@@ -43,10 +41,12 @@ exports.getDailySaying = async (req, res) => {
             date: today
         });
 
+        //if theres no saying for today, generate a new one
         if (!dailySaying) {
-            return res.status(404).json({ message: "Daily saying not found" });
+            return this.generateNewDailySaying(req, res);
         }
 
+        //if the daily saying has already been seen, return it
         return res.status(200).json({ message: "Daily saying found", dailySaying });
 
 

@@ -9,6 +9,7 @@ const userRouter = require('./routes/userRoutes.js');
 const dailySayingRouter = require('./routes/dailySayingRoutes.js');
 // require('dotenv').config();
 require('dotenv').config({ path: "../.env.local" });
+const cron = require('node-cron');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -30,6 +31,10 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         console.log('Connection successful to database:', mongoose.connection.db.databaseName);
         app.listen(process.env.PORT, () => {
             console.log(`Server is running on port ${process.env.PORT}`);
+        });
+
+        cron.schedule('0 0 * * *', async () => {
+            console.log("Running the daily saying generation task");
         });
     })
     .catch((err) => {

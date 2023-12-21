@@ -1,5 +1,5 @@
 const express = require('express');
-const { getRandomSaying, postSaying, getAllSayings, getSayingByID } = require('../controllers/sayingController');
+const { getRandomSaying, getAllSayings, getRandomSayingByCategories } = require('../controllers/sayingController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.get('/', getAllSayings)
 router.get('/random', getRandomSaying);
 
 //GET randomSaying by Categories
-router.get('/:userID', verifyToken, getRandomSaying);
+router.get('/:userID', verifyToken, getRandomSayingByCategories);
 
 
 

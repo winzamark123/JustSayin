@@ -42,15 +42,30 @@ exports.getRandomSaying = async (req, res) => {
             return res.status(404).send('No sayings found');
         }
 
-        res.json(randomSaying);
+        res.status(200).json(randomSaying);
 
     } catch (error) {
         res.status(500).send('Error occurred: ' + error.message);
     }
 }
 
+exports.getRandomSayingByCategoriesInternal = async (uid) => {
+    try {
+        const categoryNames = await getUserCategoriesInternal(uid);
+        const matchingSayings = await sayingModel.find({ category: { $in: categoryNames } });
 
+        if (!matchingSayings.length) {
+            throw new Error("GETRANDOMSAYINGBYCATEGORIES INTERNAL: No sayings found for the selected categories");
+        }
 
+        const randomIndex = Math.floor(Math.random() * matchingSayings.length);
+        const randomSaying = matchingSayings[randomIndex];
+
+        return randomSaying;
+    } catch (error) {
+        return error;
+    }
+}
 exports.getRandomSayingByCategories = async (req, res) => {
     try {
         const uid = req.uid;
