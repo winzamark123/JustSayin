@@ -46,9 +46,9 @@ export default function Home() {
                     <View style={homeMain.container}>
                         <Text style={homeMain.text}>Quote of the Day</Text>
                         <View style={homeMain.quoteBox}>
-                            <Text style={homeMain.dailySaying}>{dailySaying.quote}</Text>
-                            <Text style={homeMain.dailySaying}>{dailySaying.author}</Text>
-                            <Text style={homeMain.dailySaying}>{dailySaying.category}</Text>
+                            <Text style={dailySayingStyles.quote}>{dailySaying.quote}</Text>
+                            <Text style={dailySayingStyles.author}>{dailySaying.author}</Text>
+                            <Text style={dailySayingStyles.category}>{dailySaying.category}</Text>
                         </View>
                     </View>
                     <Text>Home Page - UserID: {user.firebaseID}</Text>
@@ -64,6 +64,35 @@ export default function Home() {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+const dailySayingStyles = StyleSheet.create({
+    quoteBox: {
+        height: 233,
+        width: 370,
+        backgroundColor: 'red',
+        borderRadius: 11,
+
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    quote: {
+        borderWidth: 1,
+        borderColor: 'black',
+        alignSelf: 'center',
+        justifySelf: 'center',
+        color: "white",
+
+    },
+    author: {
+        color: "white",
+    },
+    category: {
+        color: "white",
+
+    }
+
+});
 const savedQuotes = StyleSheet.create({
     container: {
         borderWidth: 1,
@@ -73,9 +102,6 @@ const savedQuotes = StyleSheet.create({
     },
 });
 const homeMain = StyleSheet.create({
-    dailySaying: {
-
-    },
     container: {
         borderWidth: 1,
         borderColor: colorPalette.mainColor,
