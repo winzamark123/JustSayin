@@ -17,6 +17,8 @@ exports.generateNewDailySaying = async (req, res) => {
             firebaseID: uid,
             sayingID: randomSayingByCategories._id,
             quote: randomSayingByCategories.quote,
+            author: randomSayingByCategories.author,
+            category: randomSayingByCategories.category,
             date: today,
             isSeen: true //default to true
         });
@@ -34,29 +36,30 @@ exports.generateNewDailySaying = async (req, res) => {
 
 
 exports.getDailySaying = async (req, res) => {
-    // try {
-    //     const uid = req.uid;
-    //     const today = moment().format('YYYY-MM-DD');
+    try {
+        const uid = req.uid;
+        const today = moment().format('YYYY-MM-DD');
 
-    //     // Find the daily saying for this user for today
-    //     const dailySaying = await dailySayingModel.findOne({
-    //         firebaseID: uid,
-    //         date: today
-    //     });
+        // Find the daily saying for this user for today
+        const dailySaying = await dailySayingModel.findOne({
+            firebaseID: uid,
+            date: today
+        });
 
-    //     //if theres no saying for today, generate a new one
-    //     if (!dailySaying) {
-    //         return this.generateNewDailySaying(req, res);
-    //     }
+        //if theres no saying for today, generate a new one
+        if (!dailySaying) {
+            return this.generateNewDailySaying(req, res);
+        }
 
-    //     //if the daily saying has already been seen, return it
-    //     return res.status(200).json({ message: "Daily saying found", dailySaying });
+        //if the daily saying has already been seen, return it
+        console.log("THIS IS DAILY SAYING", dailySaying);
+        return res.status(200).json(dailySaying);
 
 
-    // } catch (error) {
-    //     console.error("Error occurred in getDailySaying BACKEND:", error);
-    //     res.status(500).json({ message: "Error getting daily saying", error: error.message });
-    // }
+    } catch (error) {
+        console.error("Error occurred in getDailySaying BACKEND:", error);
+        res.status(500).json({ message: "Error getting daily saying", error: error.message });
+    }
 }
 
 exports.nodeGenerateForAllUsers = async () => {
@@ -95,6 +98,8 @@ exports.nodeGenerateNewDailySaying = async (uid) => {
             firebaseID: uid,
             sayingID: randomSayingByCategories._id,
             quote: randomSayingByCategories.quote,
+            author: randomSayingByCategories.author,
+            category: randomSayingByCategories.category,
             date: today,
             isSeen: true //default to true
         });

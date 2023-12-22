@@ -101,6 +101,7 @@ const insertMockData = async () => {
 
 app.use(express.json());
 app.get('/api/dailySayings/:userID/generate', mockAuthMiddleware, dailySayingController.generateNewDailySaying);
+app.get('/api/dailySayings/:userID', mockAuthMiddleware, dailySayingController.getDailySaying);
 
 //Connect to MONGODB
 beforeAll(async () => {
@@ -137,8 +138,37 @@ describe('Get DailySaying Routes', () => {
 
         expect(res.body).toHaveProperty('firebaseID');
         expect(res.body).toHaveProperty('sayingID');
+        expect(res.body).toHaveProperty('author');
+        expect(res.body).toHaveProperty('category');
+        expect(res.body).toHaveProperty('quote');
         expect(res.body).toHaveProperty('date');
         expect(res.body).toHaveProperty('isSeen');
+    }, 10000);
+
+    test('should get a daily saying', async () => {
+        setTestUid("firebaseUser1");
+
+        const createdUser = await userModel.findOne({ firebaseID: 'firebaseUser1' });
+        if (!createdUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        userID = createdUser._id;
+
+        const res = await request(app)
+            .get(`/api/dailySayings/${userID}`)
+            .set('Authorization', 'Bearer mock-token')
+            .set('Accept', 'application/json')
+            .expect(200);
+
+        expect(res.body).toHaveProperty('firebaseID');
+        expect(res.body).toHaveProperty('sayingID');
+        expect(res.body).toHaveProperty('quote');
+        expect(res.body).toHaveProperty('author');
+        expect(res.body).toHaveProperty('category');
+        expect(res.body).toHaveProperty('date');
+        expect(res.body).toHaveProperty('isSeen');
+        // console.log("THIS IS RES BODY", res.body);
     }, 10000);
 
 })
@@ -148,8 +178,8 @@ describe('Internal Node Cron Job', () => {
         let user1 = await userModel.findOne({ firebaseID: 'firebaseUser1' });
         let user2 = await userModel.findOne({ firebaseID: 'firebaseUser2' });
 
-        console.log("THIS IS USER1", user1);
-        console.log("THIS IS USER2", user2);
+        // console.log("THIS IS USER1", user1);
+        // console.log("THIS IS USER2", user2);
         await dailySayingController.nodeGenerateForAllUsers();
 
         // Verify that a new daily saying has been generated for each mock user
@@ -162,8 +192,8 @@ describe('Internal Node Cron Job', () => {
         expect(updatedUser1).not.toBeNull();
         expect(updatedUser2).not.toBeNull();
 
-        console.log("Updated user 1 dailySaying:", updatedUser1.quote);
-        console.log("Updated user 2 dailySaying:", updatedUser2.quote);
+        // console.log("Updated user 1 dailySaying:", updatedUser1.quote);
+        // console.log("Updated user 2 dailySaying:", updatedUser2.quote);
     }, 10000);
 });
 

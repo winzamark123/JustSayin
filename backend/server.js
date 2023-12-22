@@ -7,6 +7,8 @@ const sayingRouter = require('./routes/sayingRoutes.js');
 const categoryRouter = require('./routes/categoryRoutes.js');
 const userRouter = require('./routes/userRoutes.js');
 const dailySayingRouter = require('./routes/dailySayingRoutes.js');
+
+const dailySayingController = require('./controllers/dailySayingController.js');
 // require('dotenv').config();
 require('dotenv').config({ path: "../.env.local" });
 const cron = require('node-cron');
@@ -32,9 +34,13 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         app.listen(process.env.PORT, () => {
             console.log(`Server is running on port ${process.env.PORT}`);
         });
+        dailySayingController.nodeGenerateForAllUsers();
+        console.log("Running the daily saying generation task");
+
 
         cron.schedule('0 0 * * *', async () => {
             console.log("Running the daily saying generation task");
+            dailySayingController.nodeGenerateForAllUsers();
         });
     })
     .catch((err) => {

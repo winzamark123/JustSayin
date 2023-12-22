@@ -5,18 +5,32 @@ import tempUserIMG from '../assets/tempUser.png';
 import { colorPalette } from "../components/theme";
 import NavBar from "../components/navBar";
 import { useUser } from "../context/UserContext";
+import { fetchDailySayingFromBackend } from "../api/dailySayingAPI";
 
 
 export default function Home() {
     const { user } = useUser();
+    const [dailySaying, setDailySaying] = useState({});
 
+    const loadDailySaying = async () => {
+        try {
+            const fetchedDailySaying = await fetchDailySayingFromBackend(user.firebaseID);
+            setDailySaying(fetchedDailySaying);
+        } catch (error) {
+            console.log("Error loading daily saying", error);
+        }
+    }
 
     useEffect(() => {
         if (!user) {
             console.log("User is null");
             // Optionally, handle the situation when user data is not available
         }
+
+        loadDailySaying();
     }, [user]);
+
+
 
     return (
         <SafeAreaView style={homeStyles.safeArea}>
@@ -32,7 +46,9 @@ export default function Home() {
                     <View style={homeMain.container}>
                         <Text style={homeMain.text}>Quote of the Day</Text>
                         <View style={homeMain.quoteBox}>
-
+                            <Text style={homeMain.dailySaying}>{dailySaying.quote}</Text>
+                            <Text style={homeMain.dailySaying}>{dailySaying.author}</Text>
+                            <Text style={homeMain.dailySaying}>{dailySaying.category}</Text>
                         </View>
                     </View>
                     <Text>Home Page - UserID: {user.firebaseID}</Text>
@@ -57,6 +73,9 @@ const savedQuotes = StyleSheet.create({
     },
 });
 const homeMain = StyleSheet.create({
+    dailySaying: {
+
+    },
     container: {
         borderWidth: 1,
         borderColor: colorPalette.mainColor,
