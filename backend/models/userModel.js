@@ -12,22 +12,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    savedSayings: [
-        {
-            sayingID: {
-                type: Schema.Types.ObjectId,
-                ref: 'Saying'
-            },
-            quote: {
-                type: String,
-                required: true,
-            },
-            author: {
-                type: String,
-                required: true,
-            },
-        }
-    ],
+    savedSayings: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Saying'
+    }],
     savedCategories: [{
         type: Schema.Types.ObjectId,
         ref: 'Category'
