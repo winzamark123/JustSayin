@@ -49,6 +49,30 @@ exports.saveUserCategories = async (req, res) => {
     }
 }
 
+exports.saveUserSaying = async (req, res) => {
+    const uid = req.uid;
+    const { sayingID, quote, author } = req.body;
+
+    try {
+        const user = await userModel.findOne({ firebaseID: uid }); // Find the user by userID
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.savedSayings.push({ sayingID, quote, author });
+        await user.save()// Add the new saying to the user
+
+        res.status(200).json({ message: "Saying saved successfully", user });
+
+
+    } catch (error) {
+        console.error("Error occurred in saveUserSaying:", error);
+        res.status(500).json({ message: "Error saving user saying", error: error.message });
+    }
+}
+
+
 exports.getUser = async (req, res) => {
     const uid = req.uid;
     const user = await userModel.findOne({ firebaseID: uid });
@@ -94,3 +118,4 @@ exports.getUserCategories = async (req, res) => {
     }
 
 }
+

@@ -138,11 +138,11 @@ describe('Get DailySaying Routes', () => {
 
         expect(res.body).toHaveProperty('firebaseID');
         expect(res.body).toHaveProperty('sayingID');
-        expect(res.body).toHaveProperty('author');
-        expect(res.body).toHaveProperty('category');
-        expect(res.body).toHaveProperty('quote');
         expect(res.body).toHaveProperty('date');
         expect(res.body).toHaveProperty('isSeen');
+        // console.log("THIS IS RES BODY", res.body);
+
+
     }, 10000);
 
     test('should get a daily saying', async () => {
@@ -163,9 +163,6 @@ describe('Get DailySaying Routes', () => {
 
         expect(res.body).toHaveProperty('firebaseID');
         expect(res.body).toHaveProperty('sayingID');
-        expect(res.body).toHaveProperty('quote');
-        expect(res.body).toHaveProperty('author');
-        expect(res.body).toHaveProperty('category');
         expect(res.body).toHaveProperty('date');
         expect(res.body).toHaveProperty('isSeen');
         // console.log("THIS IS RES BODY", res.body);

@@ -27,13 +27,22 @@ const setTestUid = (uid) => {
 
 const mockCategories = [
     {
-        name: 'Test Category 1',
+        name: 'Test1',
     },
     {
-        name: 'Test Category 2',
+        name: 'Test2',
     },
     {
-        name: 'Test Category 3',
+        name: 'Test3',
+    },
+    {
+        name: 'TestA',
+    },
+    {
+        name: 'TestB',
+    },
+    {
+        name: 'TestC',
     }
 ]
 let mockUsers = [
@@ -54,15 +63,37 @@ let mockUsers = [
     // ...additional mock users
 ];
 
+let mockSayings = [
+    {
+        quote: "Test1 Quote 1",
+        author: "Test1 Author 1",
+        category: "Test1"
+    },
+    {
+        quote: "Test2 Quote 2",
+        author: "Test2 Author 2",
+        category: "Test2"
+    },
+    {
+        quote: "Test3 Quote 3",
+        author: "Test3 Author 3",
+        category: "Test3"
+    }
+]
+
 const insertMockData = async () => {
     //inserting mock categories and their IDs
     const insertedCategories = await categoryModel.insertMany(mockCategories);
-    const categoryIds = insertedCategories.map((category) => category._id);
+
+    // Filter for specific categories (Test1, Test2, Test3)
+    const filteredCategoryIds = insertedCategories
+        .filter(category => ['Test1', 'Test2', 'Test3'].includes(category.name))
+        .map(category => category._id);
 
     // Update mock users with category IDs
     mockUsers = mockUsers.map(user => ({
         ...user,
-        savedCategories: categoryIds
+        savedCategories: filteredCategoryIds
     }));
 
     //for more specific 
@@ -77,6 +108,7 @@ const insertMockData = async () => {
 app.use(express.json());
 app.post('/api/users/', mockAuthMiddleware, userController.createUser);
 app.post('/api/users/:userID/categories', mockAuthMiddleware, userController.saveUserCategories);
+app.post('/api/users/:userID/savedSayings', mockAuthMiddleware, userController.saveUserSaying);
 app.get('/api/users/:userID', mockAuthMiddleware, userController.getUser);
 app.get('/api/users/:userID/categories', mockAuthMiddleware, userController.getUserCategories);
 
@@ -149,7 +181,7 @@ describe('Get User Routes', () => {
         expect(res.headers['content-type']).toMatch(/json/);
         expect(res.body).toBeInstanceOf(Array);
 
-        console.log("GET user categories:", res.body);
+        // console.log("GET user categories:", res.body);
         // expect(res.body[0]).toHaveProperty();
 
     }, 10000);
@@ -170,8 +202,38 @@ describe('Post User Routes', () => {
         expect(res.statusCode).toEqual(201);
 
 
-        const createdUser = await userModel.findOne({ firebaseID: 'firebaseUser3' });
-        console.log("POST new User:", createdUser);
+        // const createdUser = await userModel.findOne({ firebaseID: 'firebaseUser3' });
+        // console.log("POST new User:", createdUser);
+    });
+    test('should save user categories', async () => {
+        setTestUid('firebaseUser1');
+        const createdUser = await userModel.findOne({ firebaseID: 'firebaseUser1' });
+        if (!createdUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        userID = createdUser._id;
+
+        testCategoryA = await categoryModel.findOne({ name: 'TestA' });
+        testCategoryB = await categoryModel.findOne({ name: 'TestB' });
+
+        const res = await request(app)
+            .post(`/api/users/${userID}/categories`)
+            .set('Authorization', `Bearer mock-token`)
+            .send({
+                categories: [testCategoryA._id, testCategoryB._id]
+            });
+
+        console.log("POST user categories:", res.body);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty('message', 'Categories updated successfully');
+
+        expect(res.body.user.savedCategories).toBeInstanceOf(Array);
+        expect(res.body.user.savedCategories).toHaveLength(2);
+
+    });
+    test('should save user saying', async () => {
+
     });
 });
 

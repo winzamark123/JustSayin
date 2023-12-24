@@ -1,16 +1,20 @@
 import React from "react";
 import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
 import { useEffect, useState } from "react";
-import tempUserIMG from '../assets/tempUser.png';
-import { colorPalette } from "../components/theme";
-import NavBar from "../components/navBar";
+
 import { useUser } from "../context/UserContext";
 import { fetchDailySayingFromBackend } from "../api/dailySayingAPI";
+
+import { colorPalette, fontFamily } from "../components/theme";
+import NavBar from "../components/navBar";
+import tempUserIMG from '../assets/tempUser.png';
+
 
 
 export default function Home() {
     const { user } = useUser();
     const [dailySaying, setDailySaying] = useState({});
+
 
     const loadDailySaying = async () => {
         try {
@@ -45,16 +49,19 @@ export default function Home() {
                     </View>
                     <View style={homeMain.container}>
                         <Text style={homeMain.text}>Quote of the Day</Text>
-                        <View style={homeMain.quoteBox}>
-                            <Text style={dailySayingStyles.quote}>{dailySaying.quote}</Text>
+                        <View style={dailySayingStyles.quoteBox}>
+                            <Text
+                                adjustsFontSizeToFit
+                                numberOfLines={5}
+                                style={dailySayingStyles.quote}>
+                                {dailySaying.quote}
+                            </Text>
                             <Text style={dailySayingStyles.author}>{dailySaying.author}</Text>
                             <Text style={dailySayingStyles.category}>{dailySaying.category}</Text>
                         </View>
                     </View>
-                    <Text>Home Page - UserID: {user.firebaseID}</Text>
+                    {/* <Text>Home Page - UserID: {user.firebaseID}</Text> */}
                     <View style={savedQuotes.container}></View>
-                    {/* <Text>{JSON.stringify(user, null, 2)}</Text> */}
-                    {/* <Text>{user.username}</Text> */}
                 </View>
                 <NavBar />
             </View>
@@ -81,14 +88,27 @@ const dailySayingStyles = StyleSheet.create({
         borderColor: 'black',
         alignSelf: 'center',
         justifySelf: 'center',
+        textAlign: 'center',
         color: "white",
+        fontSize: 20,
+        fontFamily: fontFamily.Poppins,
 
     },
     author: {
+        alignSelf: 'flex-end',
+        justifySelf: 'center',
+        textAlign: 'center',
         color: "white",
+        fontSize: 20,
+        fontFamily: fontFamily.Poppins,
     },
     category: {
+        alignSelf: 'center',
+        justifySelf: 'center',
+        textAlign: 'center',
         color: "white",
+        fontSize: 20,
+        fontFamily: fontFamily.Poppins,
 
     }
 
@@ -108,15 +128,12 @@ const homeMain = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    quoteBox: {
-        height: 233,
-        width: 370,
-        backgroundColor: 'red',
-        borderRadius: 11,
-
-    },
     text: {
         alignSelf: 'flex-start',
+        marginLeft: 30,
+        fontSize: 24,
+        fontFamily: fontFamily.Poppins,
+        color: colorPalette.mainColor,
     },
 });
 const homeTop = StyleSheet.create({

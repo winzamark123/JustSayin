@@ -16,15 +16,14 @@ exports.generateNewDailySaying = async (req, res) => {
         let newDailySaying = new dailySayingModel({
             firebaseID: uid,
             sayingID: randomSayingByCategories._id,
-            quote: randomSayingByCategories.quote,
-            author: randomSayingByCategories.author,
-            category: randomSayingByCategories.category,
             date: today,
             isSeen: true //default to true
         });
         // console.log("THIS IS NEW DAILY SAYING", newDailySaying);
 
         await newDailySaying.save();
+        await newDailySaying.populate('sayingID');
+
         return res.status(201).json(newDailySaying);
 
     } catch (error) {
@@ -52,7 +51,7 @@ exports.getDailySaying = async (req, res) => {
         }
 
         //if the daily saying has already been seen, return it
-        console.log("THIS IS DAILY SAYING", dailySaying);
+        // console.log("THIS IS DAILY SAYING", dailySaying);
         return res.status(200).json(dailySaying);
 
 
@@ -93,19 +92,18 @@ exports.nodeGenerateNewDailySaying = async (uid) => {
 
         //new saying
         let randomSayingByCategories = await sayingController.getRandomSayingByCategoriesInternal(uid);
-        console.log("THIS IS RANDOM SAYING BY CATEGORIES", randomSayingByCategories);
+        // console.log("THIS IS RANDOM SAYING BY CATEGORIES", randomSayingByCategories);
         let newDailySaying = new dailySayingModel({
             firebaseID: uid,
             sayingID: randomSayingByCategories._id,
-            quote: randomSayingByCategories.quote,
-            author: randomSayingByCategories.author,
-            category: randomSayingByCategories.category,
             date: today,
             isSeen: true //default to true
         });
         // console.log("THIS IS NEW DAILY SAYING", newDailySaying);
 
         await newDailySaying.save();
+
+        await newDailySaying.populate('sayingID');
         return newDailySaying;
 
 
