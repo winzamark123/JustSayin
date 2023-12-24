@@ -20,6 +20,7 @@ export default function Home() {
         try {
             const fetchedDailySaying = await fetchDailySayingFromBackend(user.firebaseID);
             setDailySaying(fetchedDailySaying);
+            console.log("Daily Saying Loaded", dailySaying)
         } catch (error) {
             console.log("Error loading daily saying", error);
         }
@@ -52,7 +53,7 @@ export default function Home() {
                         <View style={dailySayingStyles.quoteBox}>
                             <Text
                                 adjustsFontSizeToFit
-                                numberOfLines={5}
+                                numberOfLines={7}
                                 style={dailySayingStyles.quote}>
                                 {dailySaying.quote}
                             </Text>
