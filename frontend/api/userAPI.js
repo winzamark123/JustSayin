@@ -53,6 +53,25 @@ export const fetchUserFromBackend = async (userID) => {
     }
 }
 
+export const saveUserSayingToBackend = async (userID, sayingID) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+        console.log("ID TOKEN: ", idToken);
+
+        const response = await axios.post(`${BASE_URL}/api/users/${userID}/savedSayings`, { sayingID }, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+
+        console.log("UserAPI: User Saying Saved to Backend:", response.data);
+        return response.data;
+
+    } catch (error) {
+        console.log("UserAPI: Error Saving User Saying to Backend", error);
+    }
+}
+
 
 
 

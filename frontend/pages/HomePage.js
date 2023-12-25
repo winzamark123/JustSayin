@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useUser } from "../context/UserContext";
 import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../api/dailySayingAPI";
+import { saveUserSayingToBackend } from "../api/userAPI";
 
 import { colorPalette, fontFamily } from "../components/theme";
 import NavBar from "../components/navBar";
@@ -37,6 +38,16 @@ export default function Home() {
         }
     }
 
+    const saveDaily = async () => {
+        console.log("Saving Daily Saying: ", user.firebaseID);
+        try {
+            const savedDailySaying = await saveUserSayingToBackend(user.firebaseID, dailySaying.sayingID._id);
+            console.log("Daily Saying Saved", savedDailySaying)
+        } catch (error) {
+            console.log("Error saving daily saying", error);
+        }
+    }
+
     useEffect(() => {
         if (!user) {
             console.log("User is null");
@@ -48,9 +59,6 @@ export default function Home() {
 
 
 
-    const saveDaily = async () => {
-
-    }
     return (
         <SafeAreaView style={homeStyles.safeArea}>
             <View style={homeStyles.background}>
@@ -76,7 +84,7 @@ export default function Home() {
                         </View>
                     </View>
                     {/* <Text>Home Page - UserID: {user.firebaseID}</Text> */}
-                    <View>
+                    <View style={{ display: "flex", flexDirection: "row", alignItems: "space-between", justifyContent: "space-between" }}>
                         <TouchableOpacity onPress={() => refreshDaily()}>
                             <Text>REFRESH</Text>
                         </TouchableOpacity>

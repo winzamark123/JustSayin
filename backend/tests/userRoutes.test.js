@@ -2,6 +2,7 @@ const request = require('supertest');
 const express = require('express');
 const mongoose = require('mongoose');
 const userController = require('../controllers/userController');
+const sayingModel = require('../models/sayingModel');
 const userModel = require('../models/userModel');
 const categoryModel = require('../models/categoryModel');
 
@@ -102,6 +103,7 @@ const insertMockData = async () => {
     //     await newUser.save();
     // }
     await userModel.insertMany(mockUsers);
+    await sayingModel.insertMany(mockSayings);
     // Repeat for other collections/models as necessary
 };
 
@@ -233,6 +235,28 @@ describe('Post User Routes', () => {
 
     });
     test('should save user saying', async () => {
+        setTestUid('firebaseUser1');
+        const createdUser = await userModel.findOne({ firebaseID: 'firebaseUser1' });
+        if (!createdUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        userID = createdUser._id;
+
+        const testSaying = await sayingModel.findOne({ quote: 'Test1 Quote 1' });
+        console.log("SDAASD", testSaying);
+
+        const res = await request(app)
+            .post(`/api/users/${userID}/savedSayings`)
+            .set('Authorization', `Bearer mock-token`)
+            .send({
+                sayingID: testSaying._id,
+            });
+
+        console.log("POST user saying:", res.body);
+        expect(res.statusCode).toEqual(201);
+        expect(res.body).toHaveProperty('message', 'Saying saved successfully');
+        expect(res.body.user.savedSayings).toBeInstanceOf(Array);
 
     });
 });

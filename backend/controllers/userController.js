@@ -51,7 +51,7 @@ exports.saveUserCategories = async (req, res) => {
 
 exports.saveUserSaying = async (req, res) => {
     const uid = req.uid;
-    const { sayingID, quote, author } = req.body;
+    const { sayingID } = req.body;
 
     try {
         const user = await userModel.findOne({ firebaseID: uid }); // Find the user by userID
@@ -60,16 +60,19 @@ exports.saveUserSaying = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        user.savedSayings.push({ sayingID, quote, author });
+        user.savedSayings.push(sayingID);
         await user.save()// Add the new saying to the user
 
-        res.status(200).json({ message: "Saying saved successfully", user });
+        res.status(201).json({ message: "Saying saved successfully", user });
 
 
     } catch (error) {
         console.error("Error occurred in saveUserSaying:", error);
         res.status(500).json({ message: "Error saving user saying", error: error.message });
     }
+}
+
+exports.getUserSayings = async (req, res) => {
 }
 
 
