@@ -54,8 +54,8 @@ exports.saveUserSaying = async (req, res) => {
     const { sayingID } = req.body;
 
     try {
-        const user = await userModel.findOne({ firebaseID: uid }); // Find the user by userID
 
+        const user = await userModel.findOne({ firebaseID: uid }); // Find the user by userID
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -73,6 +73,20 @@ exports.saveUserSaying = async (req, res) => {
 }
 
 exports.getUserSayings = async (req, res) => {
+    const uid = req.uid;
+
+    try {
+        const user = await userModel.findOne({ firebaseID: uid }).populate('savedSayings'); // Find the user by userID
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        return res.status(200).json(user.savedSayings);
+
+    } catch (error) {
+        console.error("Error occurred in getUserSayings:", error);
+        res.status(500).json({ message: "Error getting user sayings", error: error.message });
+    }
 }
 
 

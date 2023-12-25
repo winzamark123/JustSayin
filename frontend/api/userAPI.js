@@ -72,6 +72,24 @@ export const saveUserSayingToBackend = async (userID, sayingID) => {
     }
 }
 
+export const fetchUserSayingsFromBackend = async (userID) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+        console.log("ID TOKEN: ", idToken);
+
+        const response = await axios.get(`${BASE_URL}/api/users/${userID}/savedSayings`, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+
+        console.log("UserAPI: User Sayings Fetched from Backend:", response.data);
+        return response.data;
+    } catch (error) {
+        console.log("UserAPI: Error Fetching User Sayings from Backend", error);
+    }
+}
+
 
 
 

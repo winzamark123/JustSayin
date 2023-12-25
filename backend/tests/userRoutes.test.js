@@ -113,6 +113,7 @@ app.post('/api/users/:userID/categories', mockAuthMiddleware, userController.sav
 app.post('/api/users/:userID/savedSayings', mockAuthMiddleware, userController.saveUserSaying);
 app.get('/api/users/:userID', mockAuthMiddleware, userController.getUser);
 app.get('/api/users/:userID/categories', mockAuthMiddleware, userController.getUserCategories);
+app.get('/api/users/:userID/savedSayings', mockAuthMiddleware, userController.getUserSayings);
 
 
 //Connect to MONGODB
@@ -133,6 +134,7 @@ beforeAll(async () => {
 });
 
 describe('Get User Routes', () => {
+
     test('should get user details', async () => {
         setTestUid('firebaseUser1');
 
@@ -187,6 +189,27 @@ describe('Get User Routes', () => {
         // expect(res.body[0]).toHaveProperty();
 
     }, 10000);
+
+    test('should get user sayings', async () => {
+        setTestUid('firebaseUser1');
+
+        const createdUser = await userModel.findOne({ firebaseID: 'firebaseUser1' });
+        if (!createdUser) {
+            throw new Error('User not found');
+        }
+
+        userID = createdUser._id.toString();
+        const res = await request(app)
+            .get(`/api/users/${userID}/savedSayings`)
+            .set('Authorization', `Bearer mock-token`)
+            .set('Accept', 'application/json');
+
+        console.log("GET user sayings:", res.body);
+
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toBeInstanceOf(Array);
+
+    }, 10000);
 });
 
 // Test cases
@@ -226,7 +249,7 @@ describe('Post User Routes', () => {
                 categories: [testCategoryA._id, testCategoryB._id]
             });
 
-        console.log("POST user categories:", res.body);
+        // console.log("POST user categories:", res.body);
         expect(res.statusCode).toEqual(200);
         expect(res.body).toHaveProperty('message', 'Categories updated successfully');
 
@@ -244,7 +267,7 @@ describe('Post User Routes', () => {
         userID = createdUser._id;
 
         const testSaying = await sayingModel.findOne({ quote: 'Test1 Quote 1' });
-        console.log("SDAASD", testSaying);
+        // console.log("SDAASD", testSaying);
 
         const res = await request(app)
             .post(`/api/users/${userID}/savedSayings`)
@@ -253,7 +276,7 @@ describe('Post User Routes', () => {
                 sayingID: testSaying._id,
             });
 
-        console.log("POST user saying:", res.body);
+        // console.log("POST user saying:", res.body);
         expect(res.statusCode).toEqual(201);
         expect(res.body).toHaveProperty('message', 'Saying saved successfully');
         expect(res.body.user.savedSayings).toBeInstanceOf(Array);
