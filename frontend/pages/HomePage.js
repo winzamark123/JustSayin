@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
+import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 
 import { useUser } from "../context/UserContext";
@@ -20,7 +20,7 @@ export default function Home() {
         try {
             const fetchedDailySaying = await fetchDailySayingFromBackend(user.firebaseID);
             setDailySaying(fetchedDailySaying);
-            console.log("Daily Saying Loaded", dailySaying)
+            console.log("Daily Saying Loaded", fetchedDailySaying)
         } catch (error) {
             console.log("Error loading daily saying", error);
         }
@@ -35,8 +35,13 @@ export default function Home() {
         loadDailySaying();
     }, [user]);
 
+    const refreshDaily = async () => {
 
+    }
 
+    const saveDaily = async () => {
+
+    }
     return (
         <SafeAreaView style={homeStyles.safeArea}>
             <View style={homeStyles.background}>
@@ -55,13 +60,21 @@ export default function Home() {
                                 adjustsFontSizeToFit
                                 numberOfLines={7}
                                 style={dailySayingStyles.quote}>
-                                {dailySaying.sayingID.quote}
+                                {dailySaying.sayingID ? dailySaying.sayingID.quote : "Loading..."}
                             </Text>
-                            <Text style={dailySayingStyles.author}>{dailySaying.sayingID.author}</Text>
-                            <Text style={dailySayingStyles.category}>{dailySaying.sayingID.category}</Text>
+                            <Text style={dailySayingStyles.author}>{dailySaying.sayingID ? dailySaying.sayingID.author : "Loading..."}</Text>
+                            <Text style={dailySayingStyles.category}>{dailySaying.sayingID ? dailySaying.sayingID.category : "Loading..."}</Text>
                         </View>
                     </View>
                     {/* <Text>Home Page - UserID: {user.firebaseID}</Text> */}
+                    <View>
+                        <TouchableOpacity onPress={() => refreshDaily()}>
+                            <Text>REFRESH</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => saveDaily()}>
+                            <Text>SAVE</Text>
+                        </TouchableOpacity>
+                    </View>
                     <View style={savedQuotes.container}></View>
                 </View>
                 <NavBar />

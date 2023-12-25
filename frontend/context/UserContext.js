@@ -1,5 +1,5 @@
 // UserContext.js
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { fetchUserFromBackend } from '../api/userAPI';
 
 const UserContext = createContext(null);
@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
         try {
             const fetchedUser = await fetchUserFromBackend(userID);
             setUser(fetchedUser);
-            console.log("UserContext: Set User Successful", user.username);
+            console.log("UserContext: Set User Successful", fetchedUser.username);
         } catch (error) {
             console.error("UserContext: Error at fetchUser", error);
         }
