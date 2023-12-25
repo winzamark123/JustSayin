@@ -55,10 +55,10 @@ export default function Home() {
                                 adjustsFontSizeToFit
                                 numberOfLines={7}
                                 style={dailySayingStyles.quote}>
-                                {dailySaying.quote}
+                                {dailySaying.sayingID.quote}
                             </Text>
-                            <Text style={dailySayingStyles.author}>{dailySaying.author}</Text>
-                            <Text style={dailySayingStyles.category}>{dailySaying.category}</Text>
+                            <Text style={dailySayingStyles.author}>{dailySaying.sayingID.author}</Text>
+                            <Text style={dailySayingStyles.category}>{dailySaying.sayingID.category}</Text>
                         </View>
                     </View>
                     {/* <Text>Home Page - UserID: {user.firebaseID}</Text> */}

@@ -6,17 +6,14 @@ const BASE_URL = "http://localhost:4000";
 export const fetchDailySayingFromBackend = async (userID) => {
     try {
         const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
-        console.log("ID TOKEN: ", idToken);
+        // console.log("ID TOKEN: ", idToken);
 
         const response = await axios.get(`${BASE_URL}/api/dailySayings/${userID}`, {
             headers: {
                 Authorization: `Bearer ${idToken}`
             }
         });
-
-        if (response.status === 200) {
-            console.log("Daily Saying Fetched from Backend");
-        }
+        console.log("THIS IS RESPONSE", response.data);
 
         return response.data;
     } catch (error) {

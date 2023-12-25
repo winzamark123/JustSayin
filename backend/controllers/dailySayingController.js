@@ -21,8 +21,8 @@ exports.generateNewDailySaying = async (req, res) => {
         });
         // console.log("THIS IS NEW DAILY SAYING", newDailySaying);
 
-        await newDailySaying.save();
         await newDailySaying.populate('sayingID');
+        await newDailySaying.save();
 
         return res.status(201).json(newDailySaying);
 
@@ -52,6 +52,8 @@ exports.getDailySaying = async (req, res) => {
 
         //if the daily saying has already been seen, return it
         // console.log("THIS IS DAILY SAYING", dailySaying);
+        await dailySaying.populate('sayingID');
+
         return res.status(200).json(dailySaying);
 
 
@@ -61,6 +63,7 @@ exports.getDailySaying = async (req, res) => {
     }
 }
 
+//FOR NODECRON
 exports.nodeGenerateForAllUsers = async () => {
     try {
         //get all users
@@ -101,9 +104,10 @@ exports.nodeGenerateNewDailySaying = async (uid) => {
         });
         // console.log("THIS IS NEW DAILY SAYING", newDailySaying);
 
-        await newDailySaying.save();
 
         await newDailySaying.populate('sayingID');
+        await newDailySaying.save();
+
         return newDailySaying;
 
 
