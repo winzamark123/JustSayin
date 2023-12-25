@@ -42,7 +42,7 @@ export const fetchUserFromBackend = async (userID) => {
         });
 
         if (response.status === 200) {
-            console.log("UserAPI: User Fetched from Backend:", response.data);
+            // console.log("UserAPI: User Fetched from Backend:", response.data);
         }
 
 

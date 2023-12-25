@@ -43,7 +43,7 @@ exports.getDailySaying = async (req, res) => {
         const dailySaying = await dailySayingModel.findOne({
             firebaseID: uid,
             date: today
-        });
+        }).sort({ _id: -1 }).limit(1); //sort from descending order and limit to 1 to GET LATEST 
 
         //if theres no saying for today, generate a new one
         if (!dailySaying) {
@@ -64,6 +64,9 @@ exports.getDailySaying = async (req, res) => {
 }
 
 //FOR NODECRON
+//=======================================================
+//=======================================================
+//=======================================================
 exports.nodeGenerateForAllUsers = async () => {
     try {
         //get all users
@@ -115,3 +118,4 @@ exports.nodeGenerateNewDailySaying = async (uid) => {
         console.error("Error occurred in nodeGenerateSaying BACKEND:", error);
     }
 }
+//=======================================================

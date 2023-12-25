@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpaci
 import { useEffect, useState } from "react";
 
 import { useUser } from "../context/UserContext";
-import { fetchDailySayingFromBackend } from "../api/dailySayingAPI";
+import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../api/dailySayingAPI";
 
 import { colorPalette, fontFamily } from "../components/theme";
 import NavBar from "../components/navBar";
@@ -20,9 +20,20 @@ export default function Home() {
         try {
             const fetchedDailySaying = await fetchDailySayingFromBackend(user.firebaseID);
             setDailySaying(fetchedDailySaying);
-            console.log("Daily Saying Loaded", fetchedDailySaying)
+            // console.log("Daily Saying Loaded", fetchedDailySaying)
         } catch (error) {
             console.log("Error loading daily saying", error);
+        }
+    }
+
+    const refreshDaily = async () => {
+        console.log("Refreshing Daily Saying: ", user.firebaseID);
+        try {
+            const fetchedDailySaying = await refreshDailySayingFromBackend(user.firebaseID);
+            setDailySaying(fetchedDailySaying);
+            // console.log("Daily Saying Loaded", fetchedDailySaying)
+        } catch (error) {
+            console.log("Error refreshing daily saying", error);
         }
     }
 
@@ -35,9 +46,7 @@ export default function Home() {
         loadDailySaying();
     }, [user]);
 
-    const refreshDaily = async () => {
 
-    }
 
     const saveDaily = async () => {
 
