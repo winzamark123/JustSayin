@@ -97,8 +97,8 @@ export default function Home() {
                             <Text>SAVE</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={savedQuotes.container}>
-                        <Text>SAVED QUOTES</Text>
+                    <View style={savedSayings.container}>
+                        <Text>SAVED SAYINGS</Text>
                         <SavedSayings refreshKey={refreshKey} />
                     </View>
                 </View>
@@ -109,6 +109,16 @@ export default function Home() {
 }
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+
+const savedSayings = StyleSheet.create({
+    container: {
+        marginTop: 20,
+        // borderWidth: 1,
+        // borderColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
 
 const dailySayingStyles = StyleSheet.create({
     quoteBox: {
@@ -152,14 +162,7 @@ const dailySayingStyles = StyleSheet.create({
     }
 
 });
-const savedQuotes = StyleSheet.create({
-    container: {
-        borderWidth: 1,
-        borderColor: 'black',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
+
 const homeMain = StyleSheet.create({
     container: {
         borderWidth: 1,

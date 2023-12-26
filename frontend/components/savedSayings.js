@@ -11,9 +11,9 @@ import { colorPalette, fontFamily } from "../components/theme";
 
 const sayingCard = (saying) => {
     return (
-        <View style={sayingCard.card}>
-            <Text style={sayingCard.cardText}>{saying.quote}</Text>
-            <Text style={sayingCard.cardAuthor}>- {saying.author}</Text>
+        <View style={sayingCardStyle.card}>
+            <Text style={sayingCardStyle.cardText}>{saying.quote}</Text>
+            <Text style={sayingCardStyle.cardAuthor}>- {saying.author}</Text>
         </View>
     );
 }
@@ -47,3 +47,21 @@ export default function SavedSayings(props) {
     )
 
 }
+
+const sayingCardStyle = StyleSheet.create({
+    card: {
+        flex: 1,
+        backgroundColor: colorPalette.whiteColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 372,
+        height: 77,
+        borderRadius: 20,
+    },
+    cardText: {
+        fontFamily: fontFamily.Poppins,
+        fontSize: 10,
+        color: colorPalette.blackColor,
+    },
+
+})
