@@ -9,12 +9,15 @@ import { saveUserSayingToBackend } from "../api/userAPI";
 import { colorPalette, fontFamily } from "../components/theme";
 import NavBar from "../components/navBar";
 import tempUserIMG from '../assets/tempUser.png';
+import SavedSayings from "../components/savedSayings";
+
 
 
 
 export default function Home() {
     const { user } = useUser();
     const [dailySaying, setDailySaying] = useState({});
+    const [refreshKey, setRefreshKey] = useState(0);
 
 
     const loadDailySaying = async () => {
@@ -46,6 +49,8 @@ export default function Home() {
         } catch (error) {
             console.log("Error saving daily saying", error);
         }
+
+        setRefreshKey(refreshKey + 1);
     }
 
     useEffect(() => {
@@ -92,7 +97,10 @@ export default function Home() {
                             <Text>SAVE</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={savedQuotes.container}></View>
+                    <View style={savedQuotes.container}>
+                        <Text>SAVED QUOTES</Text>
+                        <SavedSayings refreshKey={refreshKey} />
+                    </View>
                 </View>
                 <NavBar />
             </View>
