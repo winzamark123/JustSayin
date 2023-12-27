@@ -11,6 +11,8 @@ import NavBar from "../components/navBar";
 import tempUserIMG from '../assets/tempUser.png';
 import SavedSayings from "../components/savedSayings";
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 
 
 
@@ -70,9 +72,9 @@ export default function Home() {
                 <View style={homeStyles.container}>
                     <View style={homeTop.container}>
                         <Image source={tempUserIMG} style={homeTop.userProfileImage}></Image>
-                        <View style={homeTop.text}>
-                            <Text>Have a nice day</Text>
-                            <Text>{user.username}</Text>
+                        <View style={homeTop.textContainer}>
+                            <Text style={{ fontFamily: fontFamily.Poppins }}>Have a nice day</Text>
+                            <Text style={{ fontFamily: fontFamily.Poppins, fontSize: 20 }}>{user.username}</Text>
                         </View>
                     </View>
                     <View style={homeMain.container}>
@@ -80,23 +82,26 @@ export default function Home() {
                         <View style={dailySayingStyles.quoteBox}>
                             <Text
                                 adjustsFontSizeToFit
-                                numberOfLines={7}
+                                numberOfLines={6}
                                 style={dailySayingStyles.quote}>
                                 {dailySaying.sayingID ? dailySaying.sayingID.quote : "Loading..."}
                             </Text>
-                            <Text style={dailySayingStyles.author}>{dailySaying.sayingID ? dailySaying.sayingID.author : "Loading..."}</Text>
                             <Text style={dailySayingStyles.category}>{dailySaying.sayingID ? dailySaying.sayingID.category : "Loading..."}</Text>
+                            <Text style={dailySayingStyles.author}>{dailySaying.sayingID ? dailySaying.sayingID.author : "Loading..."}</Text>
+
+                            <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end" }}>
+                                <TouchableOpacity onPress={() => saveDaily()}>
+                                    <Icon name="favorite" size={30} color="white" />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => refreshDaily()}>
+                                    <Icon name="refresh" size={30} color="white" />
+                                </TouchableOpacity>
+                            </View>
+
+
                         </View>
                     </View>
                     {/* <Text>Home Page - UserID: {user.firebaseID}</Text> */}
-                    <View style={{ display: "flex", flexDirection: "row", alignItems: "space-between", justifyContent: "space-between" }}>
-                        <TouchableOpacity onPress={() => refreshDaily()}>
-                            <Text>REFRESH</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => saveDaily()}>
-                            <Text>SAVE</Text>
-                        </TouchableOpacity>
-                    </View>
                     <View style={savedSayings.container}>
                         <Text>SAVED SAYINGS</Text>
                         <SavedSayings refreshKey={refreshKey} />
@@ -122,34 +127,31 @@ const savedSayings = StyleSheet.create({
 
 const dailySayingStyles = StyleSheet.create({
     quoteBox: {
-        height: 233,
-        width: 370,
-        backgroundColor: 'red',
+        height: 295,
+        width: 371,
+        backgroundColor: colorPalette.mainColor,
         borderRadius: 11,
-
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
+        paddingLeft: 16.5,
+        paddingRight: 16.5
     },
     quote: {
         borderWidth: 1,
         borderColor: 'black',
-        alignSelf: 'center',
-        justifySelf: 'center',
-        textAlign: 'center',
         color: "white",
-        fontSize: 20,
         fontFamily: fontFamily.Poppins,
-
+        fontSize: 20,
+        marginTop: 35,
     },
     author: {
         alignSelf: 'flex-end',
-        justifySelf: 'center',
         textAlign: 'center',
         color: "white",
-        fontSize: 20,
+        fontSize: 16,
         fontFamily: fontFamily.Poppins,
+        marginBottom: 15
     },
     category: {
         alignSelf: 'center',
@@ -172,17 +174,21 @@ const homeMain = StyleSheet.create({
     },
     text: {
         alignSelf: 'flex-start',
-        marginLeft: 30,
         fontSize: 24,
         fontFamily: fontFamily.Poppins,
         color: colorPalette.mainColor,
     },
 });
 const homeTop = StyleSheet.create({
-    text: {
+    textContainer: {
+        marginLeft: 12,
         flexDirection: 'column',
     },
+    text: {
+        fontFamily: fontFamily.Poppins,
+    },
     container: {
+        marginTop: 30,
         flexDirection: 'row',
         backgroundColor: '#F0F0D1',
         width: windowWidth,
@@ -193,6 +199,7 @@ const homeTop = StyleSheet.create({
     userProfileImage: {
         width: 50,
         height: 50,
+        borderRadius: 50,
     }
 });
 const homeStyles = StyleSheet.create({
@@ -201,7 +208,9 @@ const homeStyles = StyleSheet.create({
         // justifyContent: "center",
         // alignItems: "center",
         width: windowWidth,
-        height: windowHeight
+        height: windowHeight,
+        paddingLeft: 30,
+        paddingRight: 30,
     },
     background: {
         flex: 1,
