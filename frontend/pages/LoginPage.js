@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
 
             updateUser(uid);
             console.log("Update Successful");
-            navigation.navigate("HomePage", { userID: uid });
+            navigation.navigate("HomePage");
 
         } catch (e) {
             alert(e.message);

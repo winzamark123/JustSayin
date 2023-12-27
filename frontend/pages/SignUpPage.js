@@ -5,6 +5,7 @@ import { useState } from "react";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../firebaseConfig';
 import { saveUserToBackend } from '../api/userAPI';
+import { useUser } from '../context/UserContext';
 
 
 export default function Signup({ navigation }) {
@@ -12,6 +13,8 @@ export default function Signup({ navigation }) {
     const [username, setUsername] = useState(''); // [username, setUsername
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const { updateUser } = useUser();
 
     const goToLogin = () => {
         navigation.navigate("LoginPage");
@@ -44,11 +47,11 @@ export default function Signup({ navigation }) {
             const uid = user.uid;
             const response = await saveUserToBackend(user, fixedUsername);
 
-
+            updateUser(uid);
             console.log("HandleCompleteSignUp:", response);
 
             //navigates to the CategoryPage of the User
-            navigation.navigate("CategoryPage", { userID: uid });
+            navigation.navigate("CategoryPage");
 
         } catch (error) {
             console.error("Error at handleCompleteSignUp", error);

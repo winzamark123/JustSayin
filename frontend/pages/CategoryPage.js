@@ -4,6 +4,7 @@ import { colorPalette, fontFamily, fontSize } from '../components/theme';
 import { useState } from "react";
 import { fetchAllCategories, saveUserCategories } from '../api/categoriesAPI';
 import { useEffect } from 'react';
+import { useUser } from '../context/UserContext';
 
 
 const categoriesCard = (category) => {
@@ -14,15 +15,23 @@ const categoriesCard = (category) => {
     );
 }
 
-export default function CategoryPage({ userID }) {
+export default function CategoryPage({ navigation }) {
     const [categories, setCategories] = useState([]);
     const [searchBarText, setSearchBarText] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
+    const { user } = useUser();
+
 
     const handleSaveCategories = async () => {
         const selectedCategoriesIDs = selectedCategories.map(category => category._id);
-        const response = await saveUserCategories(userID, selectedCategoriesIDs);
+        const response = await saveUserCategories(user.firebaseID, selectedCategoriesIDs);
         console.log(response);
+
+        goToHomePage();
+    }
+
+    const goToHomePage = () => {
+        navigation.navigate("HomePage");
     }
 
     useEffect(() => {
