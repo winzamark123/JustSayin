@@ -19,5 +19,7 @@ export const fontSize = {
 
 export const fontFamily = {
     Poppins: "Poppins",
+    PoppinsBold: "Poppins-Bold",
+    PoppinsSemiBold: "Poppins-SemiBold",
 
 }

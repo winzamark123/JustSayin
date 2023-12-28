@@ -55,13 +55,23 @@ const sayingCardStyle = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: 372,
-        height: 77,
-        borderRadius: 20,
+        // height: 113,
+        padding: 20,
+        borderRadius: 11,
+        marginBottom: 10,
     },
     cardText: {
-        fontFamily: fontFamily.Poppins,
-        fontSize: 10,
+        fontFamily: fontFamily.PoppinsSemiBold,
+        fontSize: 15,
         color: colorPalette.blackColor,
     },
+    cardAuthor: {
+        fontFamily: fontFamily.Poppins,
+        fontSize: 11,
+        color: colorPalette.blackColor,
+        marginTop: 5,
+        alignSelf: 'flex-end',
+        marginRight: 10
+    }
 
 })

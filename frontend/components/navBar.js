@@ -11,19 +11,21 @@ function NavBar() {
     const navigation = useNavigation();
 
     return (
-        <View style={navBarStyles.container}>
-            <TouchableOpacity title="Home" onPress={() => navigation.navigate('HomePage')}>
-                <Icon name="home" size={40} color="#000"></Icon>
-            </TouchableOpacity>
-            <TouchableOpacity title="Friends" onPress={() => navigation.navigate('FriendsPage')}>
-                <Icon name="group" size={40} color="#000"></Icon>
-            </TouchableOpacity>
-            <TouchableOpacity title="EmoTracker" onPress={() => navigation.navigate('EmoTrackerPage')}>
-                <Icon name="event" size={40} color="#000"></Icon>
-            </TouchableOpacity>
-            <TouchableOpacity title="Settings" onPress={() => navigation.navigate('SettingsPage')}>
-                <Icon name="settings" size={40} color="#000"></Icon>
-            </TouchableOpacity>
+        <View style={navBarStyles.background}>
+            <View style={navBarStyles.container}>
+                <TouchableOpacity title="Home" onPress={() => navigation.navigate('HomePage')}>
+                    <Icon name="home" size={40} color="#000"></Icon>
+                </TouchableOpacity>
+                <TouchableOpacity title="Friends" onPress={() => navigation.navigate('FriendsPage')}>
+                    <Icon name="group" size={40} color="#000"></Icon>
+                </TouchableOpacity>
+                <TouchableOpacity title="EmoTracker" onPress={() => navigation.navigate('EmoTrackerPage')}>
+                    <Icon name="event" size={40} color="#000"></Icon>
+                </TouchableOpacity>
+                <TouchableOpacity title="Settings" onPress={() => navigation.navigate('SettingsPage')}>
+                    <Icon name="settings" size={40} color="#000"></Icon>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -39,6 +41,16 @@ const navBarStyles = StyleSheet.create({
         // borderColor: 'black',
         width: windowWidth * 0.8,
     },
+    background: {
+        alignItems: 'center',
+        // justifyContent: 'center',
+        width: windowWidth,
+        backgroundColor: `${colorPalette.yellowColor}`,
+        position: 'absolute',
+        bottom: 0,
+        padding: 20
+
+    }
 });
 
 

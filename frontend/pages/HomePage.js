@@ -74,7 +74,7 @@ export default function Home() {
                         <Image source={tempUserIMG} style={homeTop.userProfileImage}></Image>
                         <View style={homeTop.textContainer}>
                             <Text style={{ fontFamily: fontFamily.Poppins }}>Have a nice day</Text>
-                            <Text style={{ fontFamily: fontFamily.Poppins, fontSize: 20 }}>{user.username}</Text>
+                            <Text style={{ fontFamily: fontFamily.PoppinsSemiBold, fontSize: 20 }}>{user.username}</Text>
                         </View>
                     </View>
                     <View style={homeMain.container}>
@@ -86,16 +86,20 @@ export default function Home() {
                                 style={dailySayingStyles.quote}>
                                 {dailySaying.sayingID ? dailySaying.sayingID.quote : "Loading..."}
                             </Text>
-                            <Text style={dailySayingStyles.category}>{dailySaying.sayingID ? dailySaying.sayingID.category : "Loading..."}</Text>
-                            <Text style={dailySayingStyles.author}>{dailySaying.sayingID ? dailySaying.sayingID.author : "Loading..."}</Text>
+                            {/* <Text style={dailySayingStyles.category}>{dailySaying.sayingID ? dailySaying.sayingID.category : "Loading..."}</Text> */}
 
-                            <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end" }}>
-                                <TouchableOpacity onPress={() => saveDaily()}>
-                                    <Icon name="favorite" size={30} color="white" />
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => refreshDaily()}>
-                                    <Icon name="refresh" size={30} color="white" />
-                                </TouchableOpacity>
+                            <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 10 }}>
+
+                                <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end" }}>
+                                    <TouchableOpacity onPress={() => saveDaily()}>
+                                        <Icon name="favorite" size={30} color="white" />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => refreshDaily()}>
+                                        <Icon name="refresh" size={30} color="white" />
+                                    </TouchableOpacity>
+                                </View>
+                                <Text style={dailySayingStyles.author}>{dailySaying.sayingID ? dailySaying.sayingID.author : "Loading..."}</Text>
+
                             </View>
 
 
@@ -103,12 +107,12 @@ export default function Home() {
                     </View>
                     {/* <Text>Home Page - UserID: {user.firebaseID}</Text> */}
                     <View style={savedSayings.container}>
-                        <Text>SAVED SAYINGS</Text>
+                        <Text style={savedSayings.text}>SAVED SAYINGS</Text>
                         <SavedSayings refreshKey={refreshKey} />
                     </View>
                 </View>
-                <NavBar />
             </View>
+            <NavBar />
         </SafeAreaView>
     )
 }
@@ -123,6 +127,12 @@ const savedSayings = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    text: {
+        alignSelf: 'flex-start',
+        fontFamily: fontFamily.PoppinsBold,
+        fontSize: 22,
+
+    }
 });
 
 const dailySayingStyles = StyleSheet.create({
@@ -138,10 +148,10 @@ const dailySayingStyles = StyleSheet.create({
         paddingRight: 16.5
     },
     quote: {
-        borderWidth: 1,
-        borderColor: 'black',
+        // borderWidth: 1,
+        // borderColor: 'black',
         color: "white",
-        fontFamily: fontFamily.Poppins,
+        fontFamily: fontFamily.PoppinsSemiBold,
         fontSize: 20,
         marginTop: 35,
     },
@@ -151,7 +161,6 @@ const dailySayingStyles = StyleSheet.create({
         color: "white",
         fontSize: 16,
         fontFamily: fontFamily.Poppins,
-        marginBottom: 15
     },
     category: {
         alignSelf: 'center',
@@ -167,15 +176,17 @@ const dailySayingStyles = StyleSheet.create({
 
 const homeMain = StyleSheet.create({
     container: {
-        borderWidth: 1,
-        borderColor: colorPalette.mainColor,
-        alignItems: 'center',
+        // borderWidth: 1,
+        // borderColor: colorPalette.mainColor,
+        alignItems: 'flex-start',
         justifyContent: 'center',
+        marginTop: 12,
+        marginBottom: 12,
     },
     text: {
         alignSelf: 'flex-start',
         fontSize: 24,
-        fontFamily: fontFamily.Poppins,
+        fontFamily: fontFamily.PoppinsBold,
         color: colorPalette.mainColor,
     },
 });
@@ -184,17 +195,17 @@ const homeTop = StyleSheet.create({
         marginLeft: 12,
         flexDirection: 'column',
     },
-    text: {
-        fontFamily: fontFamily.Poppins,
-    },
     container: {
         marginTop: 30,
         flexDirection: 'row',
         backgroundColor: '#F0F0D1',
         width: windowWidth,
 
-        borderWidth: 1,
-        borderColor: 'black',
+        // borderWidth: 1,
+        // borderColor: 'black',
+    },
+    text: {
+
     },
     userProfileImage: {
         width: 50,
