@@ -26,6 +26,14 @@ export default function SettingsPage({ navigation }) {
                 <TouchableOpacity onPress={goToCategoryPage}>
                     <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Categories</Text>
                 </TouchableOpacity>
+                <View style={settingsCardStyles.card}>
+
+                </View>
+                <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
+                    <View>
+                        <Text style={settingsCardStyles.cardText}>Change Category</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
             <NavBar />
 
@@ -35,6 +43,28 @@ export default function SettingsPage({ navigation }) {
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
+
+const settingsCardStyles = StyleSheet.create({
+    card: {
+        // flex: 1,
+        backgroundColor: colorPalette.whiteColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 372,
+        // height: 113,
+        padding: 20,
+        borderRadius: 11,
+        // borderWidth: 1,
+        // borderColor: 'black',
+        marginBottom: 20
+    },
+    cardText: {
+        fontFamily: fontFamily.Poppins,
+        fontSize: 20,
+        color: colorPalette.blackColor,
+        textAlign: 'center',
+    }
+});
 
 const settingsStyles = StyleSheet.create({
     container: {
