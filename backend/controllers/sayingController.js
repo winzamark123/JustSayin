@@ -52,10 +52,13 @@ exports.getRandomSaying = async (req, res) => {
 exports.getRandomSayingByCategoriesInternal = async (uid) => {
     try {
         const categoryNames = await getUserCategoriesInternal(uid);
-        const matchingSayings = await sayingModel.find({ category: { $in: categoryNames } });
-
-        if (!matchingSayings.length) {
-            throw new Error("GETRANDOMSAYINGBYCATEGORIES INTERNAL: No sayings found for the selected categories");
+        
+        // Find sayings that match the user's categories
+        let matchingSayings;
+        if (categoryNames.length > 0) {
+            matchingSayings = await sayingModel.find({ category: { $in: categoryNames } });
+        } else {
+            matchingSayings = await sayingModel.find({});
         }
 
         const randomIndex = Math.floor(Math.random() * matchingSayings.length);
@@ -71,12 +74,13 @@ exports.getRandomSayingByCategories = async (req, res) => {
         const uid = req.uid;
         // Use getUserCategories to get the user's saved category IDs
         const categoryNames = await getUserCategoriesInternal(uid);
-        // Find sayings that match the user's categories
-        const matchingSayings = await sayingModel.find({ category: { $in: categoryNames } });
 
-        // Handle no sayings found
-        if (!matchingSayings.length) {
-            return res.status(404).json({ message: "No sayings found for the selected categories" });
+        // Find sayings that match the user's categories
+        let matchingSayings;
+        if (categoryNames.length > 0) {
+            matchingSayings = await sayingModel.find({ category: { $in: categoryNames } });
+        } else {
+            matchingSayings = await sayingModel.find({});
         }
 
         const randomIndex = Math.floor(Math.random() * matchingSayings.length);

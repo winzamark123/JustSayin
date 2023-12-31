@@ -9,7 +9,13 @@ import NavBar from '../components/navBar'
 import { colorPalette, fontFamily } from "../components/theme";
 import tempUserIMG from '../assets/tempUser.png';
 
-export default function SettingsPage() {
+
+export default function SettingsPage({ navigation }) {
+
+    const goToCategoryPage = () => {
+        navigation.navigate("CategoryPage");
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: colorPalette.yellowColor }}>
             <View style={settingsStyles.container}>
@@ -17,6 +23,9 @@ export default function SettingsPage() {
                 <View style={settingsProfilePic.container}>
                     <Image source={tempUserIMG} style={settingsProfilePic.pic}></Image>
                 </View>
+                <TouchableOpacity onPress={goToCategoryPage}>
+                    <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Categories</Text>
+                </TouchableOpacity>
             </View>
             <NavBar />
 

@@ -2,6 +2,7 @@ const request = require('supertest');
 const express = require('express');
 const mongoose = require('mongoose');
 const userController = require('../controllers/userController');
+const sayingController = require('../controllers/sayingController');
 const sayingModel = require('../models/sayingModel');
 const userModel = require('../models/userModel');
 const categoryModel = require('../models/categoryModel');
@@ -115,6 +116,7 @@ app.get('/api/users/:userID', mockAuthMiddleware, userController.getUser);
 app.get('/api/users/:userID/categories', mockAuthMiddleware, userController.getUserCategories);
 app.get('/api/users/:userID/savedSayings', mockAuthMiddleware, userController.getUserSayings);
 
+app.get('/api/sayings/:userID', mockAuthMiddleware, sayingController.getRandomSayingByCategories);
 
 //Connect to MONGODB
 beforeAll(async () => {
@@ -282,6 +284,49 @@ describe('Post User Routes', () => {
         expect(res.body.user.savedSayings).toBeInstanceOf(Array);
 
     });
+});
+
+describe('Custom Handling for No Categories User', () => {
+    let createdUserId;
+    test('should create a new user with no categories', async () => {
+        setTestUid('firebaseUser4');
+
+        const response = await request(app)
+            .post('/api/users/')
+            .set('Authorization', `Bearer mock-token`)
+            .send({
+                firebaseID: 'firebaseUser4',
+                username: 'TestUser4',
+            });
+        expect(response.statusCode).toEqual(201);
+
+        // Save the created user ID for use in the next test
+        createdUserId = response.body.user._id;
+    });
+
+    test('should retrieve Nothing for user categories', async () => {
+        // Make sure createdUserId is defined
+        if (!createdUserId) {
+            throw new Error("User ID not found");
+        }
+
+        const response = await request(app)
+            .get(`/api/users/${createdUserId}/categories`)
+            .set('Authorization', `Bearer mock-token`);
+        expect(response.statusCode).toEqual(200);
+
+        const testUserCategories = response.body;
+        expect(testUserCategories).toHaveLength(0);
+        console.log("TEST USER CATEGORIES", testUserCategories);
+    });
+    test('should get a random saying with regardless of category', async () => {
+        const res = await request(app)
+            .get(`/api/sayings/${createdUserId}`)
+            .set('Authorization', `Bearer mock-token`)
+        expect(res.statusCode).toEqual(200);
+
+        console.log("RANDOM SAYING", res.body);
+    })
 });
 
 afterAll(async () => {

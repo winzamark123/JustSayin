@@ -136,3 +136,23 @@ exports.getUserCategories = async (req, res) => {
 
 }
 
+exports.editUsername = async (req, res) => {
+    try {
+        const uid = req.uid;
+
+        const user = await userModel.findOne({ firebaseID: uid });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.username = req.body.username;
+        await user.save();
+
+        res.status(200).json({ message: "Username updated successfully", user });
+    } catch (error) {
+        console.error("Error occurred in editUsername:", error);
+        res.status(500).json({ message: "Error updating username", error: error.message });
+    }
+}
+
