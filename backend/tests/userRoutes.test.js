@@ -118,6 +118,8 @@ app.get('/api/users/:userID/savedSayings', mockAuthMiddleware, userController.ge
 
 app.get('/api/sayings/:userID', mockAuthMiddleware, sayingController.getRandomSayingByCategories);
 
+app.patch('/api/users/:userID/username', mockAuthMiddleware, userController.editUsername);
+
 //Connect to MONGODB
 beforeAll(async () => {
     // Connect to MongoDB Atlas
@@ -283,6 +285,32 @@ describe('Post User Routes', () => {
         expect(res.body).toHaveProperty('message', 'Saying saved successfully');
         expect(res.body.user.savedSayings).toBeInstanceOf(Array);
 
+    });
+});
+
+describe('Patch User Routes', () => {
+    test('should edit user username', async () => {
+        setTestUid('firebaseUser1');
+        const createdUser = await userModel.findOne({ firebaseID: 'firebaseUser1' });
+        if (!createdUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        userID = createdUser._id;
+
+        const res = await request(app)
+            .patch(`/api/users/${userID}/username`)
+            .set('Authorization', `Bearer mock-token`)
+            .send({
+                username: 'TestUser1Edited'
+            });
+
+        // console.log("PATCH user username:", res.body);
+        expect(res.statusCode).toEqual(200);
+        expect(res.body).toHaveProperty('message', 'Username updated successfully');
+
+        expect(res.body.user.username).toEqual('TestUser1Edited');
+        console.log("PATCH user username:", res.body.user.username);
     });
 });
 

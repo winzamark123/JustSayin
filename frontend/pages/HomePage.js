@@ -161,6 +161,7 @@ const dailySayingStyles = StyleSheet.create({
         color: "white",
         fontSize: 16,
         fontFamily: fontFamily.Poppins,
+        maxWidth: 250,
     },
     category: {
         alignSelf: 'center',

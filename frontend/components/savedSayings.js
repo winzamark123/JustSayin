@@ -50,7 +50,7 @@ export default function SavedSayings(props) {
 
 const sayingCardStyle = StyleSheet.create({
     card: {
-        flex: 1,
+        // flex: 1,
         backgroundColor: colorPalette.whiteColor,
         alignItems: 'center',
         justifyContent: 'center',
