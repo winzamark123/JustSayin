@@ -31,6 +31,11 @@ export default function SettingsPage({ navigation }) {
                 </View>
                 <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
                     <View>
+                        <Text style={settingsCardStyles.cardText}>Username</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
+                    <View>
                         <Text style={settingsCardStyles.cardText}>Change Category</Text>
                     </View>
                 </TouchableOpacity>
