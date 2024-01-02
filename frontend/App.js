@@ -17,6 +17,7 @@ import { UserProvider } from './context/UserContext';
 const Stack = createNativeStackNavigator();
 
 
+
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 

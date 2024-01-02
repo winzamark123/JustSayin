@@ -19,10 +19,11 @@ NSString *const appGroup = @"group.frontend";
   return dispatch_get_main_queue();
 }
 
-//RCT_EXPORT_METHOD(RNSharedWidget)
+RCT_EXPORT_MODULE(RNSharedWidget)
 
 // Export the `setData` method
 RCT_EXPORT_METHOD(setData:(NSString *)key data:(NSString *)data callback:(RCTResponseSenderBlock)callback) {
+  RCTLogInfo(@"This is working?");
   NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:appGroup];
   
   if (sharedDefaults == nil) {

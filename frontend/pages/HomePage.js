@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity } from "react-native";
+import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, NativeModules } from "react-native";
 import { useEffect, useState } from "react";
 
 import { useUser } from "../context/UserContext";
@@ -21,6 +21,19 @@ export default function Home() {
     const [dailySaying, setDailySaying] = useState({});
     const [refreshKey, setRefreshKey] = useState(0);
 
+    const { RNSharedWidget } = NativeModules;
+
+
+    const toggleWidget = () => {
+        console.log(NativeModules);
+        RNSharedWidget.setData('justSayinWidgetKey', JSON.stringify({
+            quote: dailySaying.sayingID.quote ?? "Unknown",
+            author: dailySaying.sayingID.author ?? "Author",
+        }), (status) => {
+            console.log('Widget status: ', status);
+        });
+        console.log("Widget Toggled!")
+    }
 
     const loadDailySaying = async () => {
         try {
@@ -96,6 +109,9 @@ export default function Home() {
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => refreshDaily()}>
                                         <Icon name="refresh" size={30} color="white" />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => toggleWidget()}>
+                                        <Text>Toggle Widget!</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <Text style={dailySayingStyles.author}>{dailySaying.sayingID ? dailySaying.sayingID.author : "Loading..."}</Text>
