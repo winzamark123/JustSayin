@@ -12,22 +12,27 @@ import Intents
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
       let valuesData = ValuesData(quote: "This is a mock quote!", author: "Win Cheng")
-      SimpleEntry(date: Date(), configuration: ConfigurationIntent(), data: valuesData)
+      return SimpleEntry(date: Date(), configuration: ConfigurationIntent(), data: valuesData)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
+      let valuesData = ValuesData(quote: "This is a mock quote!", author: "Win Cheng")
+      let entry = SimpleEntry(date: Date(), configuration: configuration, data: valuesData)
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
+      let userDfaults = UserDefaults.init(suiteName: "group.frontend")
+      let jsonText = userDfaults!.value(forKey: "justSayinWidgetKey") as? String
+      let jsonData = Data(jsonText?.utf8 ?? "".utf8)
+      let valuesData = try! JSONDecoder().decode(ValuesData.self, from: jsonData)
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+          let entry = SimpleEntry(date: entryDate, configuration: configuration, data: valuesData)
             entries.append(entry)
         }
 
