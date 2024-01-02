@@ -11,7 +11,8 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent())
+      let valuesData = ValuesData(quote: "This is a mock quote!", author: "Win Cheng")
+      SimpleEntry(date: Date(), configuration: ConfigurationIntent(), data: valuesData)
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
@@ -35,15 +36,24 @@ struct Provider: IntentTimelineProvider {
     }
 }
 
+struct ValuesData: Codable{
+  let quote: String
+  let author: String
+}
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
+  let data: ValuesData
 }
 
 struct JustSayinWidgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
+      ZStack{
+        ContainerRelativeShape()
+          .fill(.white.gradient)
+      }
         Text(entry.date, style: .time)
     }
 }
@@ -62,7 +72,8 @@ struct JustSayinWidget: Widget {
 
 struct JustSayinWidget_Previews: PreviewProvider {
     static var previews: some View {
-        JustSayinWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+      let valuesData = ValuesData(quote: "This is a mock quote!", author:"Win Cheng")
+      JustSayinWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent(), data: valuesData))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
