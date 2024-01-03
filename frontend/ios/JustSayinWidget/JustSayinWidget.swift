@@ -23,10 +23,10 @@ struct Provider: IntentTimelineProvider {
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
-      let userDfaults = UserDefaults.init(suiteName: "group.frontend")
-      let jsonText = userDfaults!.value(forKey: "justSayinWidgetKey") as? String
-      let jsonData = Data(jsonText?.utf8 ?? "".utf8)
-      let valuesData = try! JSONDecoder().decode(ValuesData.self, from: jsonData)
+        let userDfaults = UserDefaults.init(suiteName: "group.frontend")
+        let jsonText = userDfaults!.value(forKey: "justSayinWidgetKey") as? String
+        let jsonData = Data(jsonText?.utf8 ?? "".utf8)
+        let valuesData = try! JSONDecoder().decode(ValuesData.self, from: jsonData)
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
@@ -48,7 +48,7 @@ struct ValuesData: Codable{
 struct SimpleEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
-  let data: ValuesData
+    let data: ValuesData
 }
 
 struct JustSayinWidgetEntryView : View {
@@ -58,8 +58,15 @@ struct JustSayinWidgetEntryView : View {
       ZStack{
         ContainerRelativeShape()
           .fill(.white.gradient)
+        VStack{
+          Text(entry.data.quote).font(.custom("Poppins-Bold", size: 15)).padding()
+          HStack{
+            Spacer()
+            Text(entry.data.author).font(.custom("Poppins-SemiBold", size: 11)).padding().multilineTextAlignment(.trailing)
+          }
+        }.padding(.top, 20)
       }
-        Text(entry.date, style: .time)
+        
     }
 }
 

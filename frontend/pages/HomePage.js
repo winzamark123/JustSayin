@@ -23,9 +23,8 @@ export default function Home() {
 
     const { RNSharedWidget } = NativeModules;
 
-
     const toggleWidget = () => {
-        console.log(NativeModules);
+        console.log(RNSharedWidget);
         RNSharedWidget.setData('justSayinWidgetKey', JSON.stringify({
             quote: dailySaying.sayingID.quote ?? "Unknown",
             author: dailySaying.sayingID.author ?? "Author",
@@ -154,14 +153,16 @@ const savedSayings = StyleSheet.create({
 const dailySayingStyles = StyleSheet.create({
     quoteBox: {
         height: 295,
-        width: 371,
+        width: 370,
         backgroundColor: colorPalette.mainColor,
         borderRadius: 11,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         paddingLeft: 16.5,
-        paddingRight: 16.5
+        paddingRight: 16.5,
+        // borderWidth: 1,
+        // borderColor: 'black',
     },
     quote: {
         // borderWidth: 1,
@@ -194,7 +195,7 @@ const dailySayingStyles = StyleSheet.create({
 const homeMain = StyleSheet.create({
     container: {
         // borderWidth: 1,
-        // borderColor: colorPalette.mainColor,
+        // borderColor: "black",
         alignItems: 'flex-start',
         justifyContent: 'center',
         marginTop: 12,

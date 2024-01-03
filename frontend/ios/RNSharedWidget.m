@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RNSharedWidget.h"
+#import "frontend-Bridging-Header.h"
 #import "frontend-Swift.h"
 
 
@@ -23,20 +24,35 @@ RCT_EXPORT_MODULE(RNSharedWidget)
 
 // Export the `setData` method
 RCT_EXPORT_METHOD(setData:(NSString *)key data:(NSString *)data callback:(RCTResponseSenderBlock)callback) {
-  RCTLogInfo(@"This is working?");
+  NSLog(@"[RNSharedWidget] setData called with key: %@ and data: %@", key, data);
   NSUserDefaults *sharedDefaults = [[NSUserDefaults alloc] initWithSuiteName:appGroup];
   
-  if (sharedDefaults == nil) {
-    callback(@[@"Could not create UserDefaults with app group."]);
-    return;
-  }
+  if (!sharedDefaults) {
+     NSLog(@"[RNSharedWidget] Could not create UserDefaults with app group: %@", appGroup);
+     callback(@[@"Could not create UserDefaults with app group."]);
+     return;
+   }
+
   
   [sharedDefaults setValue:data forKey:key];
+  BOOL success = [sharedDefaults synchronize]; // This will save the changes immediately.
+   
+   if (!success) {
+     NSLog(@"[RNSharedWidget] UserDefaults synchronize failed.");
+     callback(@[@"UserDefaults synchronize failed."]);
+     return;
+   }
+
+  
+
   if (@available(iOS 14, *)) {
+    NSLog(@"[RNSharedWidget] iOS 14 or later, attempting to reload widget timelines.");
     [WidgetKitHelper reloadAllTimelines];
   } else {
-    // Fallback on earlier versions
+    NSLog(@"[RNSharedWidget] iOS version is below 14, no need to reload widget timelines.");
   }
+
+  NSLog(@"[RNSharedWidget] setData method completed successfully.");
   callback(@[[NSNull null]]); // Indicate success with null error
 }
 
