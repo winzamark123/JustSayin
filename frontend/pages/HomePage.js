@@ -102,7 +102,7 @@ export default function Home() {
 
                             <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 10 }}>
 
-                                <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end" }}>
+                                <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end", justifyContent: "center" }}>
                                     <TouchableOpacity onPress={() => saveDaily()}>
                                         <Icon name="favorite" size={30} color="white" />
                                     </TouchableOpacity>
@@ -110,7 +110,7 @@ export default function Home() {
                                         <Icon name="refresh" size={30} color="white" />
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => toggleWidget()}>
-                                        <Text>Toggle Widget!</Text>
+                                        <Icon name = "home" size = {32} color = "white"></Icon>
                                     </TouchableOpacity>
                                 </View>
                                 <Text style={dailySayingStyles.author}>{dailySaying.sayingID ? dailySaying.sayingID.author : "Loading..."}</Text>
