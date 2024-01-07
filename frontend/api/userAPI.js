@@ -91,13 +91,15 @@ export const fetchUserSayingsFromBackend = async (userID) => {
 }
 
 export const saveUserProfilePicToBackend = async (userID, profilePic) => {
+    const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
     const formData = new FormData();
     formData.append('profilePic', profilePic);
-    form.append('uid', userID);
+    formData.append('uid', userID);
 
     try {
         const response = await axios.post(`${BASE_URL}/api/users/${userID}/profilePic`, formData, {
             headers: {
+                'Authorization': `Bearer ${idToken}`, // 'Content-Type': 'multipart/form-data
                 'Content-Type': 'multipart/form-data'
             }
         });

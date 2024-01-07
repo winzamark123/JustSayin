@@ -14,6 +14,7 @@ import { saveUserProfilePicToBackend } from "../api/userAPI";
 
 
 export default function SettingsPage({ navigation }) {
+    const { user } = useUser();
     const [profilePic, setProfilePic] = useState();
     const [caption, setCaption] = useState("");
 
@@ -36,12 +37,22 @@ export default function SettingsPage({ navigation }) {
             } else {
                 setProfilePic(result.uri);
                 // Update your state or profile picture here
+                completeEditProfilePic();
             }
 
         } catch (error) {
             console.log("Error editing profile pic", error);
         }
 
+    }
+
+    const completeEditProfilePic = async () => {
+        try {
+            const response = await saveUserProfilePicToBackend(user.firebaseID, profilePic);
+            console.log("Profile Pic Saved to Backend", response);
+        } catch (error) {
+            console.log("Error saving profile pic to backend", error);
+        }
     }
 
     return (

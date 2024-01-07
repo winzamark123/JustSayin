@@ -171,5 +171,18 @@ const s3 = new S3Client({
 });
 
 exports.saveUserProfilePic = async (req, res) => {
+    const params = {
+        Bucket: bucketName,
+        Key: req.file.originalname,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype,
+    };
+    const command = new PutObjectCommand(params);
 
+    try {
+        await s3.send(command);
+    } catch (error) {
+        console.error("Error occurred in saveUserProfilePic:", error);
+        res.status(500).json({ message: "Error saving user profile picture", error: error.message });
+    }
 }
