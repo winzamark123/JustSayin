@@ -500,6 +500,7 @@
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = frontend/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = JustSayin;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -533,6 +534,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UZ93A5PDD9;
 				INFOPLIST_FILE = frontend/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = JustSayin;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
