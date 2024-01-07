@@ -8,12 +8,40 @@ import { useUser } from "../context/UserContext";
 import NavBar from '../components/navBar'
 import { colorPalette, fontFamily } from "../components/theme";
 import tempUserIMG from '../assets/tempUser.png';
+import { launchImageLibrary } from 'react-native-image-picker';
+
+import { saveUserProfilePicToBackend } from "../api/userAPI";
 
 
 export default function SettingsPage({ navigation }) {
+    const [profilePic, setProfilePic] = useState();
+    const [caption, setCaption] = useState("");
 
     const goToCategoryPage = () => {
         navigation.navigate("CategoryPage");
+    }
+
+    const editProfilePic = async () => {
+        const options = {
+            mediaType: 'photo',
+            quality: 1,
+        };
+
+        try {
+            const result = await launchImageLibrary(options);
+            if (result.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (result.errorCode) {
+                console.log('ImagePicker Error: ', result.errorMessage);
+            } else {
+                setProfilePic(result.uri);
+                // Update your state or profile picture here
+            }
+
+        } catch (error) {
+            console.log("Error editing profile pic", error);
+        }
+
     }
 
     return (
@@ -37,6 +65,11 @@ export default function SettingsPage({ navigation }) {
                 <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
                     <View>
                         <Text style={settingsCardStyles.cardText}>Change Category</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={settingsCardStyles.card} onPress={editProfilePic}>
+                    <View>
+                        <Text style={settingsCardStyles.cardText}>Test ImagePicker</Text>
                     </View>
                 </TouchableOpacity>
             </View>

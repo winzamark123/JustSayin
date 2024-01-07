@@ -90,7 +90,23 @@ export const fetchUserSayingsFromBackend = async (userID) => {
     }
 }
 
+export const saveUserProfilePicToBackend = async (userID, profilePic) => {
+    const formData = new FormData();
+    formData.append('profilePic', profilePic);
+    form.append('uid', userID);
 
+    try {
+        const response = await axios.post(`${BASE_URL}/api/users/${userID}/profilePic`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        console.log("UserAPI: User Profile Pic Saved to Backend:", response.data);
+    } catch (error) {
+        console.log("UserAPI: Error Saving User Profile Pic to Backend", error);
+    }
+
+}
 
 
 
