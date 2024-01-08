@@ -171,6 +171,7 @@ const s3 = new S3Client({
 });
 
 exports.saveUserProfilePic = async (req, res) => {
+    console.log("Request File: ", req.file);
     const params = {
         Bucket: bucketName,
         Key: req.file.originalname,

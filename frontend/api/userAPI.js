@@ -91,25 +91,36 @@ export const fetchUserSayingsFromBackend = async (userID) => {
     }
 }
 
+const convertToBlob = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    return blob;
+}
 
 export const saveUserProfilePicToBackend = async (userID, profilePic) => {
     const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
     const formData = new FormData();
 
-    formData.append('uid', userID);
-    formData.append('profilePic', profilePic);
+    try {
+        const blob = await convertToBlob(profilePic);
+        // formData.append('uid', userID);
+        formData.append('profilePic', blob, 'profile-pic.jpg');
 
-    console.log("FormData: ", formData);
+        console.log("Form Data: ", formData);
+    } catch (error) {
+        console.log("Error converting to blob", error);
+    }
+
     try {
         const response = await axios.post(`${BASE_URL}/api/users/${userID}/profilePic`, formData, {
             headers: {
-                'Authorization': `Bearer ${idToken}`, // 'Content-Type': 'multipart/form-data
-                'Content-Type': 'multipart/form-data'
+                'Authorization': `Bearer ${idToken}` // 'Content-Type': 'multipart/form-data
+                // 'Content-Type': 'multipart/form-data'
             }
         });
         console.log("UserAPI: User Profile Pic Saved to Backend:", response.data);
     } catch (error) {
-        console.log("UserAPI: Error Saving User Profile Pic to Backend", error);
+        console.log("UserAPI: Error Saving User Profile Pic to Backend", error.message, error.response);
     }
 
 }
