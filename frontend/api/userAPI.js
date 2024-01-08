@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { FIREBASE_AUTH } from '../firebaseConfig';
-import RNFetchBlob from 'react-native-fetch-blob';
+
 
 const BASE_URL = "http://localhost:4000";
 
@@ -91,28 +91,13 @@ export const fetchUserSayingsFromBackend = async (userID) => {
     }
 }
 
-const getBlobFromUri = async (uri) => {
-    return new Promise((resolve, reject) => {
-        RNFetchBlob.fs.readFile(uri, 'base64')
-            .then((data) => {
-                const blob = RNFetchBlob.polyfill.Blob.build(data, { type: 'image/jpeg;BASE64' });
-                resolve(blob);
-            })
-            .catch((error) => {
-                reject(error);
-            });
-    });
-};
-
 
 export const saveUserProfilePicToBackend = async (userID, profilePic) => {
     const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
     const formData = new FormData();
 
-    const blob = await getBlobFromUri(profilePic);
-
     formData.append('uid', userID);
-    formData.append('profilePic', blob);
+    formData.append('profilePic', profilePic);
 
     console.log("FormData: ", formData);
     try {
