@@ -13,6 +13,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { saveUserProfilePicToBackend } from "../api/userAPI";
 
 
+
 export default function SettingsPage({ navigation }) {
     const { user } = useUser();
     const [profilePic, setProfilePic] = useState();
