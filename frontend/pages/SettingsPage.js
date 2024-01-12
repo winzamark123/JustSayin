@@ -36,9 +36,11 @@ export default function SettingsPage({ navigation }) {
             } else if (result.errorCode) {
                 console.log('ImagePicker Error: ', result.errorMessage);
             } else {
-                const selectedImageUri = result.assets[0].uri;
-                setProfilePic(selectedImageUri); // Assuming this is a state setter
-                completeEditProfilePic(selectedImageUri); // Pass URI directly
+                const selectedImage = result.assets[0];
+                // console.log("Result: ", result);
+                // console.log("Selected Image: ", selectedImage);
+                setProfilePic(selectedImage); // Assuming this is a state setter
+                completeEditProfilePic(selectedImage); // Pass URI directly
             }
 
         } catch (error) {
@@ -47,9 +49,9 @@ export default function SettingsPage({ navigation }) {
 
     }
 
-    const completeEditProfilePic = async (imageUri) => {
+    const completeEditProfilePic = async (image) => {
         try {
-            const response = await saveUserProfilePicToBackend(user.firebaseID, imageUri);
+            const response = await saveUserProfilePicToBackend(user.firebaseID, image);
             console.log("Profile Pic Saved to Backend", response);
         } catch (error) {
             console.log("Error saving profile pic to backend", error);

@@ -91,24 +91,21 @@ export const fetchUserSayingsFromBackend = async (userID) => {
     }
 }
 
-const convertToBlob = async (uri) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    return blob;
-}
-
 export const saveUserProfilePicToBackend = async (userID, profilePic) => {
     const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
     const formData = new FormData();
-
+    console.log("Profile Pic: ", profilePic);
     try {
-        const blob = await convertToBlob(profilePic);
-        // formData.append('uid', userID);
-        formData.append('profilePic', blob, 'profile-pic.jpg');
+        formData.append('uid', userID);
+        formData.append('profilePic', {
+            name: profilePic.fileName,
+            type: profilePic.type,
+            uri: profilePic.uri.replace('file://', '')
+        });
 
         console.log("Form Data: ", formData);
     } catch (error) {
-        console.log("Error converting to blob", error);
+        console.log("Error Making Form Data", error);
     }
 
     try {

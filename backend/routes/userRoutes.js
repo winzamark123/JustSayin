@@ -19,6 +19,7 @@ router.patch('/:userID/username', verifyToken, editUsername);
 
 router.post('/:userID/profilePic', upload.single('profilePic'), (req, res, next) => {
     console.log("Request Body: ", req.body);
+    console.log("Request Content Type:" + req.headers['content-type']);
     console.log("Request File: ", req.file);
     next();
 }, saveUserProfilePic);
