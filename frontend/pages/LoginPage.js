@@ -47,7 +47,7 @@ export default function Login({ navigation }) {
 
 
     return (
-        < View style={login.background} >
+        < View style={login.background}>
 
             <Text style={title.welcome}>Welcome Back</Text>
             <Text style={title.welcome2}>We missed you!</Text>
