@@ -8,6 +8,8 @@ const userModel = require('../models/userModel');
 const categoryModel = require('../models/categoryModel');
 
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const AWSMock = require('aws-sdk-mock');
+
 
 require('dotenv').config({ path: "../.env.local" });
 

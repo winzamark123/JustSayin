@@ -47,7 +47,7 @@ export default function Login({ navigation }) {
 
 
     return (
-        < View style={login.background} >
+        < View style={login.background}>
 
             <Text style={title.welcome}>Welcome Back</Text>
             <Text style={title.welcome2}>We missed you!</Text>
@@ -94,7 +94,7 @@ const windowHeight = Dimensions.get('window').height;
 login = StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: colorPalette.yellowColor,
+        backgroundColor: colorPalette.mainColor,
         alignItems: 'center',
         // justifyContent: 'center',
         width: windowWidth,

@@ -17,5 +17,7 @@ router.post('/:userID/savedSayings', verifyToken, saveUserSaying);
 router.post('/:userID/categories', verifyToken, saveUserCategories);
 router.patch('/:userID/username', verifyToken, editUsername);
 
+//can remove middleware for logging now 
 router.post('/:userID/profilePic', verifyToken, upload.single('profilePic'), saveUserProfilePic);
+
 module.exports = router;
