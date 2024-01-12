@@ -12,6 +12,11 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    profilePic: {
+        type: String,
+        required: false,
+        default: "https://justsayin-bucket.s3.us-east-2.amazonaws.com/tempUser.png"
+    },
     savedSayings: [{
         type: Schema.Types.ObjectId,
         ref: 'Saying'

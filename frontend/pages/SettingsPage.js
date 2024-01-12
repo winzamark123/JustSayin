@@ -63,7 +63,7 @@ export default function SettingsPage({ navigation }) {
             <View style={settingsStyles.container}>
                 <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Settings</Text>
                 <View style={settingsProfilePic.container}>
-                    <Image source={tempUserIMG} style={settingsProfilePic.pic}></Image>
+                    <Image source={profilePic ? profilePic : tempUserIMG} style={settingsProfilePic.pic}></Image>
                 </View>
                 <TouchableOpacity onPress={goToCategoryPage}>
                     <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Categories</Text>
@@ -132,8 +132,8 @@ const settingsProfilePic = StyleSheet.create({
         height: 308,
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 1,
-        borderColor: "black"
+        // borderWidth: 1,
+        // borderColor: "black"
     },
     pic: {
         width: 166,

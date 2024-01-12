@@ -171,7 +171,7 @@ const s3 = new S3Client({
     }
 });
 
-exports.saveUserProfilePic = async (req, res) => {
+const AWSsaveUserProfilePic = async (req, res) => {
     const params = {
         Bucket: bucketName,
         Key: req.file.originalname,
@@ -182,8 +182,49 @@ exports.saveUserProfilePic = async (req, res) => {
 
     try {
         await s3.send(command);
+        console.log("AWS SUCCESSFUL");
+        return res.status(201).json({ message: "Profile picture saved successfully", filename: req.file.originalname });
+    } catch (error) {
+        console.error("Error occurred in AWSsaveUserProfilePic:", error);
+        res.status(500).json({ message: "Error saving user profile picture", error: error.message });
+    }
+}
+
+exports.saveUserProfilePic = async (req, res) => {
+    const uid = req.uid;
+    await AWSsaveUserProfilePic;
+
+    try {
+
+        const user = await userModel.findOne({ firebaseID: uid });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.profilePic = req.file.originalname;
+        await user.save();
+
+        console.log("Profile Pic Saved to Backend");
+        res.status(201).json({ message: "Profile picture saved successfully" });
+
     } catch (error) {
         console.error("Error occurred in saveUserProfilePic:", error);
         res.status(500).json({ message: "Error saving user profile picture", error: error.message });
     }
 }
+
+exports.getUserProfilePic = async (req, res) => {
+    const params = {
+        Bucket: bucketName,
+        Key: req.params.filename
+    };
+
+    try {
+        const data = await s3.getObject(params);
+        res.status(200).send(data.Body);
+    } catch (error) {
+        console.error("Error occurred in getUserProfilePic:", error);
+        res.status(500).json({ message: "Error getting user profile picture", error: error.message });
+    }
+}
+
