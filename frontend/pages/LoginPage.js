@@ -94,7 +94,7 @@ const windowHeight = Dimensions.get('window').height;
 login = StyleSheet.create({
     background: {
         flex: 1,
-        backgroundColor: colorPalette.yellowColor,
+        backgroundColor: colorPalette.mainColor,
         alignItems: 'center',
         // justifyContent: 'center',
         width: windowWidth,

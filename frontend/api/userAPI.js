@@ -94,7 +94,6 @@ export const fetchUserSayingsFromBackend = async (userID) => {
 export const saveUserProfilePicToBackend = async (userID, profilePic) => {
     const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
     const formData = new FormData();
-    console.log("Profile Pic: ", profilePic);
     try {
         formData.append('uid', userID);
         formData.append('profilePic', {
@@ -103,7 +102,6 @@ export const saveUserProfilePicToBackend = async (userID, profilePic) => {
             uri: profilePic.uri.replace('file://', '')
         });
 
-        console.log("Form Data: ", formData);
     } catch (error) {
         console.log("Error Making Form Data", error);
     }

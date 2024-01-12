@@ -17,11 +17,7 @@ router.post('/:userID/savedSayings', verifyToken, saveUserSaying);
 router.post('/:userID/categories', verifyToken, saveUserCategories);
 router.patch('/:userID/username', verifyToken, editUsername);
 
-router.post('/:userID/profilePic', upload.single('profilePic'), (req, res, next) => {
-    console.log("Request Body: ", req.body);
-    console.log("Request Content Type:" + req.headers['content-type']);
-    console.log("Request File: ", req.file);
-    next();
-}, saveUserProfilePic);
+//can remove middleware for logging now 
+router.post('/:userID/profilePic', verifyToken, upload.single('profilePic'), saveUserProfilePic);
 
 module.exports = router;

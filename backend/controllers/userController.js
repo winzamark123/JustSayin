@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel');
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3")
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+require('dotenv').config({ path: "../.env.local" });
 
 exports.createUser = async (req, res) => {
     try {
@@ -171,7 +172,6 @@ const s3 = new S3Client({
 });
 
 exports.saveUserProfilePic = async (req, res) => {
-    console.log("Request File: ", req.file);
     const params = {
         Bucket: bucketName,
         Key: req.file.originalname,
