@@ -1,7 +1,7 @@
 import { StyleSheet, View, Image, Dimensions, TouchableOpacity, Text } from 'react-native';
-import { colorPalette, fontFamily, fontSize } from '../components/theme';
+import { colorPalette, fontFamily, normalize } from '../components/theme';
 import JustSayinPNG from '../assets/LandingPage/JustSayin.png';
-
+import SafeAreaWrapper from '../components/SafeAreaWrapper';
 
 
 
@@ -12,13 +12,16 @@ export default function Landing({ navigation }) {
     }
 
     return (
-        <View style={landing.background}>
-            <Text style={landing.Welcome}>Welcome to</Text>
-            <Image source={JustSayinPNG} style={landing.JustSayinPNG} resizeMode='contain' />
-            <Text style={landing.body}>Your Quote of the Day</Text>
-            <TouchableOpacity style={landing.BTN} onPress={() => goToLogin()}></TouchableOpacity>
-
-        </View>
+        <SafeAreaWrapper color={colorPalette.mainColor}>
+            <View style={landing.background}>
+                <View style={landing.container}>
+                    <Text style={landing.Welcome}>Welcome to</Text>
+                    <Image source={JustSayinPNG} style={landing.JustSayinPNG} resizeMode='contain' />
+                    <Text style={landing.body}>Your Quote of the Day</Text>
+                </View>
+                <TouchableOpacity style={landing.BTN} onPress={() => goToLogin()}></TouchableOpacity>
+            </View>
+        </SafeAreaWrapper>
     )
 }
 
@@ -26,6 +29,12 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const landing = StyleSheet.create({
+    container: {
+        top: 56,
+        left: 30,
+        justifyContent: 'center',
+
+    },
     background: {
         width: windowWidth,
         height: windowHeight,
@@ -33,34 +42,31 @@ const landing = StyleSheet.create({
     },
     Welcome: {
         position: 'relative',
-        top: 100,
-        left: 30,
-        fontSize: 32,
+        fontSize: normalize(28),
         color: colorPalette.whiteColor,
-        fontFamily: fontFamily.Poppins,
+        fontFamily: fontFamily.PoppinsBold,
+        
         // borderWidth: 1,
         // borderColor: colorPalette.whiteColor,
     },
     JustSayinPNG: {
         position: 'relative',
-        top: 100,
-        left: 30,
+        width: windowWidth * 0.85,
         // borderWidth: 1,
         // borderColor: colorPalette.whiteColor,
+
     },
     body: {
         position: 'relative',
-        top: 100,
-        left: 30,
-        fontSize: 20,
+        fontSize: normalize(24),
         color: colorPalette.whiteColor,
-        fontFamily: fontFamily.Poppins,
+        fontFamily: fontFamily.PoppinsBold,
         // borderWidth: 1,
         // borderColor: colorPalette.whiteColor,
     },
     BTN: {
         position: 'absolute',
-        top: 750,
+        bottom: 100,
         right: 30,
         width: 88,
         height: 88,

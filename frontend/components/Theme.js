@@ -1,3 +1,5 @@
+import { Dimensions } from 'react-native';
+
 export const colorPalette = {
     mainColor: '#D33F48',
     pinkColor: '#D5808C',
@@ -21,5 +23,15 @@ export const fontFamily = {
     Poppins: "Poppins",
     PoppinsBold: "Poppins-Bold",
     PoppinsSemiBold: "Poppins-SemiBold",
+
+}
+
+const windowWidth = Dimensions.get('window').width;
+const scale = windowWidth / 375;
+
+export const normalize = (size) => {
+    const newSize = size * scale;
+
+    return Math.round(newSize)
 
 }

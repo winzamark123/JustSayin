@@ -58,6 +58,10 @@ export default function SettingsPage({ navigation }) {
         }
     }
 
+    useEffect(() => {
+        updateProfilePic();
+    }, []);
+
     return (
         <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: colorPalette.yellowColor }}>
             <View style={settingsStyles.container}>
@@ -68,7 +72,7 @@ export default function SettingsPage({ navigation }) {
                 <TouchableOpacity onPress={goToCategoryPage}>
                     <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Categories</Text>
                 </TouchableOpacity>
-        
+
                 <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
                     <View>
                         <Text style={settingsCardStyles.cardText}>Username</Text>
