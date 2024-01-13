@@ -7,17 +7,15 @@ import { useUser } from "../context/UserContext";
 
 import NavBar from '../components/navBar'
 import { colorPalette, fontFamily } from "../components/theme";
-import tempUserIMG from '../assets/tempUser.png';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import { saveUserProfilePicToBackend } from "../api/userAPI";
+import { saveUserProfilePicToBackend, getUserProfilePicFromBackend } from "../api/userAPI";
 
 
 
 export default function SettingsPage({ navigation }) {
-    const { user } = useUser();
-    const [profilePic, setProfilePic] = useState();
-    const [caption, setCaption] = useState("");
+    const { user, profilePic, updateProfilePic } = useUser();
+    const [curProfilePic, setProfilePic] = useState();
 
     const goToCategoryPage = () => {
         navigation.navigate("CategoryPage");
@@ -53,6 +51,8 @@ export default function SettingsPage({ navigation }) {
         try {
             const response = await saveUserProfilePicToBackend(user.firebaseID, image);
             console.log("Profile Pic Saved to Backend", response);
+
+            await updateProfilePic();
         } catch (error) {
             console.log("Error saving profile pic to backend", error);
         }
@@ -63,7 +63,7 @@ export default function SettingsPage({ navigation }) {
             <View style={settingsStyles.container}>
                 <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Settings</Text>
                 <View style={settingsProfilePic.container}>
-                    <Image source={profilePic ? profilePic : tempUserIMG} style={settingsProfilePic.pic}></Image>
+                    <Image source={profilePic} style={settingsProfilePic.pic}></Image>
                 </View>
                 <TouchableOpacity onPress={goToCategoryPage}>
                     <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Categories</Text>

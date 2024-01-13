@@ -4,11 +4,10 @@ import { useEffect, useState } from "react";
 
 import { useUser } from "../context/UserContext";
 import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../api/dailySayingAPI";
-import { saveUserSayingToBackend } from "../api/userAPI";
+import { saveUserSayingToBackend, getUserProfilePicFromBackend } from "../api/userAPI";
 
 import { colorPalette, fontFamily } from "../components/theme";
 import NavBar from "../components/navBar";
-import tempUserIMG from '../assets/tempUser.png';
 import SavedSayings from "../components/savedSayings";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -17,7 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 export default function Home() {
-    const { user } = useUser();
+    const { user, profilePic, updateProfilePic } = useUser();
     const [dailySaying, setDailySaying] = useState({});
     const [refreshKey, setRefreshKey] = useState(0);
 
@@ -67,12 +66,13 @@ export default function Home() {
         setRefreshKey(refreshKey + 1);
     }
 
+
     useEffect(() => {
         if (!user) {
             console.log("User is null");
             // Optionally, handle the situation when user data is not available
         }
-
+        updateProfilePic();
         loadDailySaying();
     }, [user]);
 
@@ -83,7 +83,7 @@ export default function Home() {
             <View style={homeStyles.background}>
                 <View style={homeStyles.container}>
                     <View style={homeTop.container}>
-                        <Image source={tempUserIMG} style={homeTop.userProfileImage}></Image>
+                        <Image source={profilePic} style={homeTop.userProfileImage}></Image>
                         <View style={homeTop.textContainer}>
                             <Text style={{ fontFamily: fontFamily.Poppins }}>Have a nice day</Text>
                             <Text style={{ fontFamily: fontFamily.PoppinsSemiBold, fontSize: 20 }}>{user.username}</Text>
@@ -110,7 +110,7 @@ export default function Home() {
                                         <Icon name="refresh" size={30} color="white" />
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => toggleWidget()}>
-                                        <Icon name = "home" size = {32} color = "white"></Icon>
+                                        <Icon name="home" size={32} color="white"></Icon>
                                     </TouchableOpacity>
                                 </View>
                                 <Text style={dailySayingStyles.author}>{dailySaying.sayingID ? dailySaying.sayingID.author : "Loading..."}</Text>

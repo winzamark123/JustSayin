@@ -1,5 +1,6 @@
 const userModel = require('../models/userModel');
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 require('dotenv').config({ path: "../.env.local" });
 
 exports.createUser = async (req, res) => {
@@ -218,14 +219,19 @@ exports.saveUserProfilePic = async (req, res) => {
 }
 
 exports.getUserProfilePic = async (req, res) => {
-    const params = {
-        Bucket: bucketName,
-        Key: req.params.filename
-    };
+    const uid = req.uid;
 
     try {
-        const data = await s3.getObject(params);
-        res.status(200).send(data.Body);
+        const user = await userModel.findOne({ firebaseID: uid });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const command = new GetObjectCommand({ Bucket: bucketName, Key: user.profilePic });
+        const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+
+        console.log("Profile Pic URL Generated", url);
+        return res.status(200).json({ message: "Profile Pic URL Generated", url: url });
     } catch (error) {
         console.error("Error occurred in getUserProfilePic:", error);
         res.status(500).json({ message: "Error getting user profile picture", error: error.message });

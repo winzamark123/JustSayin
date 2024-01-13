@@ -1,5 +1,5 @@
 const express = require('express');
-const { createUser, saveUserCategories, getUser, getUserCategories, saveUserSaying, getUserSayings, editUsername, saveUserProfilePic } = require('../controllers/userController');
+const userController = require('../controllers/userController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const multer = require('multer');
 
@@ -8,16 +8,16 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post('/', verifyToken, createUser);
-router.get('/:userID/savedSayings', verifyToken, getUserSayings);
-router.get('/:userID', verifyToken, getUser);
-router.get('/:userID/categories', verifyToken, getUserCategories);
+router.post('/', verifyToken, userController.createUser);
+router.get('/:userID/savedSayings', verifyToken, userController.getUserSayings);
+router.get('/:userID', verifyToken, userController.getUser);
+router.get('/:userID/categories', verifyToken, userController.getUserCategories);
 
-router.post('/:userID/savedSayings', verifyToken, saveUserSaying);
-router.post('/:userID/categories', verifyToken, saveUserCategories);
-router.patch('/:userID/username', verifyToken, editUsername);
+router.post('/:userID/savedSayings', verifyToken, userController.saveUserSaying);
+router.post('/:userID/categories', verifyToken, userController.saveUserCategories);
+router.patch('/:userID/username', verifyToken, userController.editUsername);
 
 //can remove middleware for logging now 
-router.post('/:userID/profilePic', verifyToken, upload.single('profilePic'), saveUserProfilePic);
-
+router.post('/:userID/profilePic', verifyToken, upload.single('profilePic'), userController.saveUserProfilePic);
+router.get('/:userID/profilePic', verifyToken, userController.getUserProfilePic)
 module.exports = router;

@@ -24,10 +24,10 @@ export default function Login({ navigation }) {
             const response = await signInWithEmailAndPassword(auth, email, password);
             const uid = response.user.uid;
 
-            console.log("User Logged In with UID:", uid);
+            // console.log("User Logged In with UID:", uid);
 
             updateUser(uid);
-            console.log("Update Successful");
+            // console.log("Update Successful");
             navigation.navigate("HomePage");
 
         } catch (e) {
