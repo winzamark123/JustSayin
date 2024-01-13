@@ -68,9 +68,7 @@ export default function SettingsPage({ navigation }) {
                 <TouchableOpacity onPress={goToCategoryPage}>
                     <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Categories</Text>
                 </TouchableOpacity>
-                <View style={settingsCardStyles.card}>
-
-                </View>
+        
                 <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
                     <View>
                         <Text style={settingsCardStyles.cardText}>Username</Text>
