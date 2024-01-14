@@ -45,7 +45,7 @@ const landing = StyleSheet.create({
         fontSize: normalize(28),
         color: colorPalette.whiteColor,
         fontFamily: fontFamily.PoppinsBold,
-        
+
         // borderWidth: 1,
         // borderColor: colorPalette.whiteColor,
     },

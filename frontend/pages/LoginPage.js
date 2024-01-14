@@ -1,10 +1,12 @@
-import { StyleSheet, Text, TextInput, View, Dimensions, TouchableOpacity } from "react-native";
-import { colorPalette, fontFamily, fontSize } from "../components/theme";
+import { StyleSheet, Text, TextInput, View, Dimensions, TouchableOpacity, Image } from "react-native";
+import { colorPalette, fontFamily, normalize } from "../components/theme";
 import { FIREBASE_AUTH } from "../firebaseConfig";
 import { useState } from "react";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { useUser } from '../context/UserContext';
 import 'firebase/auth';
+import SafeAreaWrapper from "../components/SafeAreaWrapper";
+import quoteIcon from '../assets/quoteIcon.svg';
 
 
 
@@ -47,59 +49,72 @@ export default function Login({ navigation }) {
 
 
     return (
-        < View style={login.background}>
-
-            <Text style={title.welcome}>Welcome Back</Text>
-            <Text style={title.welcome2}>We missed you!</Text>
-
-
-            <View style={loginForm.container}>
-                <View style={loginForm.form}>
-                    <Text style={loginForm.form_text}>Email</Text>
-                    <TextInput style={loginForm.form_input}
-                        value={email}
-                        onChangeText={(text) => setEmail(text)}
-                    ></TextInput>
-                    <Text style={loginForm.form_text}>Password</Text>
-                    <TextInput style={loginForm.form_input}
-                        secureTextEntry={true}
-                        value={password}
-                        onChangeText={(text) => setPassword(text)}
-                    ></TextInput>
-
-                    <View style={loginForm.loginBTN_Container}>
-
-                        <TouchableOpacity style={loginForm.loginBTN} onPress={() => signIn()}>
-                            <Text style={loginForm.loginBTN_text}>Log In</Text>
-                        </TouchableOpacity>
+        <SafeAreaWrapper color={colorPalette.mainColor} >
+            <View style={{ paddingLeft: 30, paddingRight: 30 }}>
+                < View style={login.background}>
+                    <View style={login.title}>
+                        <Text style={login.title.text}>Welcome to</Text>
+                        <Text style={login.title.text}>Create an Account</Text>
                     </View>
-                </View>
+                    <View style={loginForm.container}>
+                        <View style={loginForm.form}>
+                            <Text style={loginForm.form_text}>Email</Text>
+                            <TextInput style={loginForm.form_input}
+                                value={email}
+                                onChangeText={(text) => setEmail(text)}
+                            ></TextInput>
+                            <Text style={loginForm.form_text}>Password</Text>
+                            <TextInput style={loginForm.form_input}
+                                secureTextEntry={true}
+                                value={password}
+                                onChangeText={(text) => setPassword(text)}
+                            ></TextInput>
+
+                            <View style={loginForm.loginBTN_Container}>
+
+                                <TouchableOpacity style={loginForm.loginBTN} onPress={() => signIn()}>
+                                    <Text style={loginForm.loginBTN_text}>Log In</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+
+                    <TouchableOpacity style={signUptext.BTN} onPress={() => goToSignUp()}>
+                        <Text style={signUptext.text}>Sign Up</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={forgotPassword.BTN} onPress={() => goToForgotPassword()}>
+                        <Text style={forgotPassword.text}>Forgot Password?</Text>
+                    </TouchableOpacity>
+                </View >
             </View>
-
-            <TouchableOpacity style={signUptext.BTN} onPress={() => goToSignUp()}>
-                <Text style={signUptext.text}>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={forgotPassword.BTN} onPress={() => goToForgotPassword()}>
-                <Text style={forgotPassword.text}>Forgot Password?</Text>
-            </TouchableOpacity>
-
-
-        </View >
+        </SafeAreaWrapper >
     )
 };
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 login = StyleSheet.create({
     background: {
-        flex: 1,
-        backgroundColor: colorPalette.mainColor,
+        backgroundColor: colorPalette.yellowColor,
         alignItems: 'center',
-        // justifyContent: 'center',
-        width: windowWidth,
-        height: windowHeight
+        top: 104,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
     },
+    title: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: normalize(130),
+
+        text: {
+            fontFamily: fontFamily.PoppinsBold,
+            color: colorPalette.mainColor,
+            fontSize: normalize(25),
+        }
+    }
 });
 
 title = StyleSheet.create({
@@ -212,7 +227,6 @@ loginForm = StyleSheet.create({
     loginBTN_text: {
         color: colorPalette.blackColor,
         fontFamily: fontFamily.Average,
-        fontSize: fontSize.medium,
     },
 
 });
