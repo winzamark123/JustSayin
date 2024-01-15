@@ -53,8 +53,8 @@ export default function Login({ navigation }) {
             <View style={{ paddingLeft: 30, paddingRight: 30 }}>
                 < View style={login.background}>
                     <View style={login.title}>
-                        <Text style={login.title.text}>Welcome to</Text>
-                        <Text style={login.title.text}>Create an Account</Text>
+                        <Text style={login.title_text}>Welcome to</Text>
+                        <Text style={login.title_text}>We missed you!</Text>
                     </View>
                     <View style={loginForm.container}>
                         <View style={loginForm.form}>
@@ -75,13 +75,14 @@ export default function Login({ navigation }) {
                                 <TouchableOpacity style={loginForm.loginBTN} onPress={() => signIn()}>
                                     <Text style={loginForm.loginBTN_text}>Log In</Text>
                                 </TouchableOpacity>
+                                <TouchableOpacity style={loginForm.signUpBTN} onPress={() => goToSignUp()}>
+                                    <Text style={loginForm.signUpText}>Sign Up</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
 
-                    <TouchableOpacity style={signUptext.BTN} onPress={() => goToSignUp()}>
-                        <Text style={signUptext.text}>Sign Up</Text>
-                    </TouchableOpacity>
+
                     <TouchableOpacity style={forgotPassword.BTN} onPress={() => goToForgotPassword()}>
                         <Text style={forgotPassword.text}>Forgot Password?</Text>
                     </TouchableOpacity>
@@ -99,22 +100,27 @@ login = StyleSheet.create({
     background: {
         backgroundColor: colorPalette.yellowColor,
         alignItems: 'center',
-        top: 104,
+        top: normalize(90),
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 20,
+        padding: 30,
+        // borderWidth: 2,
+        // borderColor: 'black',
     },
     title: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: normalize(130),
-
-        text: {
-            fontFamily: fontFamily.PoppinsBold,
-            color: colorPalette.mainColor,
-            fontSize: normalize(25),
-        }
+        marginTop: normalize(50),
+        // borderWidth: 2,
+        // borderColor: 'black',
+    },
+    title_text: {
+        fontFamily: fontFamily.PoppinsBold,
+        color: colorPalette.mainColor,
+        fontSize: normalize(25),
     }
+
 });
 
 title = StyleSheet.create({
@@ -132,23 +138,6 @@ title = StyleSheet.create({
         width: 300,
         fontSize: 30,
         color: colorPalette.mainColor,
-    },
-});
-
-
-signUptext = StyleSheet.create({
-    BTN: {
-        position: 'absolute',
-        top: 480,
-        right: 70,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text: {
-        color: colorPalette.blackColor,
-        fontFamily: fontFamily.Poppins,
-        fontSize: 15,
-        textDecorationLine: 'underline',
     },
 });
 
@@ -171,29 +160,23 @@ forgotPassword = StyleSheet.create({
 loginForm = StyleSheet.create({
     container: {
         position: 'relative',
-        // borderColor: 'blue',
-        // borderWidth: 2,
-        width: 350,
-        height: 200,
-
         alignItems: 'center',
-        // justifyContent: 'center',
+        justifyContent: 'center',
+        // borderWidth: 1,
+        // borderColor: 'black',
     },
     form: {
         // borderColor: 'red',
         // borderWidth: 2,
-        marginTop: 20,
-        width: 300,
-        height: 150,
     },
 
     form_text: {
         color: colorPalette.blackColor,
         fontFamily: fontFamily.Poppins,
-        fontSize: 14,
+        fontSize: normalize(14),
         // paddingTop: 5,
         // paddingBottom: 5,
-        marginTop: 40,
+        marginTop: normalize(40),
     },
     form_input: {
         borderColor: 'transparent',
@@ -206,19 +189,19 @@ loginForm = StyleSheet.create({
 
     loginBTN_Container: {
         display: 'flex',
-        marginTop: 150,
-        width: 300,
-        height: 50,
+        marginTop: normalize(150),
         alignItems: 'center',
         justifyContent: 'center',
+        // borderWidth: 2,
+        // borderColor: 'black',
     },
     loginBTN: {
         backgroundColor: colorPalette.forestGreenColor,
         borderRadius: 25,
         borderColor: 'transparent',
         borderWidth: 1,
-        width: 277,
-        height: 72,
+        width: normalize(277),
+        height: normalize(72),
 
         alignItems: 'center',
         justifyContent: 'center',
@@ -226,8 +209,19 @@ loginForm = StyleSheet.create({
     },
     loginBTN_text: {
         color: colorPalette.blackColor,
-        fontFamily: fontFamily.Average,
+        fontFamily: fontFamily.PoppinsBold,
+        fontSize: normalize(20),
     },
+    signUpBTN: {
+        marginTop: normalize(10),
+    },
+    signUpText: {
+        color: colorPalette.blackColor,
+        fontFamily: fontFamily.Poppins,
+        fontSize: normalize(15),
+        textDecorationLine: 'underline',
+    }
+
 
 });
 
