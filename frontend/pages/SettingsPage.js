@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useUser } from "../context/UserContext";
 
 import NavBar from '../components/navBar'
-import { colorPalette, fontFamily } from "../components/theme";
+import { colorPalette, fontFamily, normalize } from "../components/theme";
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { saveUserProfilePicToBackend, getUserProfilePicFromBackend } from "../api/userAPI";
@@ -75,17 +75,17 @@ export default function SettingsPage({ navigation }) {
 
                 <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
                     <View>
-                        <Text style={settingsCardStyles.cardText}>Username</Text>
+                        <Text style={settingsCardStyles.cardText}>Edit Username</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
                     <View>
-                        <Text style={settingsCardStyles.cardText}>Change Category</Text>
+                        <Text style={settingsCardStyles.cardText}>Edit Category</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={settingsCardStyles.card} onPress={editProfilePic}>
                     <View>
-                        <Text style={settingsCardStyles.cardText}>Test ImagePicker</Text>
+                        <Text style={settingsCardStyles.cardText}>Edit Profile Image</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -104,7 +104,6 @@ const settingsCardStyles = StyleSheet.create({
         backgroundColor: colorPalette.whiteColor,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 372,
         // height: 113,
         padding: 20,
         borderRadius: 11,
@@ -114,7 +113,7 @@ const settingsCardStyles = StyleSheet.create({
     },
     cardText: {
         fontFamily: fontFamily.Poppins,
-        fontSize: 20,
+        fontSize: normalize(20),
         color: colorPalette.blackColor,
         textAlign: 'center',
     }
@@ -131,16 +130,16 @@ const settingsStyles = StyleSheet.create({
 
 const settingsProfilePic = StyleSheet.create({
     container: {
-        height: 308,
+        height: normalize(308),
         justifyContent: "center",
         alignItems: "center",
         // borderWidth: 1,
         // borderColor: "black"
     },
     pic: {
-        width: 166,
-        height: 166,
-        borderRadius: 83,
+        width: normalize(166),
+        height: normalize(166),
+        borderRadius: normalize(83),
     }
 });
 
