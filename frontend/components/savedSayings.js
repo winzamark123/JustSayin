@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "../context/UserContext";
 import { fetchUserSayingsFromBackend } from "../api/userAPI";
 
-import { colorPalette, fontFamily } from "../components/theme";
+import { colorPalette, fontFamily, normalize } from "../components/theme";
 
 
 
@@ -54,24 +54,22 @@ const sayingCardStyle = StyleSheet.create({
         backgroundColor: colorPalette.whiteColor,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 372,
-        // height: 113,
-        padding: 20,
+        padding: normalize(20),
         borderRadius: 11,
-        marginBottom: 10,
+        marginBottom: normalize(10),
     },
     cardText: {
         fontFamily: fontFamily.PoppinsSemiBold,
-        fontSize: 15,
+        fontSize: normalize(15),
         color: colorPalette.blackColor,
     },
     cardAuthor: {
         fontFamily: fontFamily.Poppins,
-        fontSize: 11,
+        fontSize: normalize(11),
         color: colorPalette.blackColor,
-        marginTop: 5,
+        marginTop: normalize(5),
         alignSelf: 'flex-end',
-        marginRight: 10
+        marginRight: normalize(10)
     }
 
 })
