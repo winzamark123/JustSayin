@@ -168,6 +168,8 @@ loginForm = StyleSheet.create({
     form: {
         // borderColor: 'red',
         // borderWidth: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     form_text: {
@@ -177,12 +179,13 @@ loginForm = StyleSheet.create({
         // paddingTop: 5,
         // paddingBottom: 5,
         marginTop: normalize(40),
+        alignSelf: 'flex-start',
     },
     form_input: {
         borderColor: 'transparent',
         borderBottomColor: colorPalette.blackColor,
         borderWidth: 1,
-        width: 300,
+        width: normalize(280),
         color: colorPalette.blackColor,
         // paddingBottom: 5,
     },

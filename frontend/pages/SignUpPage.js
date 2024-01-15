@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, TextInput, View, Dimensions, TouchableOpacity } from "react-native";
-import { colorPalette, fontFamily, fontSize } from '../components/theme';
+import { colorPalette, fontFamily, normalize } from '../components/theme';
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { FIREBASE_AUTH } from '../firebaseConfig';
 import { saveUserToBackend } from '../api/userAPI';
 import { useUser } from '../context/UserContext';
+import SafeAreaWrapper from '../components/SafeAreaWrapper';
 
 
 export default function Signup({ navigation }) {
@@ -59,42 +60,51 @@ export default function Signup({ navigation }) {
     }
 
     return (
-        <View style={signup.background}>
-            <Text style={title.text}>Create an Account</Text>
-
-            <View style={signUpForm.container}>
-                <View style={signUpForm.form}>
-                    <Text style={signUpForm.form_text}>Username</Text>
-                    <TextInput style={signUpForm.form_input}
-                        value={username}
-                        onChangeText={(text) => setUsername(text)}
-                    ></TextInput>
-                    <Text style={signUpForm.form_text}>Password</Text>
-                    <TextInput style={signUpForm.form_input}
-                        secureTextEntry={true}
-                        value={password}
-                        onChangeText={(text) => setPassword(text)}
-                    ></TextInput>
-                    <Text style={signUpForm.form_text}>Email</Text>
-                    <TextInput style={signUpForm.form_input}
-                        value={email}
-                        onChangeText={(text) => setEmail(text.trim())}
-                    ></TextInput>
-
-
-                    <View style={signUpForm.signUpBTN_Container}>
-
-                        <TouchableOpacity style={signUpForm.signUpBTN} onPress={() => handleCompleteSignUp()}>
-                            <Text style={signUpForm.signUpBTN_text}>Create Account</Text>
-                        </TouchableOpacity>
+        <SafeAreaWrapper color={colorPalette.mainColor} >
+            <View style={{ paddingLeft: 30, paddingRight: 30 }}>
+                < View style={signup.background}>
+                    <View style={signup.title}>
+                        <Text style={signup.title_text}>Welcome</Text>
+                        <Text style={signup.title_text}>Create an Account</Text>
                     </View>
-                </View>
-            </View>
-            <TouchableOpacity style={login.BTN} onPress={() => goToLogin()}>
-                <Text style={login.text}>Login</Text>
-            </TouchableOpacity>
-        </View>
+                    <View style={signupForm.container}>
+                        <View style={signupForm.form}>
+                            <Text style={signupForm.form_text}>Email</Text>
+                            <TextInput style={signupForm.form_input}
+                                value={email}
+                                onChangeText={(text) => setEmail(text)}
+                            ></TextInput>
+                            <Text style={signupForm.form_text}>Username</Text>
+                            <TextInput style={signupForm.form_input}
+                                value={username}
+                                onChangeText={(text) => setUsername(text)}
+                            ></TextInput>
+                            <Text style={signupForm.form_text}>Password</Text>
+                            <TextInput style={signupForm.form_input}
+                                secureTextEntry={true}
+                                value={password}
+                                onChangeText={(text) => setPassword(text)}
+                            ></TextInput>
 
+                            <View style={signupForm.signupBTN_Container}>
+
+                                <TouchableOpacity style={signupForm.signupBTN} onPress={() => handleCompleteSignUp()}>
+                                    <Text style={signupForm.signupBTN_text}>Sign Up</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={signupForm.signUpBTN} onPress={() => goToLogin()}>
+                                    <Text style={signupForm.signUpText}>Log In</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+
+
+                    <TouchableOpacity style={forgotPassword.BTN} onPress={() => goToForgotPassword()}>
+                        <Text style={forgotPassword.text}>Forgot Password?</Text>
+                    </TouchableOpacity>
+                </View >
+            </View>
+        </SafeAreaWrapper>
 
     )
 };
@@ -103,94 +113,122 @@ export default function Signup({ navigation }) {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+
 signup = StyleSheet.create({
     background: {
-        width: windowWidth,
-        height: windowHeight,
         backgroundColor: colorPalette.yellowColor,
-        flex: 1,
         alignItems: 'center',
+        top: normalize(90),
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+        padding: 30,
+        // borderWidth: 2,
+        // borderColor: 'black',
     },
-});
+    title: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: normalize(50),
+        // borderWidth: 2,
+        // borderColor: 'black',
+    },
+    title_text: {
+        fontFamily: fontFamily.PoppinsBold,
+        color: colorPalette.mainColor,
+        fontSize: normalize(25),
+    }
 
-login = StyleSheet.create({
-    BTN: {
-        position: 'absolute',
-        top: 520,
-        right: 70,
-        alignItems: 'center',
-    },
-    text: {
-        position: 'relative',
-        fontSize: 15,
-        color: colorPalette.blackColor,
-        fontFamily: fontFamily.Poppins,
-        textDecorationLine: 'underline',
-    },
 });
 
 title = StyleSheet.create({
-    text: {
+    welcome: {
         position: 'relative',
+        marginTop: 200,
+        left: 30,
+        width: 300,
         fontSize: 30,
         color: colorPalette.mainColor,
-        fontFamily: fontFamily.Poppins,
-        marginTop: 200,
+    },
+    welcome2: {
+        position: 'relative',
+        left: 30,
+        width: 300,
+        fontSize: 30,
+        color: colorPalette.mainColor,
     },
 });
 
-signUpForm = StyleSheet.create({
+
+signupForm = StyleSheet.create({
     container: {
         position: 'relative',
-        width: 350,
-        height: 200,
-
         alignItems: 'center',
+        justifyContent: 'center',
+        // borderWidth: 1,
+        // borderColor: 'black',
     },
     form: {
-        marginTop: 20,
-        width: 300,
-        height: 150,
+        // borderColor: 'red',
+        // borderWidth: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     form_text: {
         color: colorPalette.blackColor,
         fontFamily: fontFamily.Poppins,
-        fontSize: 14,
-        marginTop: 40,
+        fontSize: normalize(14),
+        // paddingTop: 5,
+        // paddingBottom: 5,
+        marginTop: normalize(40),
+        alignSelf: 'flex-start',
     },
     form_input: {
         borderColor: 'transparent',
         borderBottomColor: colorPalette.blackColor,
         borderWidth: 1,
-        width: 300,
+        width: normalize(280),
         color: colorPalette.blackColor,
+        // paddingBottom: 5,
     },
 
-    signUpBTN_Container: {
+    signupBTN_Container: {
         display: 'flex',
-        marginTop: 150,
-        width: 300,
-        height: 50,
+        marginTop: normalize(80),
         alignItems: 'center',
         justifyContent: 'center',
+        // borderWidth: 2,
+        // borderColor: 'black',
     },
-    signUpBTN: {
+    signupBTN: {
         backgroundColor: colorPalette.forestGreenColor,
         borderRadius: 25,
         borderColor: 'transparent',
         borderWidth: 1,
-        width: 277,
-        height: 72,
+        width: normalize(277),
+        height: normalize(72),
 
         alignItems: 'center',
         justifyContent: 'center',
 
     },
-    signUpBTN_text: {
+    signupBTN_text: {
         color: colorPalette.blackColor,
-        fontFamily: fontFamily.Average,
-        fontSize: fontSize.medium,
+        fontFamily: fontFamily.PoppinsBold,
+        fontSize: normalize(20),
     },
+    signUpBTN: {
+        marginTop: normalize(10),
+    },
+    signUpText: {
+        color: colorPalette.blackColor,
+        fontFamily: fontFamily.Poppins,
+        fontSize: normalize(15),
+        textDecorationLine: 'underline',
+    }
+
 
 });
+
+
