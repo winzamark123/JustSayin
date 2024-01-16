@@ -17,7 +17,12 @@ router.post('/:userID/savedSayings', verifyToken, userController.saveUserSaying)
 router.post('/:userID/categories', verifyToken, userController.saveUserCategories);
 router.patch('/:userID/username', verifyToken, userController.editUsername);
 
-//can remove middleware for logging now 
+
+//user Profiles
 router.post('/:userID/profilePic', verifyToken, upload.single('profilePic'), userController.saveUserProfilePic);
 router.get('/:userID/profilePic', verifyToken, userController.getUserProfilePic)
+
+//user Friends
+router.post('/:userID/friends', verifyToken, userController.addFriend);
+
 module.exports = router;

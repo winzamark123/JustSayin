@@ -238,3 +238,28 @@ exports.getUserProfilePic = async (req, res) => {
     }
 }
 
+exports.addFriend = async (req, res) => {
+    const uid = req.uid;
+    const friendUsername = req.body.friendUsername;
+    try {
+        const user = await userModel.findOne({ firebaseID: uid });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const friend = await userModel.findOne({ username: friendUsername });
+        if (!friend) {
+            return res.status(404).json({ message: "Friend not found" });
+        }
+
+        user.friends.push(friend._id);
+        await user.save();
+        console.log("Friend added successfully");
+        return res.status(200).json({ message: "Friend added successfully" });
+
+    } catch (error) {
+        console.error("Error occurred in addFriend:", error);
+        res.status(500).json({ message: "Error adding friend", error: error.message });
+    }
+}
+

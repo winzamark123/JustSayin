@@ -137,5 +137,21 @@ export const getUserProfilePicFromBackend = async (userID) => {
     }
 }
 
+export const addFriendToBackend = async (userID, friendUsername) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+
+        const response = await axios.post(`${BASE_URL}/api/users/${userID}/friends`, { friendUsername }, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+
+        console.log("UserAPI: Friend Added to Backend:", response.data);
+        return response.data;
+    } catch (error) {
+        console.log("UserAPI: Error Adding Friend to Backend", error);
+    }
+}
 
 
