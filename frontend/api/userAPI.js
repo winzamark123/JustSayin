@@ -158,4 +158,21 @@ export const addFriendToBackend = async (userID, friendUsername) => {
     }
 }
 
+export const fetchFriendsDailySayingFromBackend = async (userID) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+
+        const response = await axios.get(`${BASE_URL}/api/users/${userID}/friends/dailySaying`, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+
+        console.log("UserAPI: Friends Daily Saying Fetched from Backend:", response.data);
+        return response.data;
+    } catch (error) {
+        console.log("UserAPI: Error Fetching Friends Daily Saying from Backend", error);
+    }
+}
+
 

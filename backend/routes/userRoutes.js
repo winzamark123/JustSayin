@@ -24,5 +24,6 @@ router.get('/:userID/profilePic', verifyToken, userController.getUserProfilePic)
 
 //user Friends
 router.post('/:userID/friends', verifyToken, userController.addFriend);
+router.get('/:userID/friends/dailySaying', verifyToken, userController.getFriendsDailySaying);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const userModel = require('../models/userModel');
+const dailySayingModel = require('../models/dailySayingModel');
 const { S3Client, PutObjectCommand, GetObjectCommand } = require("@aws-sdk/client-s3");
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 require('dotenv').config({ path: "../.env.local" });
@@ -265,6 +266,42 @@ exports.addFriend = async (req, res) => {
     } catch (error) {
         console.error("Error occurred in addFriend:", error);
         res.status(500).json({ message: "Error adding friend", error: error.message });
+    }
+}
+
+exports.getFriendsDailySaying = async (req, res) => {
+    const uid = req.uid;
+
+    try {
+        const user = await userModel.findOne({ firebaseID: uid }).populate('friends');
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const friendsSayingsPromises = user.friends.map(async (friend) => {
+            // Find the latest daily saying for each friend
+            const latestDailySaying = await dailySayingModel.findOne({ firebaseID: friend.firebaseID })
+                .sort({ date: -1 }) // Sort by date descending (latest first)
+                .populate({
+                    path: 'sayingID',
+                    select: 'quote author'
+                }) // Assuming you want to get the details of the saying
+                .limit(1); // Limit to 1 result (latest)
+
+            return {
+                ...friend._doc,
+                dailySaying: latestDailySaying ? latestDailySaying.sayingID : null
+            };
+        });
+
+
+        const friendsSayings = await Promise.all(friendsSayingsPromises);
+        console.log("Friends Sayings:", friendsSayings);
+        res.status(200).json(friendsSayings);
+
+    } catch (error) {
+        console.error("Error occurred in getFriendsDailySaying:", error);
+        res.status(500).json({ message: "Error getting friend's daily saying", error: error.message });
     }
 }
 

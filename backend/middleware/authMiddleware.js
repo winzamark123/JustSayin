@@ -10,7 +10,7 @@ exports.verifyToken = async (req, res, next) => {
     }
 
     try {
-        console.log("TOKEN: ", token);
+        // console.log("TOKEN: ", token);
         const decodedToken = await admin.auth().verifyIdToken(token);
         req.uid = decodedToken.uid; // Add UID to the request object
         next();

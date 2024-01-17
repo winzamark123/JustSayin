@@ -6,7 +6,7 @@ import { colorPalette, fontFamily, normalize } from '../../components/theme';
 import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NavBar from '../../components/navBar';
-import FriendsSayings from './friendsSaying';
+import FriendsSayings from './FriendsSaying';
 
 export default function Friends() {
     const { user, profilePic, updateProfilePic } = useUser();
