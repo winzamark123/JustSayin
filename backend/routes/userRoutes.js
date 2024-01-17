@@ -20,7 +20,7 @@ router.patch('/:userID/username', verifyToken, userController.editUsername);
 
 //user Profiles
 router.post('/:userID/profilePic', verifyToken, upload.single('profilePic'), userController.saveUserProfilePic);
-router.get('/:userID/profilePic', verifyToken, userController.getUserProfilePic)
+router.get('/:userID/profilePic', userController.getUserProfilePic)
 
 //user Friends
 router.post('/:userID/friends', verifyToken, userController.addFriend);

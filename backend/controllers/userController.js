@@ -220,7 +220,7 @@ exports.saveUserProfilePic = async (req, res) => {
 }
 
 exports.getUserProfilePic = async (req, res) => {
-    const uid = req.uid;
+    const uid = req.params.userID;
 
     try {
         const user = await userModel.findOne({ firebaseID: uid });

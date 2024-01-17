@@ -122,12 +122,10 @@ export const saveUserProfilePicToBackend = async (userID, profilePic) => {
 
 export const getUserProfilePicFromBackend = async (userID) => {
     try {
-        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+        // const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
 
         const response = await axios.get(`${BASE_URL}/api/users/${userID}/profilePic`, {
-            headers: {
-                Authorization: `Bearer ${idToken}`
-            }
+
         });
 
         console.log("UserAPI: User Profile Pic Fetched from Backend:", response.data);

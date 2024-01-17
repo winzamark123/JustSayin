@@ -12,7 +12,7 @@ const fetchFriendsProfilePics = async (fetchedFriends) => {
             const profilePic = await getUserProfilePicFromBackend(friend.firebaseID);
             return {
                 ...friend,
-                profilePic: profilePic
+                profilePic: profilePic.url
             };
         });
 
@@ -28,7 +28,7 @@ const SayingCard = ({ item }) => {
     return (
         <View style={sayingCardStyle.container}>
             <View style={sayingCardStyle.user}>
-                <Image source={{ uri: item.profilePic.url }} style={sayingCardStyle.userProfileImage}></Image>
+                <Image source={{ uri: item.profilePic }} style={sayingCardStyle.userProfileImage}></Image>
                 <Text style={sayingCardStyle.userText}>{item.username}</Text>
             </View>
             <View style={sayingCardStyle.card}>
@@ -45,22 +45,12 @@ export default function FriendsSayings(props) {
 
     });
 
-    // Friends {
-    //     username
-    //     profilePic
-    //     dailySayings: {
-    // quote
-    // author
-    //  }
-    // }
-
-
     useEffect(() => {
         const fetchFriendsSayings = async () => {
             try {
                 const fetchedFriends = await fetchFriendsDailySayingFromBackend(user.firebaseID);
                 const friendsWithProfilePics = await fetchFriendsProfilePics(fetchedFriends);
-                console.log(fetchedFriends);
+                // console.log(fetchedFriends);
                 setFriends(friendsWithProfilePics);
             } catch (error) {
                 console.error('Failed to fetch saved sayings:', error);
