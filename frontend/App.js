@@ -4,14 +4,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from 'react';
 import * as Font from 'expo-font';
 
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import ForgotPassword from './pages/ForgotPassword';
 import CategoryPage from './pages/CategoryPage';
 import SettingsPage from './pages/SettingsPage';
-import FriendsPage from './pages/FriendsPage';
+import FriendsPage from './pages/FriendsPage/FriendsPage';
 
 import { UserProvider } from './context/UserContext';
 

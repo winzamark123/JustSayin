@@ -150,6 +150,10 @@ export const addFriendToBackend = async (userID, friendUsername) => {
         console.log("UserAPI: Friend Added to Backend:", response.data);
         return response.data;
     } catch (error) {
+        if (error.response.status === 409) {
+            console.log("Friend already added!");
+            return { status: 409, message: 'Friend already added' };
+        }
         console.log("UserAPI: Error Adding Friend to Backend", error);
     }
 }

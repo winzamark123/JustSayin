@@ -2,13 +2,13 @@ import React from "react";
 import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, NativeModules } from "react-native";
 import { useEffect, useState } from "react";
 
-import { useUser } from "../context/UserContext";
-import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../api/dailySayingAPI";
-import { saveUserSayingToBackend, getUserProfilePicFromBackend } from "../api/userAPI";
+import { useUser } from "../../context/UserContext";
+import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../../api/dailySayingAPI";
+import { saveUserSayingToBackend, getUserProfilePicFromBackend } from "../../api/userAPI";
 
-import { colorPalette, fontFamily, normalize } from "../components/theme";
-import NavBar from "../components/navBar";
-import SavedSayings from "../components/savedSayings";
+import { colorPalette, fontFamily, normalize } from "../../components/theme";
+import NavBar from "../../components/navBar";
+import SavedSayings from "./savedSayings";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 

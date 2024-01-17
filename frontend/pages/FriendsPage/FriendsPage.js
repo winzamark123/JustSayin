@@ -1,17 +1,33 @@
-import { useUser } from '../context/UserContext';
-import { addFriendToBackend } from '../api/userAPI';
-import SafeAreaWrapper from '../components/SafeAreaWrapper';
+import { useUser } from '../../context/UserContext';
+import { addFriendToBackend } from '../../api/userAPI';
+import SafeAreaWrapper from '../../components/SafeAreaWrapper';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Dimensions, Modal } from 'react-native';
-import { colorPalette, fontFamily, normalize } from '../components/theme';
+import { colorPalette, fontFamily, normalize } from '../../components/theme';
 import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import NavBar from '../components/navBar';
+import NavBar from '../../components/navBar';
+import FriendsSayings from './friendsSaying';
 
 export default function Friends() {
     const { user, profilePic, updateProfilePic } = useUser();
     const [modalVisible, setModalVisible] = useState(false);
     const [friendUsername, setFriendUsername] = useState('');
-    // const [addFriendPopUp, setAddFriendPopUp] = useState(false);
+
+    const handleAddFriend = async () => {
+        try {
+            const response = await addFriendToBackend(user.firebaseID, friendUsername);
+            console.log(response.status);
+            if (response.status === 409) {
+                console.log("Friend already exists!");
+            } else {
+                console.log("Friend added successfully!");
+            }
+            setModalVisible(!modalVisible);
+        } catch (error) {
+            console.log("Error adding friend:", error);
+
+        }
+    }
 
 
     return (
@@ -30,7 +46,6 @@ export default function Friends() {
                         <Icon name="add" size={30} color="black"></Icon>
                     </TouchableOpacity>
                 </View>
-
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -41,13 +56,20 @@ export default function Friends() {
                 >
                     <View style={friendPopUp.centeredView}>
                         <View style={friendPopUp.modalView}>
-                            <Text style={friendPopUp.modalText}>Add Your Friend!</Text>
+                            <Text style={friendPopUp.modalText}>Input Your Friend's Username</Text>
                             <TextInput
                                 style={friendPopUp.input}
                                 value={friendUsername}
                                 placeholder='Friend Username'
                                 onChangeText={(text) => setFriendUsername(text)}
                             />
+
+                            <TouchableOpacity
+                                style={friendPopUp.submitBTN}
+                                onPress={() => handleAddFriend()}
+                            >
+                                <Text style={friendPopUp.textStyle}>Add Friend</Text>
+                            </TouchableOpacity>
 
                             {/* Button to close the modal */}
                             <TouchableOpacity
@@ -59,6 +81,9 @@ export default function Friends() {
                         </View>
                     </View>
                 </Modal>
+                <FriendsSayings />
+
+
             </View>
 
 
@@ -79,6 +104,12 @@ const friendPopUp = StyleSheet.create({
         borderRadius: normalize(10),
         fontFamily: fontFamily.Poppins,
         fontSize: normalize(10),
+    },
+    submitBTN: {
+        backgroundColor: colorPalette.forestGreenColor,
+        borderRadius: normalize(20),
+        padding: normalize(15),
+        marginTop: normalize(20),
     },
     centeredView: {
         flex: 1,

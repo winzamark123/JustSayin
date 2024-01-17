@@ -1,11 +1,10 @@
 import React from "react";
-import { FlatList, Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
+import { useUser } from "../../context/UserContext";
+import { fetchUserSayingsFromBackend } from "../../api/userAPI";
 
-import { useUser } from "../context/UserContext";
-import { fetchUserSayingsFromBackend } from "../api/userAPI";
-
-import { colorPalette, fontFamily, normalize } from "../components/theme";
+import { colorPalette, fontFamily, normalize } from "../../components/theme";
 
 
 

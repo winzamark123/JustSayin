@@ -241,6 +241,9 @@ exports.getUserProfilePic = async (req, res) => {
 exports.addFriend = async (req, res) => {
     const uid = req.uid;
     const friendUsername = req.body.friendUsername;
+
+    console.log("Response", res.body);
+    console.log("Friend Username:", friendUsername);
     try {
         const user = await userModel.findOne({ firebaseID: uid });
         if (!user) {
@@ -250,6 +253,8 @@ exports.addFriend = async (req, res) => {
         const friend = await userModel.findOne({ username: friendUsername });
         if (!friend) {
             return res.status(404).json({ message: "Friend not found" });
+        } else if (user.friends.includes(friend._id)) {
+            return res.status(409).json({ message: "Friend already added" });
         }
 
         user.friends.push(friend._id);

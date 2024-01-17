@@ -19,9 +19,6 @@ function NavBar() {
                 <TouchableOpacity title="Friends" onPress={() => navigation.navigate('FriendsPage')}>
                     <Icon name="group" size={40} color="#000"></Icon>
                 </TouchableOpacity>
-                <TouchableOpacity title="EmoTracker" onPress={() => navigation.navigate('EmoTrackerPage')}>
-                    <Icon name="event" size={40} color="#000"></Icon>
-                </TouchableOpacity>
                 <TouchableOpacity title="Settings" onPress={() => navigation.navigate('SettingsPage')}>
                     <Icon name="settings" size={40} color="#000"></Icon>
                 </TouchableOpacity>
