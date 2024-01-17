@@ -56,11 +56,12 @@ export default function Friends() {
                 >
                     <View style={friendPopUp.centeredView}>
                         <View style={friendPopUp.modalView}>
-                            <Text style={friendPopUp.modalText}>Input Your Friend's Username</Text>
+                            <Text style={friendPopUp.modalText}>Add Friends</Text>
                             <TextInput
                                 style={friendPopUp.input}
                                 value={friendUsername}
-                                placeholder='Friend Username'
+                                placeholder='Username'
+                                placeholderTextColor="grey"
                                 onChangeText={(text) => setFriendUsername(text)}
                             />
 
@@ -68,15 +69,15 @@ export default function Friends() {
                                 style={friendPopUp.submitBTN}
                                 onPress={() => handleAddFriend()}
                             >
-                                <Text style={friendPopUp.textStyle}>Add Friend</Text>
+                                <Text style={friendPopUp.textStyle}>Add</Text>
                             </TouchableOpacity>
 
                             {/* Button to close the modal */}
                             <TouchableOpacity
-                                style={friendPopUp.button}
+                                style={friendPopUp.buttonClose}
                                 onPress={() => setModalVisible(!modalVisible)}
                             >
-                                <Text style={friendPopUp.textStyle}>Hide Popup</Text>
+                                <Text style={friendPopUp.buttonClose}>Hide Popup</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -97,18 +98,20 @@ const windowHeight = Dimensions.get('window').height;
 
 const friendPopUp = StyleSheet.create({
     input: {
-        borderWidth: 1,
-        borderColor: 'black',
+        borderColor: "transparent",
+        borderBottomColor: colorPalette.whiteColor,
+        borderWidth: normalize(1),
         width: normalize(200),
-        padding: normalize(10),
-        borderRadius: normalize(10),
         fontFamily: fontFamily.Poppins,
         fontSize: normalize(10),
+        color: colorPalette.whiteColor,
     },
     submitBTN: {
         backgroundColor: colorPalette.forestGreenColor,
         borderRadius: normalize(20),
         padding: normalize(15),
+        paddingLeft: normalize(60),
+        paddingRight: normalize(60),
         marginTop: normalize(20),
     },
     centeredView: {
@@ -117,7 +120,6 @@ const friendPopUp = StyleSheet.create({
         alignItems: "center",
     },
     modalView: {
-        backgroundColor: "white",
         borderRadius: normalize(20),
         padding: normalize(35),
         alignItems: "center",
@@ -128,18 +130,16 @@ const friendPopUp = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: normalize(4),
-        elevation: normalize(5)
-    },
-    button: {
-        borderRadius: normalize(20),
-        padding: normalize(10),
-        elevation: normalize(2)
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
+        elevation: normalize(5),
+        borderRadius: normalize(11),
+        backgroundColor: "#272732",
+
+
+
     },
     buttonClose: {
-        backgroundColor: "#2196F3",
+        marginTop: normalize(10),
+        color: colorPalette.whiteColor,
     },
     textStyle: {
         color: "black",
@@ -147,10 +147,12 @@ const friendPopUp = StyleSheet.create({
         textAlign: "center"
     },
     modalText: {
-        marginBottom: normalize(15),
-        fontFamily: fontFamily.PoppinsSemiBold,
+        marginBottom: normalize(24),
+        fontFamily: fontFamily.PoppinsBold,
         textAlign: "center",
         fontSize: normalize(15),
+        color: colorPalette.whiteColor,
+        
     }
 });
 
