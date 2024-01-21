@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity } from "react-native";
+import { Dimensions, StyleSheet, Text, View, SafeAreaView, TextInput, Image, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -15,6 +15,7 @@ import { saveUserProfilePicToBackend, getUserProfilePicFromBackend } from "../ap
 
 export default function SettingsPage({ navigation }) {
     const { user, profilePic, updateProfilePic } = useUser();
+    const [username, setUsername] = useState(user.username);
     const [curProfilePic, setProfilePic] = useState();
 
     const goToCategoryPage = () => {
@@ -66,32 +67,41 @@ export default function SettingsPage({ navigation }) {
         <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: colorPalette.yellowColor }}>
             <View style={settingsStyles.container}>
                 <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Settings</Text>
+
                 <View style={settingsProfilePic.container}>
                     <Image source={profilePic} style={settingsProfilePic.pic}></Image>
+                    <TouchableOpacity style={settingsProfilePic.edit} onPress={editProfilePic}>
+                        <Icon name="edit" size={30} color="#D33F48" />
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={goToCategoryPage}>
-                    <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Categories</Text>
-                </TouchableOpacity>
+
 
                 <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
                     <View>
                         <Text style={settingsCardStyles.cardText}>Edit Username</Text>
                     </View>
                 </TouchableOpacity>
+                <View style={settingsCardStyles.card}>
+                    <View style={settingsCardStyles.input}>
+                        <Text style={settingsCardStyles.cardText}>Username</Text>
+                        <TextInput style={settingsCardStyles.cardPlaceholder}
+                            placeholder="Username"
+                            value={username}
+                            onChangeText={(text) => setUsername(text)}
+                        >
+                        </TextInput>
+                    </View>
+                    <Icon name="person" size={normalize(35)} color="#D33F48" />
+                </View>
                 <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
                     <View>
                         <Text style={settingsCardStyles.cardText}>Edit Category</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={settingsCardStyles.card} onPress={editProfilePic}>
-                    <View>
-                        <Text style={settingsCardStyles.cardText}>Edit Profile Image</Text>
-                    </View>
-                </TouchableOpacity>
             </View>
             <NavBar />
 
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 
@@ -100,22 +110,26 @@ const windowWidth = Dimensions.get('window').width;
 
 const settingsCardStyles = StyleSheet.create({
     card: {
-        // flex: 1,
         backgroundColor: colorPalette.whiteColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-        // height: 113,
-        padding: 20,
+        paddingRight: normalize(20),
+        paddingLeft: normalize(20),
+        paddingTop: normalize(10),
+        paddingBottom: normalize(10),
         borderRadius: 11,
-        // borderWidth: 1,
-        // borderColor: 'black',
-        marginBottom: 20
+        marginBottom: 20,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-end"
     },
     cardText: {
         fontFamily: fontFamily.Poppins,
+        fontSize: normalize(14),
+        color: "grey",
+    },
+    cardPlaceholder: {
+        fontFamily: fontFamily.Poppins,
         fontSize: normalize(20),
-        color: colorPalette.blackColor,
-        textAlign: 'center',
+        color: "black",
     }
 });
 
@@ -140,6 +154,17 @@ const settingsProfilePic = StyleSheet.create({
         width: normalize(166),
         height: normalize(166),
         borderRadius: normalize(83),
+    },
+    edit: {
+        position: "absolute",
+        top: normalize(200),
+        left: normalize(200),
+        backgroundColor: colorPalette.whiteColor,
+        borderRadius: normalize(20),
+        width: normalize(40),
+        height: normalize(40),
+        justifyContent: "center",
+        alignItems: "center"
     }
 });
 
