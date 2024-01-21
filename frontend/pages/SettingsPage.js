@@ -75,12 +75,6 @@ export default function SettingsPage({ navigation }) {
                     </TouchableOpacity>
                 </View>
 
-
-                <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
-                    <View>
-                        <Text style={settingsCardStyles.cardText}>Edit Username</Text>
-                    </View>
-                </TouchableOpacity>
                 <View style={settingsCardStyles.card}>
                     <View style={settingsCardStyles.input}>
                         <Text style={settingsCardStyles.cardText}>Username</Text>
@@ -93,10 +87,14 @@ export default function SettingsPage({ navigation }) {
                     </View>
                     <Icon name="person" size={normalize(35)} color="#D33F48" />
                 </View>
-                <TouchableOpacity style={settingsCardStyles.card} onPress={goToCategoryPage}>
+                <TouchableOpacity style={settingsCardStyles.cardCategory} onPress={goToCategoryPage}>
                     <View>
-                        <Text style={settingsCardStyles.cardText}>Edit Category</Text>
+                        <Text style={settingsCardStyles.cardPlaceholder}>Edit Categories</Text>
                     </View>
+                    <Icon name="category" size={normalize(35)} color="#D33F48" />
+                </TouchableOpacity>
+                <TouchableOpacity style={saveButton.container}>
+                    <Text style={saveButton.text}>Save</Text>
                 </TouchableOpacity>
             </View>
             <NavBar />
@@ -115,11 +113,25 @@ const settingsCardStyles = StyleSheet.create({
         paddingLeft: normalize(20),
         paddingTop: normalize(10),
         paddingBottom: normalize(10),
+        height: normalize(70),
         borderRadius: 11,
         marginBottom: 20,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "flex-end"
+    },
+    cardCategory: {
+        backgroundColor: colorPalette.whiteColor,
+        paddingRight: normalize(20),
+        paddingLeft: normalize(20),
+        paddingTop: normalize(10),
+        paddingBottom: normalize(10),
+        height: normalize(70),
+        borderRadius: 11,
+        marginBottom: 20,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     cardText: {
         fontFamily: fontFamily.Poppins,
@@ -168,4 +180,22 @@ const settingsProfilePic = StyleSheet.create({
     }
 });
 
+const saveButton = StyleSheet.create({
+    container: {
+        backgroundColor: colorPalette.forestGreenColor,
+        borderRadius: 11,
+        // height: normalize(50),
+        // width: normalize(200),
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: normalize(20),
+        marginBottom: normalize(20),
+        padding: normalize(15)
+    },
+    text: {
+        fontFamily: fontFamily.PoppinsBold,
+        fontSize: normalize(20),
+        color: colorPalette.blackColor,
+    }
+});
 
