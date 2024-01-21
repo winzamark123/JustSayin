@@ -91,6 +91,21 @@ export const fetchUserSayingsFromBackend = async (userID) => {
     }
 }
 
+export const editUsernameToBackend = async (userID, username) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+        const response = await axios.patch(`${BASE_URL}/api/users/${userID}/username`, { username }, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+        console.log("UserAPI: Username Edited to Backend:", response.data);
+
+    } catch (error) {
+        console.log("UserAPI: Error Editing Username to Backend", error);
+    }
+}
+
 export const saveUserProfilePicToBackend = async (userID, profilePic) => {
     const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
     const formData = new FormData();

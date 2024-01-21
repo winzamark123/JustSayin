@@ -9,12 +9,12 @@ import NavBar from '../components/navBar'
 import { colorPalette, fontFamily, normalize } from "../components/theme";
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import { saveUserProfilePicToBackend, getUserProfilePicFromBackend } from "../api/userAPI";
+import { saveUserProfilePicToBackend, editUsernameToBackend } from "../api/userAPI";
 
 
 
 export default function SettingsPage({ navigation }) {
-    const { user, profilePic, updateProfilePic } = useUser();
+    const { user, profilePic, updateUser, updateProfilePic } = useUser();
     const [username, setUsername] = useState(user.username);
     const [curProfilePic, setProfilePic] = useState();
 
@@ -59,6 +59,16 @@ export default function SettingsPage({ navigation }) {
         }
     }
 
+    const saveUsername = async () => {
+        try {
+            const response = await editUsernameToBackend(user.firebaseID, username);
+            updateUser();
+            console.log("Username Edited to Backend", response);
+        } catch (error) {
+            console.log("Error editing username to backend", error);
+        }
+    }
+
     useEffect(() => {
         updateProfilePic();
     }, []);
@@ -93,7 +103,7 @@ export default function SettingsPage({ navigation }) {
                     </View>
                     <Icon name="category" size={normalize(35)} color="#D33F48" />
                 </TouchableOpacity>
-                <TouchableOpacity style={saveButton.container}>
+                <TouchableOpacity style={saveButton.container} onPress={saveUsername}>
                     <Text style={saveButton.text}>Save</Text>
                 </TouchableOpacity>
             </View>

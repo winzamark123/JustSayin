@@ -141,6 +141,7 @@ exports.getUserCategories = async (req, res) => {
 }
 
 exports.editUsername = async (req, res) => {
+    console.log("Edit Username Request Body:", req.body);
     try {
         const uid = req.uid;
 
@@ -152,6 +153,7 @@ exports.editUsername = async (req, res) => {
 
         user.username = req.body.username;
         await user.save();
+
 
         res.status(200).json({ message: "Username updated successfully", user });
     } catch (error) {
