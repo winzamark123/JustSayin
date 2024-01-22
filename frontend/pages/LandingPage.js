@@ -6,12 +6,6 @@ import SafeAreaWrapper from '../components/SafeAreaWrapper';
 import Onboarding from 'react-native-onboarding-swiper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-
-
-import group1 from '../assets/onBoardingPage/pageIndex/group1.png';
-import group2 from '../assets/onBoardingPage/pageIndex/group2.png';
-import group3 from '../assets/onBoardingPage/pageIndex/group3.png';
-
 export default function Landing({ navigation }) {
     const [pageIndex, setPageIndex] = useState(0);
 
@@ -34,39 +28,46 @@ export default function Landing({ navigation }) {
         );
     };
 
-    const Next = ({ isLight, ...props }) => (
-        <TouchableOpacity
-            style={landing.BTN}
-            {...props}
-        />
-    );
+    const doneButton = ({ ...props }) => {
+        return (
+            <TouchableOpacity
+                style={landing.BTN}
+                {...props}
+            >
+                <Text>Done</Text>
+            </TouchableOpacity>
+        )
+    };
 
 
     return (
-        <SafeAreaWrapper color={colorPalette.mainColor}>
+        <SafeAreaWrapper color={colorPalette.mainColor} style={{ padding: normalize(30) }}>
             {/* <View style={landing.background}> */}
             <Onboarding
                 pageIndexCallback={getPageIndex}
                 DotComponent={CustomDot}
                 bottomBarColor='transparent'
                 bottomBarHighlight={false}
-                NextButtonComponent={Next}
-                containerStyles={{ justifyContent: 'flex-start', alignItems: 'center', paddingTop: normalize(130) }}
+                showSkip={false}
+                showNext={false}
+                onDone={goToLogin}
+                DoneButtonComponent={doneButton}
+                containerStyles={{ justifyContent: 'flex-start', alignItems: 'center', padding: normalize(30) }}
                 pages={[
                     {
                         backgroundColor: colorPalette.mainColor,
                         image: (
-                            <View style={landing.container}>
+                            <View style={{ top: normalize(30) }}>
                                 <Text style={landing.Welcome}>Welcome to</Text>
                                 <Image source={JustSayinPNG} style={landing.JustSayinPNG} resizeMode='contain' />
                                 <Text style={landing.body}>Your Quote of the Day</Text>
                             </View>
-                        )
+                        ),
                     },
                     {
                         backgroundColor: colorPalette.mainColor,
                         image: (
-                            <View>
+                            <View style={{ top: normalize(150), justifyContent: "center", alignItems: "center" }}>
                                 <Image source={require('../assets/onBoardingPage/onboarding_1.png')} resizeMode='contain' />
                                 <Text style={landing.body}>Choose your own quote categories</Text>
                             </View>
@@ -74,13 +75,21 @@ export default function Landing({ navigation }) {
                     },
                     {
                         backgroundColor: colorPalette.mainColor,
-                        image: <Image source={require('../assets/onBoardingPage/onboarding_2.png')} />,
-                        title: 'Daily quote generated on your desktop',
+                        image: (
+                            <View style={{ top: normalize(150), justifyContent: "center", alignItems: "center" }}>
+                                <Image source={require('../assets/onBoardingPage/onboarding_2.png')} resizeMode='contain' />
+                                <Text style={landing.body}>Daily Quote generated on your Widgets!</Text>
+                            </View>
+                        )
                     },
                     {
                         backgroundColor: colorPalette.mainColor,
-                        image: <Image source={require('../assets/onBoardingPage/onboarding_3.png')} />,
-                        title: 'Add friends to view theirs!',
+                        image: (
+                            <View style={{ top: normalize(150), justifyContent: "center", alignItems: "center" }}>
+                                <Image source={require('../assets/onBoardingPage/onboarding_3.png')} resizeMode='contain' />
+                                <Text style={landing.body}>Add friends to view theirs!</Text>
+                            </View>
+                        )
                     },
                 ]}
             />
@@ -142,25 +151,15 @@ const landing = StyleSheet.create({
         fontSize: normalize(24),
         color: colorPalette.whiteColor,
         fontFamily: fontFamily.PoppinsBold,
+        textAlign: 'center',
+        marginTop: normalize(30),
         // borderWidth: 1,
         // borderColor: colorPalette.whiteColor,
     },
     BTN: {
-        // position: 'absolute',
-        // bottom: 100,
-        // right: 30,
-        width: normalize(80),
-        height: normalize(80),
-        borderRadius: 44,
+        padding: normalize(20),
         backgroundColor: colorPalette.forestGreenColor,
-        borderColor: colorPalette.blackColor,
-
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,  // Horizontal shadow
-            height: 2, // Vertical shadow
-        },
-        shadowOpacity: 0.25, // The opacity of the shadow
-        shadowRadius: 3.84,
+        borderTopLeftRadius: normalize(100),
+        borderBottomLeftRadius: normalize(100),
     }
 })
