@@ -17,7 +17,7 @@ const fetchFriendsProfilePics = async (fetchedFriends) => {
         });
 
         const friendsWithProfilePics = await Promise.all(promises);
-        console.log("Friends with profile pics", friendsWithProfilePics);
+        // console.log("Friends with profile pics", friendsWithProfilePics);
         return friendsWithProfilePics;
     } catch (error) {
         console.log("Error fetching friends profile pics", error);

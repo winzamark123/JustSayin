@@ -8,7 +8,7 @@ const BASE_URL = "http://localhost:4000";
 export const saveUserToBackend = async (user, username) => {
     try {
         const idToken = await user.getIdToken();
-        console.log("ID TOKEN: ", idToken);
+        // console.log("ID TOKEN: ", idToken);
 
         const response = await axios.post(`${BASE_URL}/api/users`, { username }, {
             headers: {
@@ -17,7 +17,7 @@ export const saveUserToBackend = async (user, username) => {
         });
 
         if (response.status === 201) {
-            console.log("User Saved to Backend with username:", username);
+            // console.log("User Saved to Backend with username:", username);
         }
 
         return response.data;
@@ -34,7 +34,7 @@ export const saveUserToBackend = async (user, username) => {
 export const fetchUserFromBackend = async (userID) => {
     try {
         const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
-        console.log("ID TOKEN: ", idToken);
+        // console.log("ID TOKEN: ", idToken);
 
         const response = await axios.get(`${BASE_URL}/api/users/${userID}`, {
             headers: {
@@ -57,7 +57,7 @@ export const fetchUserFromBackend = async (userID) => {
 export const saveUserSayingToBackend = async (userID, sayingID) => {
     try {
         const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
-        console.log("ID TOKEN: ", idToken);
+        // console.log("ID TOKEN: ", idToken);
 
         const response = await axios.post(`${BASE_URL}/api/users/${userID}/savedSayings`, { sayingID }, {
             headers: {
@@ -65,7 +65,7 @@ export const saveUserSayingToBackend = async (userID, sayingID) => {
             }
         });
 
-        console.log("UserAPI: User Saying Saved to Backend:", response.data);
+        // console.log("UserAPI: User Saying Saved to Backend:", response.data);
         return response.data;
 
     } catch (error) {
@@ -76,7 +76,7 @@ export const saveUserSayingToBackend = async (userID, sayingID) => {
 export const fetchUserSayingsFromBackend = async (userID) => {
     try {
         const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
-        console.log("ID TOKEN: ", idToken);
+        // console.log("ID TOKEN: ", idToken);
 
         const response = await axios.get(`${BASE_URL}/api/users/${userID}/savedSayings`, {
             headers: {
@@ -84,7 +84,7 @@ export const fetchUserSayingsFromBackend = async (userID) => {
             }
         });
 
-        console.log("UserAPI: User Sayings Fetched from Backend:", response.data);
+        // console.log("UserAPI: User Sayings Fetched from Backend:", response.data);
         return response.data;
     } catch (error) {
         console.log("UserAPI: Error Fetching User Sayings from Backend", error);
@@ -99,7 +99,7 @@ export const editUsernameToBackend = async (userID, username) => {
                 Authorization: `Bearer ${idToken}`
             }
         });
-        console.log("UserAPI: Username Edited to Backend:", response.data);
+        // console.log("UserAPI: Username Edited to Backend:", response.data);
 
     } catch (error) {
         console.log("UserAPI: Error Editing Username to Backend", error);
@@ -128,7 +128,7 @@ export const saveUserProfilePicToBackend = async (userID, profilePic) => {
                 // 'Content-Type': 'multipart/form-data'
             }
         });
-        console.log("UserAPI: User Profile Pic Saved to Backend:", response.data);
+        // console.log("UserAPI: User Profile Pic Saved to Backend:", response.data);
     } catch (error) {
         console.log("UserAPI: Error Saving User Profile Pic to Backend", error.message, error.response);
     }
@@ -143,7 +143,7 @@ export const getUserProfilePicFromBackend = async (userID) => {
 
         });
 
-        console.log("UserAPI: User Profile Pic Fetched from Backend:", response.data);
+        // console.log("UserAPI: User Profile Pic Fetched from Backend:", response.data);
         return response.data;
     } catch (error) {
         console.log("UserAPI: Error Fetching User Profile Pic from Backend", error);
@@ -160,7 +160,7 @@ export const addFriendToBackend = async (userID, friendUsername) => {
             }
         });
 
-        console.log("UserAPI: Friend Added to Backend:", response.data);
+        // console.log("UserAPI: Friend Added to Backend:", response.data);
         return response.data;
     } catch (error) {
         if (error.response.status === 409) {
@@ -181,7 +181,7 @@ export const fetchFriendsDailySayingFromBackend = async (userID) => {
             }
         });
 
-        console.log("UserAPI: Friends Daily Saying Fetched from Backend:", response.data);
+        // console.log("UserAPI: Friends Daily Saying Fetched from Backend:", response.data);
         return response.data;
     } catch (error) {
         console.log("UserAPI: Error Fetching Friends Daily Saying from Backend", error);
