@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Dimensions, FlatList, TouchableOpacity } from "react-native";
 import { colorPalette, fontFamily, fontSize } from '../components/theme';
 import { useState } from "react";
-import { fetchAllCategories, saveUserCategories } from '../api/categoriesAPI';
+import { fetchAllCategories, saveUserCategories, getUserCatergories } from '../api/categoriesAPI';
 import { useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 

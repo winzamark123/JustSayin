@@ -11,10 +11,11 @@ const upload = multer({ storage: storage });
 router.post('/', verifyToken, userController.createUser);
 router.get('/:userID/savedSayings', verifyToken, userController.getUserSayings);
 router.get('/:userID', verifyToken, userController.getUser);
+
 router.get('/:userID/categories', verifyToken, userController.getUserCategories);
+router.post('/:userID/categories', verifyToken, userController.saveUserCategories);
 
 router.post('/:userID/savedSayings', verifyToken, userController.saveUserSaying);
-router.post('/:userID/categories', verifyToken, userController.saveUserCategories);
 router.patch('/:userID/username', verifyToken, userController.editUsername);
 
 

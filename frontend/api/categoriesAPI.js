@@ -22,6 +22,24 @@ export const saveUserCategories = async (userID, categories) => {
 
 };
 
+export const getUserCatergories = async (userID) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+        const response = await axios.get(`${BASE_URL}/api/users/${userID}/categories`, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+        console.log("Categories fetched:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error at getUserCategories", error);
+        console.log(error.response.data.message);
+        return error.response.data.message;
+    }
+
+}
+
 export const fetchAllCategories = async () => {
     try {
         const response = await axios.get(`${BASE_URL}/api/categories`);

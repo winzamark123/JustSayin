@@ -4,7 +4,6 @@ import { colorPalette, fontFamily, normalize } from '../components/theme';
 import JustSayinPNG from '../assets/LandingPage/JustSayin.png';
 import SafeAreaWrapper from '../components/SafeAreaWrapper';
 import Onboarding from 'react-native-onboarding-swiper';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Landing({ navigation }) {
     const [pageIndex, setPageIndex] = useState(0);
