@@ -10,6 +10,7 @@ import { colorPalette, fontFamily, normalize } from "../components/theme";
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { saveUserProfilePicToBackend, editUsernameToBackend } from "../api/userAPI";
+import tempUserIMG from "../assets/tempUser.png";
 
 
 
