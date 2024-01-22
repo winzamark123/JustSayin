@@ -40,7 +40,19 @@ export default function CategoryPage({ navigation }) {
             try {
                 const fetchedCategories = await fetchAllCategories();
                 setCategories(fetchedCategories);
-                console.log(fetchedCategories);
+                
+                // Fetch user's saved categories
+                const userCategories = await getUserCatergories(user.firebaseID);
+                console.log('User Categories:', userCategories);
+
+                // Find full category objects from fetchedCategories that match the user's saved categories
+                const initialSelectedCategories = fetchedCategories.filter(cat =>
+                    userCategories.includes(cat.name)
+                );
+
+                setSelectedCategories(initialSelectedCategories);
+
+                // console.log(fetchedCategories);
             } catch (error) {
                 console.error('Failed to fetch categories:', error);
             }
