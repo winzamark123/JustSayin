@@ -1,5 +1,5 @@
 import { useUser } from '../../context/UserContext';
-import { addFriendToBackend } from '../../api/userAPI';
+import { addFriendToBackend, fetchFriendsFromBackend } from '../../api/userAPI';
 import SafeAreaWrapper from '../../components/SafeAreaWrapper';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Dimensions, Modal } from 'react-native';
 import { colorPalette, fontFamily, normalize } from '../../components/theme';
@@ -7,11 +7,14 @@ import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NavBar from '../../components/navBar';
 import FriendsSayings from './FriendsSaying';
+import FriendModal from './_components/FriendModal';
 
 export default function Friends() {
     const { user, profilePic, updateProfilePic } = useUser();
     const [modalVisible, setModalVisible] = useState(false);
     const [friendUsername, setFriendUsername] = useState('');
+
+
 
     const handleAddFriend = async () => {
         try {
@@ -43,45 +46,10 @@ export default function Friends() {
                 <View style={title.container}>
                     <Text style={title.text}>Friend's Quote</Text>
                     <TouchableOpacity style={title.button} onPress={() => setModalVisible(!modalVisible)}>
-                        <Icon name="add" size={30} color="black"></Icon>
+                        <Icon name="group" size={30} color="black"></Icon>
                     </TouchableOpacity>
                 </View>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        setModalVisible(!modalVisible);
-                    }}
-                >
-                    <View style={friendPopUp.centeredView}>
-                        <View style={friendPopUp.modalView}>
-                            <Text style={friendPopUp.modalText}>Add Friends</Text>
-                            <TextInput
-                                style={friendPopUp.input}
-                                value={friendUsername}
-                                placeholder='Username'
-                                placeholderTextColor="grey"
-                                onChangeText={(text) => setFriendUsername(text)}
-                            />
-
-                            <TouchableOpacity
-                                style={friendPopUp.submitBTN}
-                                onPress={() => handleAddFriend()}
-                            >
-                                <Text style={friendPopUp.textStyle}>Add</Text>
-                            </TouchableOpacity>
-
-                            {/* Button to close the modal */}
-                            <TouchableOpacity
-                                style={friendPopUp.buttonClose}
-                                onPress={() => setModalVisible(!modalVisible)}
-                            >
-                                <Text style={friendPopUp.buttonClose}>Hide Popup</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
+                <FriendModal user={user} addFriendToBackend={addFriendToBackend} modalVisible={modalVisible} setModalVisible={setModalVisible}/>
                 <FriendsSayings />
 
 
@@ -96,65 +64,6 @@ export default function Friends() {
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const friendPopUp = StyleSheet.create({
-    input: {
-        borderColor: "transparent",
-        borderBottomColor: colorPalette.whiteColor,
-        borderWidth: normalize(1),
-        width: normalize(200),
-        fontFamily: fontFamily.Poppins,
-        fontSize: normalize(10),
-        color: colorPalette.whiteColor,
-    },
-    submitBTN: {
-        backgroundColor: colorPalette.forestGreenColor,
-        borderRadius: normalize(20),
-        padding: normalize(15),
-        paddingLeft: normalize(60),
-        paddingRight: normalize(60),
-        marginTop: normalize(20),
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    modalView: {
-        borderRadius: normalize(20),
-        padding: normalize(35),
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: normalize(2)
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: normalize(4),
-        elevation: normalize(5),
-        borderRadius: normalize(11),
-        backgroundColor: "#272732",
-
-
-
-    },
-    buttonClose: {
-        marginTop: normalize(10),
-        color: colorPalette.whiteColor,
-    },
-    textStyle: {
-        color: "black",
-        fontFamily: fontFamily.Poppins,
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: normalize(24),
-        fontFamily: fontFamily.PoppinsBold,
-        textAlign: "center",
-        fontSize: normalize(15),
-        color: colorPalette.whiteColor,
-        
-    }
-});
 
 const Top = StyleSheet.create({
     textContainer: {

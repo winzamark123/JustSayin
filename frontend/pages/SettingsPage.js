@@ -10,7 +10,7 @@ import { colorPalette, fontFamily, normalize } from "../components/theme";
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { saveUserProfilePicToBackend, editUsernameToBackend, deleteUserFromBackend } from "../api/userAPI";
-import { getAuth, deleteUser } from "firebase/auth";
+import { getAuth, deleteUser, signOut } from "firebase/auth";
 
 
 export default function SettingsPage({ navigation }) {
@@ -73,7 +73,11 @@ export default function SettingsPage({ navigation }) {
         const auth = getAuth();
         const user = auth.currentUser;
 
-
+        try {
+            await deleteUserFromBackend(user.uid);
+        } catch (error) {
+            console.error("Error deleting user from backend", error);
+        }
 
         deleteUser(user).then(() => {
             // User deleted successfully
@@ -87,6 +91,18 @@ export default function SettingsPage({ navigation }) {
             alert('Error deleting user:', error.message);
         });
     };
+
+    const handleLogout = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        try {
+            await signOut(auth);
+            navigation.navigate("LoginPage");
+        } catch (error) {
+            console.error("Error logging out user", error);
+        }
+    }
 
     useEffect(() => {
         updateProfilePic();
@@ -124,6 +140,9 @@ export default function SettingsPage({ navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity style={saveButton.container} onPress={saveUsername}>
                     <Text style={saveButton.text}>Save</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={saveButton.container} onPress={handleLogout}>
+                    <Text style={saveButton.text}>Log Out</Text>
                 </TouchableOpacity>
             </View>
             <NavBar />

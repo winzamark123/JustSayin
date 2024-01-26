@@ -205,4 +205,21 @@ export const deleteUserFromBackend = async (userID) => {
     }
 }
 
+export const fetchFriendsFromBackend = async (userID) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+
+        const response = await axios.get(`${BASE_URL}/api/users/${userID}/friends`, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+
+        // console.log("UserAPI: Friends Fetched from Backend:", response.data);
+        return response.data;
+    } catch (error) {
+        console.log("UserAPI: Error Fetching Friends from Backend", error);
+    }
+}
+
 

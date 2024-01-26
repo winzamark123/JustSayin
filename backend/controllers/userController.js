@@ -309,6 +309,21 @@ exports.getFriendsDailySaying = async (req, res) => {
     }
 }
 
+exports.getFriends = async (req, res) => {
+    const uid = req.uid;
+    try {
+        const user = await userModel.findOne({ firebaseID: uid }).populate('friends');
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user.friends);
+    } catch (error) {
+        console.error("Error occurred in getUserFriends:", error);
+        res.status(500).json({ message: "Error getting user friends", error: error.message });
+    }
+}
+
 exports.deleteUser = async (req, res) => {
     const uid = req.uid;
 

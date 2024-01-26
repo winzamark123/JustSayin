@@ -41,9 +41,7 @@ const SayingCard = ({ item }) => {
 
 export default function FriendsSayings(props) {
     const { user } = useUser();
-    const [friends, setFriends] = useState({
-
-    });
+    const [friends, setFriends] = useState({});
 
     useEffect(() => {
         const fetchFriendsSayings = async () => {
