@@ -309,3 +309,39 @@ exports.getFriendsDailySaying = async (req, res) => {
     }
 }
 
+exports.deleteUser = async (req, res) => {
+    const uid = req.uid;
+
+    try {
+        const user = await userModel.findOne({ firebaseID: uid });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        await user.remove();
+        res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        console.error("Error occurred in deleteUser:", error);
+        res.status(500).json({ message: "Error deleting user", error: error.message });
+    }
+}
+
+exports.deleteFriend = async (req, res) => {
+    const uid = req.uid;
+    const friendID = req.params.friendID;
+
+    try {
+        const user = await userModel.findOne({ firebaseID: uid });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.friends = user.friends.filter(friend => friend != friendID);
+        await user.save();
+        res.status(200).json({ message: "Friend deleted successfully" });
+    } catch (error) {
+        console.error("Error occurred in deleteFriend:", error);
+        res.status(500).json({ message: "Error deleting friend", error: error.message });
+    }
+}
+

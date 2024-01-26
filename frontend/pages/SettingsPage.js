@@ -9,9 +9,8 @@ import NavBar from '../components/navBar'
 import { colorPalette, fontFamily, normalize } from "../components/theme";
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import { saveUserProfilePicToBackend, editUsernameToBackend } from "../api/userAPI";
-import tempUserIMG from "../assets/tempUser.png";
-
+import { saveUserProfilePicToBackend, editUsernameToBackend, deleteUserFromBackend } from "../api/userAPI";
+import { getAuth, deleteUser } from "firebase/auth";
 
 
 export default function SettingsPage({ navigation }) {
@@ -69,6 +68,25 @@ export default function SettingsPage({ navigation }) {
             console.log("Error editing username to backend", error);
         }
     }
+
+    const handleDeleteUser = async () => {
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+
+
+        deleteUser(user).then(() => {
+            // User deleted successfully
+            // You can navigate the user to a login or welcome screen
+            // and maybe clear any user-related data from your app's state or storage
+            console.log('User account deleted successfully');
+            navigation.navigate("LoginPage"); // or any other screen you want to redirect to
+        }).catch((error) => {
+            // An error happened
+            console.error('Error deleting user:', error);
+            alert('Error deleting user:', error.message);
+        });
+    };
 
     useEffect(() => {
         updateProfilePic();

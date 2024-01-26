@@ -188,4 +188,21 @@ export const fetchFriendsDailySayingFromBackend = async (userID) => {
     }
 }
 
+export const deleteUserFromBackend = async (userID) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+
+        const response = await axios.delete(`${BASE_URL}/api/users/${userID}`, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+
+        // console.log("UserAPI: User Deleted from Backend:", response.data);
+        return response.data;
+    } catch (error) {
+        console.log("UserAPI: Error Deleting User from Backend", error);
+    }
+}
+
 

@@ -6,7 +6,6 @@ import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/aut
 import { useUser } from '../context/UserContext';
 import 'firebase/auth';
 import SafeAreaWrapper from "../components/SafeAreaWrapper";
-import quoteIcon from '../assets/quoteIcon.svg';
 
 
 
@@ -119,7 +118,7 @@ login = StyleSheet.create({
         fontFamily: fontFamily.PoppinsBold,
         color: colorPalette.mainColor,
         fontSize: normalize(25),
-    }
+    },
 
 });
 
@@ -187,6 +186,7 @@ loginForm = StyleSheet.create({
         borderWidth: 1,
         width: normalize(280),
         color: colorPalette.blackColor,
+        fontFamily: fontFamily.Poppins,
         // paddingBottom: 5,
     },
 

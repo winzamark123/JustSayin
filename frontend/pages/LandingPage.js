@@ -1,5 +1,5 @@
-import { StyleSheet, View, Image, Dimensions, TouchableOpacity, Text } from 'react-native';
-import { useState } from 'react';
+import { StyleSheet, View, Image, Dimensions, TouchableOpacity, Text, Animated } from 'react-native';
+import { useState, useRef } from 'react';
 import { colorPalette, fontFamily, normalize } from '../components/theme';
 import JustSayinPNG from '../assets/LandingPage/JustSayin.png';
 import SafeAreaWrapper from '../components/SafeAreaWrapper';
@@ -8,14 +8,34 @@ import Onboarding from 'react-native-onboarding-swiper';
 export default function Landing({ navigation }) {
     const [pageIndex, setPageIndex] = useState(0);
 
+    // Use useRef instead of useState for the animated value
+    const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+
+
+    // ... (rest of your functions)
+
+    // Add the fadeIn function
+    // const fadeIn = () => {
+    //     Animated.timing(fadeAnim, {
+    //         fromValue: 0,
+    //         toValue: 1,
+    //         duration: 3000, // Duration in milliseconds
+    //         useNativeDriver: true, // Add this line
+    //     }).start();
+    // };
+
     const goToLogin = () => {
         navigation.navigate("LoginPage");
     }
 
-    const getPageIndex = (newPageIndex) => {
-        console.log(pageIndex);
-        setPageIndex(newPageIndex);
-    }
+    // const getPageIndex = (newPageIndex) => {
+    //     console.log(pageIndex);
+    //     setPageIndex(newPageIndex);
+    //     if (newPageIndex === 4) {
+    //         fadeIn();
+    //     }
+    // }
+
     const CustomDot = ({ selected }) => {
         return (
             <View
@@ -27,31 +47,34 @@ export default function Landing({ navigation }) {
         );
     };
 
-    const doneButton = ({ ...props }) => {
-        return (
-            <TouchableOpacity
-                style={landing.BTN}
-                {...props}
-            >
-                <Text>Done</Text>
-            </TouchableOpacity>
-        )
-    };
+    // const doneButton = ({ ...props }) => {
+    //     return (
+    //         <Animated.View style={{ opacity: fadeAnim }}>
+    //             <TouchableOpacity
+    //                 style={landing.BTN}
+    //                 {...props}
+    //             >
+    //                 <Text>Done</Text>
+    //             </TouchableOpacity>
+    //         </Animated.View>
+
+    //     )
+    // };
 
 
     return (
         <SafeAreaWrapper color={colorPalette.mainColor} style={{ padding: normalize(30) }}>
             {/* <View style={landing.background}> */}
             <Onboarding
-                pageIndexCallback={getPageIndex}
+                // pageIndexCallback={getPageIndex}
                 DotComponent={CustomDot}
                 bottomBarColor='transparent'
                 bottomBarHighlight={false}
-                showSkip={false}
+                showSkip={true}
                 showNext={false}
                 onDone={goToLogin}
-                DoneButtonComponent={doneButton}
-                containerStyles={{ justifyContent: 'flex-start', alignItems: 'center', padding: normalize(30) }}
+                // DoneButtonComponent={doneButton}
+                containerStyles={{ justifyContent: 'flex-start', alignItems: 'center', padding: normalize(30), }}
                 pages={[
                     {
                         backgroundColor: colorPalette.mainColor,

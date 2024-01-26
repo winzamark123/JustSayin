@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { useUser } from "../../context/UserContext";
 import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../../api/dailySayingAPI";
-import { saveUserSayingToBackend, getUserProfilePicFromBackend } from "../../api/userAPI";
+import { saveUserSayingToBackend } from "../../api/userAPI";
 
 import { colorPalette, fontFamily, normalize } from "../../components/theme";
 import NavBar from "../../components/navBar";
