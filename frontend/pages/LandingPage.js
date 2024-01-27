@@ -71,6 +71,7 @@ export default function Landing({ navigation }) {
                 bottomBarColor='transparent'
                 bottomBarHighlight={false}
                 showSkip={true}
+                onSkip={goToLogin}
                 showNext={false}
                 onDone={goToLogin}
                 // DoneButtonComponent={doneButton}
