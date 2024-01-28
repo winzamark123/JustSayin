@@ -29,4 +29,5 @@ router.get('/:userID/friends', verifyToken, userController.getFriends);
 router.get('/:userID/friends/dailySaying', verifyToken, userController.getFriendsDailySaying);
 
 router.delete('/:userID/', verifyToken, userController.deleteUser);
+router.delete('/:userID/friends/:friendUsername', verifyToken, userController.deleteFriend);
 module.exports = router;

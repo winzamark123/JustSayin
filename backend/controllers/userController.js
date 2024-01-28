@@ -143,7 +143,7 @@ exports.getUserCategories = async (req, res) => {
 }
 
 exports.editUsername = async (req, res) => {
-    console.log("Edit Username Request Body:", req.body);
+    // console.log("Edit Username Request Body:", req.body);
     try {
         const uid = req.uid;
 
@@ -190,7 +190,7 @@ const AWSsaveUserProfilePic = async (req) => {
 
     try {
         await s3.send(command);
-        console.log("AWS SUCCESSFUL");
+        // console.log("AWS SUCCESSFUL");
         return uniqueFileName;
     } catch (error) {
         console.error("Error occurred in AWSsaveUserProfilePic:", error);
@@ -205,7 +205,7 @@ exports.saveUserProfilePic = async (req, res) => {
     try {
 
         const AWSFileName = await AWSsaveUserProfilePic(req);
-        console.log("AWSFileName: ", AWSFileName);
+        // console.log("AWSFileName: ", AWSFileName);
         const user = await userModel.findOne({ firebaseID: uid });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -214,7 +214,7 @@ exports.saveUserProfilePic = async (req, res) => {
         user.profilePic = AWSFileName;
         await user.save();
 
-        console.log("Profile Pic Saved to Backend");
+        // console.log("Profile Pic Saved to Backend");
         res.status(201).json({ message: "Profile picture saved successfully" });
 
     } catch (error) {
@@ -235,7 +235,7 @@ exports.getUserProfilePic = async (req, res) => {
         const command = new GetObjectCommand({ Bucket: bucketName, Key: user.profilePic });
         const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
 
-        console.log("Profile Pic URL Generated", url);
+        // console.log("Profile Pic URL Generated", url);
         return res.status(200).json({ message: "Profile Pic URL Generated", url: url });
     } catch (error) {
         console.error("Error occurred in getUserProfilePic:", error);
@@ -247,8 +247,8 @@ exports.addFriend = async (req, res) => {
     const uid = req.uid;
     const friendUsername = req.body.friendUsername;
 
-    console.log("Response", res.body);
-    console.log("Friend Username:", friendUsername);
+    // console.log("Response", res.body);
+    // console.log("Friend Username:", friendUsername);
     try {
         const user = await userModel.findOne({ firebaseID: uid });
         if (!user) {
@@ -264,7 +264,7 @@ exports.addFriend = async (req, res) => {
 
         user.friends.push(friend._id);
         await user.save();
-        console.log("Friend added successfully");
+        // console.log("Friend added successfully");
         return res.status(200).json({ message: "Friend added successfully" });
 
     } catch (error) {
@@ -300,7 +300,7 @@ exports.getFriendsDailySaying = async (req, res) => {
 
 
         const friendsSayings = await Promise.all(friendsSayingsPromises);
-        console.log("Friends Sayings:", friendsSayings);
+        // console.log("Friends Sayings:", friendsSayings);
         res.status(200).json(friendsSayings);
 
     } catch (error) {
@@ -312,17 +312,34 @@ exports.getFriendsDailySaying = async (req, res) => {
 exports.getFriends = async (req, res) => {
     const uid = req.uid;
     try {
-        const user = await userModel.findOne({ firebaseID: uid }).populate('friends');
+        const user = await userModel.findOne({ firebaseID: uid }).populate({
+            path: 'friends',
+            select: 'username profilePic' // Select only the username and profilePic fields
+        });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        res.status(200).json(user.friends);
+        // Create an array to hold the promises for getting profile picture URLs
+        const profilePicPromises = user.friends.map(async (friend) => {
+            const command = new GetObjectCommand({ Bucket: bucketName, Key: friend.profilePic });
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
+            return {
+                username: friend.username, // Include the friend's username
+                profilePicUrl: url // Include the signed URL for the profile picture
+            };
+        });
+
+        // Resolve all the promises to get the profile picture URLs
+        const friendsWithProfilePics = await Promise.all(profilePicPromises);
+
+        res.status(200).json(friendsWithProfilePics);
     } catch (error) {
-        console.error("Error occurred in getUserFriends:", error);
+        console.error("Error occurred in getFriends:", error);
         res.status(500).json({ message: "Error getting user friends", error: error.message });
     }
 }
+
 
 exports.deleteUser = async (req, res) => {
     const uid = req.uid;
@@ -343,7 +360,7 @@ exports.deleteUser = async (req, res) => {
 
 exports.deleteFriend = async (req, res) => {
     const uid = req.uid;
-    const friendID = req.params.friendID;
+    const friendUsername = req.params.friendUsername;
 
     try {
         const user = await userModel.findOne({ firebaseID: uid });
@@ -351,8 +368,15 @@ exports.deleteFriend = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        user.friends = user.friends.filter(friend => friend != friendID);
+        // Find the friend's user document by username
+        const friend = await userModel.findOne({ username: friendUsername });
+        if (!friend) {
+            return res.status(404).json({ message: "Friend not found" });
+        }
+        // Remove the friend's ID from the user's friends array
+        user.friends = user.friends.filter(friendId => !friendId.equals(friend._id));
         await user.save();
+
         res.status(200).json({ message: "Friend deleted successfully" });
     } catch (error) {
         console.error("Error occurred in deleteFriend:", error);

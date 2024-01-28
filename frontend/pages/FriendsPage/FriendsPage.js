@@ -12,26 +12,6 @@ import FriendModal from './_components/FriendModal';
 export default function Friends() {
     const { user, profilePic, updateProfilePic } = useUser();
     const [modalVisible, setModalVisible] = useState(false);
-    const [friendUsername, setFriendUsername] = useState('');
-
-
-
-    const handleAddFriend = async () => {
-        try {
-            const response = await addFriendToBackend(user.firebaseID, friendUsername);
-            console.log(response.status);
-            if (response.status === 409) {
-                console.log("Friend already exists!");
-            } else {
-                console.log("Friend added successfully!");
-            }
-            setModalVisible(!modalVisible);
-        } catch (error) {
-            console.log("Error adding friend:", error);
-
-        }
-    }
-
 
     return (
         <SafeAreaWrapper color={colorPalette.yellowColor}>
@@ -49,7 +29,7 @@ export default function Friends() {
                         <Icon name="group" size={30} color="black"></Icon>
                     </TouchableOpacity>
                 </View>
-                <FriendModal user={user} addFriendToBackend={addFriendToBackend} modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+                <FriendModal user={user} modalVisible={modalVisible} setModalVisible={setModalVisible}/>
                 <FriendsSayings />
 
 

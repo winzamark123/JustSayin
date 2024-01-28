@@ -151,9 +151,6 @@ export default function SettingsPage({ navigation }) {
     )
 }
 
-const windowHeight = Dimensions.get('window').height;
-const windowWidth = Dimensions.get('window').width;
-
 const settingsCardStyles = StyleSheet.create({
     card: {
         backgroundColor: colorPalette.whiteColor,

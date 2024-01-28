@@ -171,6 +171,26 @@ export const addFriendToBackend = async (userID, friendUsername) => {
     }
 }
 
+export const deleteFriendFromBackend = async (userID, friendUsername) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+
+        const response = await axios.delete(`${BASE_URL}/api/users/${userID}/friends/${friendUsername}`, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            },
+            data: {
+                friendUsername
+            }
+        });
+
+        // console.log("UserAPI: Friend Deleted from Backend:", response.data);
+        return response.data;
+    } catch (error) {
+        console.log("UserAPI: Error Deleting Friend from Backend", error);
+    }
+}
+
 export const fetchFriendsDailySayingFromBackend = async (userID) => {
     try {
         const idToken = await FIREBASE_AUTH.currentUser.getIdToken();

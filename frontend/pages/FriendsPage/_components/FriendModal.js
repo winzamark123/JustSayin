@@ -1,11 +1,13 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 import { colorPalette, fontFamily, normalize } from '../../../components/theme';
 import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { fetchFriendsFromBackend, addFriendToBackend, deleteFriendFromBackend } from '../../../api/userAPI';
 
 
-export default function FriendModal({ user, addFriendToBackend, modalVisible, setModalVisible }) {
+export default function FriendModal({ user, modalVisible, setModalVisible }) {
     const [friendUsername, setFriendUsername] = useState('');
+    const [friends, setFriends] = useState([]);
 
     const handleAddFriend = async () => {
         try {
@@ -21,6 +23,59 @@ export default function FriendModal({ user, addFriendToBackend, modalVisible, se
             console.log("Error adding friend:", error);
         }
     }
+
+    const handleDeleteFriend = async (friendUsername) => {
+        try {
+            const response = await deleteFriendFromBackend(user.firebaseID, friendUsername);
+            console.log("Deleted friend response:", response);
+
+            // Remove the friend from the local state to update the UI
+            const updatedFriends = friends.filter(friend => friend.username !== friendUsername);
+            setFriends(updatedFriends);
+
+        } catch (error) {
+            console.log("Error deleting friend:", error);
+        }
+    }
+
+
+    const handleFetchFriends = async () => {
+        try {
+            const response = await fetchFriendsFromBackend(user.firebaseID);
+            // console.log("Friends:", response);
+            return response;
+        } catch (error) {
+            console.log("Error fetching friends:", error);
+        }
+    }
+
+    useEffect(() => {
+        const fetchFriends = async () => {
+            try {
+                const fetchedFriends = await handleFetchFriends();
+                setFriends(fetchedFriends);
+            } catch (error) {
+                console.error('Failed to fetch friends:', error)
+            }
+        };
+
+        fetchFriends();
+    }, []);
+
+    const renderFriend = ({ item }) => {
+        return (
+            <View style={friendsList.friendItem}>
+                <Image source={{ uri: item.profilePicUrl }} style={friendsList.friendProfilePic}></Image>
+                <Text style={friendsList.friendName}>{item.username}</Text>
+                <TouchableOpacity onPress={() => handleDeleteFriend(item.username)}>
+                    <Text>Delete</Text>
+                </TouchableOpacity>
+                {/* Add more friend details or actions here if needed */}
+            </View>
+        );
+    };
+
+
 
     return (
         <Modal animationType="slide"
@@ -58,13 +113,67 @@ export default function FriendModal({ user, addFriendToBackend, modalVisible, se
                     >
                         <Text style={friendPopUp.buttonClose}>Hide Popup</Text>
                     </TouchableOpacity>
+                    <View style={friendsList.container}>
+                        <View style={friendsList.title}>
+                            <Icon name="group" size={normalize(40)} color="white"></Icon>
+                        </View>
+                        <Text style={friendsList.titleFont}>Your Friends</Text>
+                    </View>
+                    <FlatList
+                        data={friends}
+                        keyExtractor={(item) => item._id}
+                        renderItem={renderFriend}
+                        contentContainerStyle={friendsList.list}
+                    />
+
                 </View>
             </View>
         </Modal>
     );
 }
 
-
+const friendsList = StyleSheet.create({
+    container: {
+        borderRadius: normalize(20),
+        padding: normalize(15),
+        marginTop: normalize(20),
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: normalize(10),
+    },
+    title: {
+        fontFamily: fontFamily.PoppinsSemiBold,
+        fontSize: normalize(18),
+        lineHeight: "150%",
+        color: colorPalette.blackColor,
+        marginLeft: -normalize(20),
+    },
+    titleFont: {
+        color: colorPalette.whiteColor,
+        fontFamily: fontFamily.PoppinsBold,
+    },
+    list: {
+        fontFamily: fontFamily.Poppins,
+        fontSize: normalize(15),
+        color: colorPalette.blackColor,
+    },
+    friendName: {
+        fontFamily: fontFamily.Poppins,
+        fontSize: normalize(15),
+        color: colorPalette.whiteColor,
+    },
+    friendItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: normalize(10),
+        padding: normalize(10),
+    },
+    friendProfilePic: {
+        width: 30,
+        height: 30,
+        borderRadius: 50,
+    }
+})
 const friendPopUp = StyleSheet.create({
     centeredView: {
         flex: 1,

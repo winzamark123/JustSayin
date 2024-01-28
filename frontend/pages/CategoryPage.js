@@ -7,13 +7,13 @@ import { useEffect } from 'react';
 import { useUser } from '../context/UserContext';
 
 
-const categoriesCard = (category) => {
-    return (
-        <View style={categoryCard.card}>
-            <Text style={categoryCard.cardText}>{category}</Text>
-        </View>
-    );
-}
+// const categoriesCard = (category) => {
+//     return (
+//         <View style={categoryCard.card}>
+//             <Text style={categoryCard.cardText}>{category}</Text>
+//         </View>
+//     );
+// }
 
 export default function CategoryPage({ navigation }) {
     const [categories, setCategories] = useState([]);
