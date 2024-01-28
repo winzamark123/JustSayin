@@ -67,8 +67,8 @@ export default function FriendModal({ user, modalVisible, setModalVisible }) {
             <View style={friendsList.friendItem}>
                 <Image source={{ uri: item.profilePicUrl }} style={friendsList.friendProfilePic}></Image>
                 <Text style={friendsList.friendName}>{item.username}</Text>
-                <TouchableOpacity onPress={() => handleDeleteFriend(item.username)}>
-                    <Text>Delete</Text>
+                <TouchableOpacity onPress={() => handleDeleteFriend(item.username)} style={{ marginLeft: normalize(140) }}>
+                    <Icon name="close" size={normalize(20)} color="white"></Icon>
                 </TouchableOpacity>
                 {/* Add more friend details or actions here if needed */}
             </View>
@@ -107,12 +107,7 @@ export default function FriendModal({ user, modalVisible, setModalVisible }) {
                     </TouchableOpacity>
 
                     {/* Button to close the modal */}
-                    <TouchableOpacity
-                        style={friendPopUp.buttonClose}
-                        onPress={() => setModalVisible(!modalVisible)}
-                    >
-                        <Text style={friendPopUp.buttonClose}>Hide Popup</Text>
-                    </TouchableOpacity>
+
                     <View style={friendsList.container}>
                         <View style={friendsList.title}>
                             <Icon name="group" size={normalize(40)} color="white"></Icon>
@@ -125,6 +120,12 @@ export default function FriendModal({ user, modalVisible, setModalVisible }) {
                         renderItem={renderFriend}
                         contentContainerStyle={friendsList.list}
                     />
+                    <TouchableOpacity
+                        style={friendPopUp.buttonClose}
+                        onPress={() => setModalVisible(!modalVisible)}
+                    >
+                        <Text style={friendPopUp.buttonClose}>Hide Popup</Text>
+                    </TouchableOpacity>
 
                 </View>
             </View>
