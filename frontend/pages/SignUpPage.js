@@ -69,18 +69,21 @@ export default function Signup({ navigation }) {
                     </View>
                     <View style={signupForm.container}>
                         <View style={signupForm.form}>
-                            <Text style={signupForm.form_text}>Email</Text>
                             <TextInput style={signupForm.form_input}
+                                placeholder='Email'
+                                placeholderTextColor={colorPalette.yellowColor}
                                 value={email}
                                 onChangeText={(text) => setEmail(text)}
                             ></TextInput>
-                            <Text style={signupForm.form_text}>Username</Text>
                             <TextInput style={signupForm.form_input}
+                                placeholder='Username'
+                                placeholderTextColor={colorPalette.yellowColor}
                                 value={username}
                                 onChangeText={(text) => setUsername(text)}
                             ></TextInput>
-                            <Text style={signupForm.form_text}>Password</Text>
                             <TextInput style={signupForm.form_input}
+                                placeholder='Password'
+                                placeholderTextColor={colorPalette.yellowColor}
                                 secureTextEntry={true}
                                 value={password}
                                 onChangeText={(text) => setPassword(text)}
@@ -110,13 +113,10 @@ export default function Signup({ navigation }) {
 };
 
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
 
 signup = StyleSheet.create({
     background: {
-        backgroundColor: colorPalette.yellowColor,
+        backgroundColor: colorPalette.mainColor,
         alignItems: 'center',
         top: normalize(90),
         alignItems: 'center',
@@ -135,28 +135,10 @@ signup = StyleSheet.create({
     },
     title_text: {
         fontFamily: fontFamily.PoppinsBold,
-        color: colorPalette.mainColor,
+        color: colorPalette.yellowColor,
         fontSize: normalize(25),
     }
 
-});
-
-title = StyleSheet.create({
-    welcome: {
-        position: 'relative',
-        marginTop: 200,
-        left: 30,
-        width: 300,
-        fontSize: 30,
-        color: colorPalette.mainColor,
-    },
-    welcome2: {
-        position: 'relative',
-        left: 30,
-        width: 300,
-        fontSize: 30,
-        color: colorPalette.mainColor,
-    },
 });
 
 
@@ -186,11 +168,13 @@ signupForm = StyleSheet.create({
     },
     form_input: {
         borderColor: 'transparent',
-        borderBottomColor: colorPalette.blackColor,
-        borderWidth: 1,
+        borderBottomColor: colorPalette.yellowColor,
+        borderWidth: 2,
         width: normalize(280),
-        color: colorPalette.blackColor,
-        // paddingBottom: 5,
+        color: colorPalette.yellowColor,
+        fontFamily: fontFamily.Poppins,
+        paddingBottom: normalize(5),
+        marginTop: normalize(40),
     },
 
     signupBTN_Container: {
@@ -222,7 +206,7 @@ signupForm = StyleSheet.create({
         marginTop: normalize(10),
     },
     signUpText: {
-        color: colorPalette.blackColor,
+        color: colorPalette.yellowColor,
         fontFamily: fontFamily.Poppins,
         fontSize: normalize(15),
         textDecorationLine: 'underline',

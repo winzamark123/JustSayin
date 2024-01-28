@@ -4,6 +4,7 @@ import { FIREBASE_AUTH } from "../firebaseConfig";
 import { useState } from "react";
 import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { useUser } from '../context/UserContext';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import 'firebase/auth';
 import SafeAreaWrapper from "../components/SafeAreaWrapper";
 
@@ -57,15 +58,17 @@ export default function Login({ navigation }) {
                     </View>
                     <View style={loginForm.container}>
                         <View style={loginForm.form}>
-                            <Text style={loginForm.form_text}>Email</Text>
                             <TextInput style={loginForm.form_input}
                                 value={email}
+                                placeholder="Email"
+                                placeholderTextColor={colorPalette.yellowColor}
                                 onChangeText={(text) => setEmail(text)}
                             ></TextInput>
-                            <Text style={loginForm.form_text}>Password</Text>
                             <TextInput style={loginForm.form_input}
                                 secureTextEntry={true}
                                 value={password}
+                                placeholder="Password"
+                                placeholderTextColor={colorPalette.yellowColor}
                                 onChangeText={(text) => setPassword(text)}
                             ></TextInput>
 
@@ -80,11 +83,6 @@ export default function Login({ navigation }) {
                             </View>
                         </View>
                     </View>
-
-
-                    <TouchableOpacity style={forgotPassword.BTN} onPress={() => goToForgotPassword()}>
-                        <Text style={forgotPassword.text}>Forgot Password?</Text>
-                    </TouchableOpacity>
                 </View >
             </View>
         </SafeAreaWrapper >
@@ -97,7 +95,7 @@ const windowHeight = Dimensions.get('window').height;
 
 login = StyleSheet.create({
     background: {
-        backgroundColor: colorPalette.yellowColor,
+        // backgroundColor: colorPalette.yellowColor,
         alignItems: 'center',
         top: normalize(90),
         alignItems: 'center',
@@ -116,28 +114,10 @@ login = StyleSheet.create({
     },
     title_text: {
         fontFamily: fontFamily.PoppinsBold,
-        color: colorPalette.mainColor,
+        color: colorPalette.yellowColor,
         fontSize: normalize(25),
     },
 
-});
-
-title = StyleSheet.create({
-    welcome: {
-        position: 'relative',
-        marginTop: 200,
-        left: 30,
-        width: 300,
-        fontSize: 30,
-        color: colorPalette.mainColor,
-    },
-    welcome2: {
-        position: 'relative',
-        left: 30,
-        width: 300,
-        fontSize: 30,
-        color: colorPalette.mainColor,
-    },
 });
 
 forgotPassword = StyleSheet.create({
@@ -169,24 +149,16 @@ loginForm = StyleSheet.create({
         // borderWidth: 2,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-
-    form_text: {
-        color: colorPalette.blackColor,
-        fontFamily: fontFamily.Poppins,
-        fontSize: normalize(14),
-        // paddingTop: 5,
-        // paddingBottom: 5,
-        marginTop: normalize(40),
-        alignSelf: 'flex-start',
+        // marginTop: normalize(40),
     },
     form_input: {
         borderColor: 'transparent',
-        borderBottomColor: colorPalette.blackColor,
-        borderWidth: 1,
+        borderBottomColor: colorPalette.yellowColor,
+        borderWidth: 2,
         width: normalize(280),
-        color: colorPalette.blackColor,
+        color: colorPalette.yellowColor,
         fontFamily: fontFamily.Poppins,
+        marginTop: normalize(40),
         // paddingBottom: 5,
     },
 
@@ -219,7 +191,7 @@ loginForm = StyleSheet.create({
         marginTop: normalize(10),
     },
     signUpText: {
-        color: colorPalette.blackColor,
+        color: colorPalette.yellowColor,
         fontFamily: fontFamily.Poppins,
         fontSize: normalize(15),
         textDecorationLine: 'underline',
