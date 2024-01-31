@@ -9,7 +9,10 @@ export const colorPalette = {
     forestGreenColor: '#77BA99',
     blackColor: '#272732',
     whiteColor: '#F6F6F6',
+    greyColor: '#7D7D8B'
 }
+
+
 
 export const fontSize = {
     title: 64,

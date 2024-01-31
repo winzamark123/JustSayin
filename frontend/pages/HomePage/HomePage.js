@@ -9,6 +9,7 @@ import { saveUserSayingToBackend } from "../../api/userAPI";
 import { colorPalette, fontFamily, normalize } from "../../components/theme";
 import NavBar from "../../components/navBar";
 import SavedSayings from "./savedSayings";
+import Layout from "../../components/Layout";
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -79,7 +80,7 @@ export default function Home() {
 
 
     return (
-        <SafeAreaView style={homeStyles.safeArea}>
+        <Layout bgColor={colorPalette.yellowColor}>
             <View style={homeStyles.background}>
                 <View style={homeStyles.container}>
                     <View style={homeTop.container}>
@@ -127,8 +128,8 @@ export default function Home() {
                     </View>
                 </View>
             </View>
-            <NavBar />
-        </SafeAreaView>
+            {/* <NavBar curPage="HomePage" iconColor="red" /> */}
+        </Layout>
     )
 }
 const windowWidth = Dimensions.get('window').width;

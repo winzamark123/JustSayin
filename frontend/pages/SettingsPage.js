@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View, SafeAreaView, TextInput, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, TextInput, Image, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -12,6 +12,8 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { saveUserProfilePicToBackend, editUsernameToBackend, deleteUserFromBackend } from "../api/userAPI";
 import { getAuth, deleteUser, signOut } from "firebase/auth";
 
+import Layout from "../components/Layout";
+
 
 export default function SettingsPage({ navigation }) {
     const { user, profilePic, updateUser, updateProfilePic } = useUser();
@@ -22,7 +24,7 @@ export default function SettingsPage({ navigation }) {
         navigation.navigate("CategoryPage");
     }
 
-    const editProfilePic = async () => {
+    const handleEditProfilePic = async () => {
         const options = {
             mediaType: 'photo',
             quality: 1,
@@ -83,7 +85,7 @@ export default function SettingsPage({ navigation }) {
             // User deleted successfully
             // You can navigate the user to a login or welcome screen
             // and maybe clear any user-related data from your app's state or storage
-            console.log('User account deleted successfully');
+            // console.log('User account deleted successfully');
             navigation.navigate("LoginPage"); // or any other screen you want to redirect to
         }).catch((error) => {
             // An error happened
@@ -109,61 +111,120 @@ export default function SettingsPage({ navigation }) {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, justifyContent: "center", backgroundColor: colorPalette.yellowColor }}>
-            <View style={settingsStyles.container}>
-                <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: 30 }}>Settings</Text>
+        <Layout bgColor={colorPalette.blackColor}>
+            <View style={{ flex: 1, paddingLeft: normalize(30), paddingRight: normalize(30) }}>
+                <Text style={{ fontFamily: fontFamily.PoppinsBold, fontSize: normalize(28), color: "white" }}>Settings</Text>
 
                 <View style={settingsProfilePic.container}>
                     <Image source={profilePic} style={settingsProfilePic.pic}></Image>
-                    <TouchableOpacity style={settingsProfilePic.edit} onPress={editProfilePic}>
-                        <Icon name="edit" size={30} color="#D33F48" />
-                    </TouchableOpacity>
+                    <Text style={{ fontFamily: fontFamily.PoppinsSemiBold, marginTop: normalize(5), fontSize: normalize(20), color: "white" }}>{username}</Text>
                 </View>
 
-                <View style={settingsCardStyles.card}>
-                    <View style={settingsCardStyles.input}>
-                        <Text style={settingsCardStyles.cardText}>Username</Text>
-                        <TextInput style={settingsCardStyles.cardPlaceholder}
-                            placeholder="Username"
-                            value={username}
-                            onChangeText={(text) => setUsername(text)}
-                        >
-                        </TextInput>
-                    </View>
-                    <Icon name="person" size={normalize(35)} color="#D33F48" />
-                </View>
-                <TouchableOpacity style={settingsCardStyles.cardCategory} onPress={goToCategoryPage}>
+                <View>
+                    <Text style={textStyles.normal}>General</Text>
                     <View>
-                        <Text style={settingsCardStyles.cardPlaceholder}>Edit Categories</Text>
+                        <TouchableOpacity style={settingsCardStyles.cardTop} onPress={handleEditProfilePic}>
+                            <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
+                                <Icon name="person" size={normalize(24)} color="white" />
+                                <Text style={textStyles.normal}>Edit Profile Picture</Text>
+                            </View>
+                            <Icon name="keyboard-arrow-right" size={normalize(35)} color="white" />
+                        </TouchableOpacity>
                     </View>
-                    <Icon name="category" size={normalize(35)} color="#D33F48" />
-                </TouchableOpacity>
-                <TouchableOpacity style={saveButton.container} onPress={saveUsername}>
-                    <Text style={saveButton.text}>Save</Text>
-                </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity style={settingsCardStyles.card} onPress={handleEditProfilePic}>
+                            <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
+                                <Icon name="edit" size={normalize(24)} color="white" />
+                                <Text style={textStyles.normal}>Edit Username</Text>
+                            </View>
+                            <Icon name="keyboard-arrow-right" size={normalize(35)} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity style={settingsCardStyles.cardBottom} onPress={goToCategoryPage}>
+                            <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
+                                <Icon name="money" size={normalize(24)} color="white" />
+                                <Text style={textStyles.normal}>Edit Categories</Text>
+                            </View>
+                            <Icon name="keyboard-arrow-right" size={normalize(35)} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={{ marginTop: normalize(10) }}>
+                    <Text style={textStyles.normal}>Friends</Text>
+                    <View>
+                        <TouchableOpacity style={settingsCardStyles.cardSolo} onPress={goToCategoryPage}>
+                            <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
+                                <Icon name="group" size={normalize(24)} color="white" />
+                                <Text style={textStyles.normal}>Edit Categories</Text>
+                            </View>
+                            <Icon name="keyboard-arrow-right" size={normalize(35)} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
                 <TouchableOpacity style={saveButton.container} onPress={handleLogout}>
                     <Text style={saveButton.text}>Log Out</Text>
                 </TouchableOpacity>
             </View>
-            <NavBar />
+        </Layout>
 
-        </SafeAreaView >
     )
 }
 
+const textStyles = StyleSheet.create({
+    normal: {
+        color: "white",
+        fontFamily: fontFamily.Poppins,
+        fontSize: normalize(15),
+        lineHeight: normalize(20),
+    }
+});
 const settingsCardStyles = StyleSheet.create({
     card: {
-        backgroundColor: colorPalette.whiteColor,
+        backgroundColor: colorPalette.greyColor,
         paddingRight: normalize(20),
         paddingLeft: normalize(20),
         paddingTop: normalize(10),
         paddingBottom: normalize(10),
-        height: normalize(70),
-        borderRadius: 11,
-        marginBottom: 20,
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "flex-end"
+        alignItems: "center",
+    },
+    cardTop: {
+        borderTopLeftRadius: 11,
+        borderTopRightRadius: 11,
+        backgroundColor: colorPalette.greyColor,
+        paddingRight: normalize(20),
+        paddingLeft: normalize(20),
+        paddingTop: normalize(20),
+        paddingBottom: normalize(10),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    cardBottom: {
+        borderBottomLeftRadius: 11,
+        borderBottomRightRadius: 11,
+        backgroundColor: colorPalette.greyColor,
+        paddingRight: normalize(20),
+        paddingLeft: normalize(20),
+        paddingTop: normalize(10),
+        paddingBottom: normalize(20),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
+    cardSolo: {
+        borderRadius: 11,
+        backgroundColor: colorPalette.greyColor,
+        paddingRight: normalize(20),
+        paddingLeft: normalize(20),
+        paddingTop: normalize(10),
+        paddingBottom: normalize(10),
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     cardCategory: {
         backgroundColor: colorPalette.whiteColor,
@@ -190,26 +251,18 @@ const settingsCardStyles = StyleSheet.create({
     }
 });
 
-const settingsStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 35,
-        paddingLeft: 30,
-        paddingRight: 30
-    }
-});
 
 const settingsProfilePic = StyleSheet.create({
     container: {
-        height: normalize(308),
+        height: normalize(200),
         justifyContent: "center",
         alignItems: "center",
         // borderWidth: 1,
         // borderColor: "black"
     },
     pic: {
-        width: normalize(166),
-        height: normalize(166),
+        width: normalize(111),
+        height: normalize(111),
         borderRadius: normalize(83),
     },
     edit: {

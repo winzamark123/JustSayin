@@ -7,20 +7,24 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 
-function NavBar() {
+function NavBar({ bgColor }) {
     const navigation = useNavigation();
 
+    const getIconColor = (bgColor) => {
+        return bgColor === colorPalette.yellowColor ? colorPalette.blackColor : colorPalette.whiteColor;
+    }
+
     return (
-        <View style={navBarStyles.background}>
+        <View style={{ ...navBarStyles.background, backgroundColor: bgColor }}>
             <View style={navBarStyles.container}>
                 <TouchableOpacity title="Home" onPress={() => navigation.navigate('HomePage')}>
-                    <Icon name="home" size={40} color="#000"></Icon>
+                    <Icon name="home" size={40} color={getIconColor(bgColor)}></Icon>
                 </TouchableOpacity>
                 <TouchableOpacity title="Friends" onPress={() => navigation.navigate('FriendsPage')}>
-                    <Icon name="group" size={40} color="#000"></Icon>
+                    <Icon name="group" size={40} color={getIconColor(bgColor)}></Icon>
                 </TouchableOpacity>
                 <TouchableOpacity title="Settings" onPress={() => navigation.navigate('SettingsPage')}>
-                    <Icon name="settings" size={40} color="#000"></Icon>
+                    <Icon name="settings" size={40} color={getIconColor(bgColor)}></Icon>
                 </TouchableOpacity>
             </View>
         </View>
@@ -32,7 +36,7 @@ const navBarStyles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        backgroundColor: `${colorPalette.yellowColor}`,
+        // backgroundColor: `${colorPalette.yellowColor}`,
 
         // borderWidth: 1,
         // borderColor: 'black',
@@ -42,7 +46,7 @@ const navBarStyles = StyleSheet.create({
         alignItems: 'center',
         // justifyContent: 'center',
         width: windowWidth,
-        backgroundColor: `${colorPalette.yellowColor}`,
+        // backgroundColor: `${colorPalette.yellowColor}`,
         position: 'absolute',
         bottom: 0,
         padding: 20
