@@ -24,14 +24,13 @@ export default function Home() {
     const { RNSharedWidget } = NativeModules;
 
     const toggleWidget = () => {
-        console.log(RNSharedWidget);
         RNSharedWidget.setData('justSayinWidgetKey', JSON.stringify({
             quote: dailySaying.sayingID.quote ?? "Unknown",
             author: dailySaying.sayingID.author ?? "Author",
         }), (status) => {
             console.log('Widget status: ', status);
         });
-        console.log("Widget Toggled!")
+        // console.log("Widget Toggled!")
     }
 
     const loadDailySaying = async () => {

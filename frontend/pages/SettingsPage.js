@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { useUser } from "../context/UserContext";
 
-import NavBar from '../components/navBar'
 import { colorPalette, fontFamily, normalize } from "../components/theme";
 import { launchImageLibrary } from 'react-native-image-picker';
 

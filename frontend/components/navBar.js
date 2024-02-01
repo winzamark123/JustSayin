@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import { colorPalette } from './theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,9 +8,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 function NavBar({ bgColor }) {
+    const route = useRoute();
     const navigation = useNavigation();
 
-    const getIconColor = (bgColor) => {
+    const getIconColor = (bgColor, pageName) => {
+        if (route.name === pageName) {
+            return '#D33F48';
+        }
         return bgColor === colorPalette.yellowColor ? colorPalette.blackColor : colorPalette.whiteColor;
     }
 
@@ -18,13 +22,13 @@ function NavBar({ bgColor }) {
         <View style={{ ...navBarStyles.background, backgroundColor: bgColor }}>
             <View style={navBarStyles.container}>
                 <TouchableOpacity title="Home" onPress={() => navigation.navigate('HomePage')}>
-                    <Icon name="home" size={40} color={getIconColor(bgColor)}></Icon>
+                    <Icon name="home" size={40} color={getIconColor(bgColor, 'HomePage')}></Icon>
                 </TouchableOpacity>
                 <TouchableOpacity title="Friends" onPress={() => navigation.navigate('FriendsPage')}>
-                    <Icon name="group" size={40} color={getIconColor(bgColor)}></Icon>
+                    <Icon name="group" size={40} color={getIconColor(bgColor, 'FriendsPage')}></Icon>
                 </TouchableOpacity>
                 <TouchableOpacity title="Settings" onPress={() => navigation.navigate('SettingsPage')}>
-                    <Icon name="settings" size={40} color={getIconColor(bgColor)}></Icon>
+                    <Icon name="settings" size={40} color={getIconColor(bgColor, 'SettingsPage')}></Icon>
                 </TouchableOpacity>
             </View>
         </View>

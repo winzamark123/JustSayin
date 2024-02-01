@@ -5,7 +5,6 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Dimensions,
 import { colorPalette, fontFamily, normalize } from '../../components/theme';
 import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import NavBar from '../../components/navBar';
 import FriendsSayings from './FriendsSaying';
 import FriendModal from './_components/FriendModal';
 import Layout from '../../components/Layout';
@@ -35,9 +34,6 @@ export default function Friends() {
 
 
             </View>
-
-
-            <NavBar />
         </Layout>
     )
 }
