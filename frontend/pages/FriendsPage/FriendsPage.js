@@ -8,13 +8,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import NavBar from '../../components/navBar';
 import FriendsSayings from './FriendsSaying';
 import FriendModal from './_components/FriendModal';
+import Layout from '../../components/Layout';
 
 export default function Friends() {
     const { user, profilePic, updateProfilePic } = useUser();
     const [modalVisible, setModalVisible] = useState(false);
 
     return (
-        <SafeAreaWrapper color={colorPalette.yellowColor}>
+        <Layout bgColor={colorPalette.yellowColor}>
             <View style={{ backgroundColor: colorPalette.yellowColor, paddingLeft: normalize(30), paddingRight: normalize(30), gap: normalize(12) }}>
                 <View style={Top.container}>
                     <Image source={profilePic} style={Top.userProfileImage}></Image>
@@ -29,7 +30,7 @@ export default function Friends() {
                         <Icon name="group" size={30} color="black"></Icon>
                     </TouchableOpacity>
                 </View>
-                <FriendModal user={user} modalVisible={modalVisible} setModalVisible={setModalVisible}/>
+                <FriendModal user={user} modalVisible={modalVisible} setModalVisible={setModalVisible} />
                 <FriendsSayings />
 
 
@@ -37,7 +38,7 @@ export default function Friends() {
 
 
             <NavBar />
-        </SafeAreaWrapper>
+        </Layout>
     )
 }
 

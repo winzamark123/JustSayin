@@ -121,7 +121,7 @@ export default function SettingsPage({ navigation }) {
                 </View>
 
                 <View>
-                    <Text style={textStyles.normal}>General</Text>
+                    <Text style={{ ...textStyles.normal, marginTop: normalize(10), marginBottom: normalize(5) }}>General</Text>
                     <View>
                         <TouchableOpacity style={settingsCardStyles.cardTop} onPress={handleEditProfilePic}>
                             <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
@@ -150,22 +150,39 @@ export default function SettingsPage({ navigation }) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{ marginTop: normalize(10) }}>
-                    <Text style={textStyles.normal}>Friends</Text>
+                <View >
+                    <Text style={{ ...textStyles.normal, marginTop: normalize(10), marginBottom: normalize(5) }}>Friends</Text>
                     <View>
                         <TouchableOpacity style={settingsCardStyles.cardSolo} onPress={goToCategoryPage}>
                             <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
                                 <Icon name="group" size={normalize(24)} color="white" />
-                                <Text style={textStyles.normal}>Edit Categories</Text>
+                                <Text style={textStyles.normal}>Friends</Text>
                             </View>
                             <Icon name="keyboard-arrow-right" size={normalize(35)} color="white" />
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                <TouchableOpacity style={saveButton.container} onPress={handleLogout}>
-                    <Text style={saveButton.text}>Log Out</Text>
-                </TouchableOpacity>
+                <View >
+                    <Text style={{ ...textStyles.normal, marginTop: normalize(10), marginBottom: normalize(5) }}>Account</Text>
+                    <View>
+                        <TouchableOpacity style={settingsCardStyles.cardTop} onPress={handleLogout}>
+                            <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
+                                <Icon name="logout" size={normalize(24)} color="white" />
+                                <Text style={textStyles.normal}>Signout</Text>
+                            </View>
+                            <Icon name="keyboard-arrow-right" size={normalize(35)} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity style={settingsCardStyles.cardBottom} onPress={handleDeleteUser}>
+                            <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
+                                <Icon name="delete" size={normalize(24)} color="white" />
+                                <Text style={textStyles.normal}>Delete Account</Text>
+                            </View>
+                            <Icon name="keyboard-arrow-right" size={normalize(35)} color="white" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
         </Layout>
 
@@ -175,7 +192,7 @@ export default function SettingsPage({ navigation }) {
 const textStyles = StyleSheet.create({
     normal: {
         color: "white",
-        fontFamily: fontFamily.Poppins,
+        fontFamily: fontFamily.PoppinsSemiBold,
         fontSize: normalize(15),
         lineHeight: normalize(20),
     }
@@ -185,8 +202,8 @@ const settingsCardStyles = StyleSheet.create({
         backgroundColor: colorPalette.greyColor,
         paddingRight: normalize(20),
         paddingLeft: normalize(20),
-        paddingTop: normalize(10),
-        paddingBottom: normalize(10),
+        paddingTop: normalize(5),
+        paddingBottom: normalize(5),
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -198,7 +215,7 @@ const settingsCardStyles = StyleSheet.create({
         paddingRight: normalize(20),
         paddingLeft: normalize(20),
         paddingTop: normalize(20),
-        paddingBottom: normalize(10),
+        paddingBottom: normalize(5),
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
@@ -209,7 +226,7 @@ const settingsCardStyles = StyleSheet.create({
         backgroundColor: colorPalette.greyColor,
         paddingRight: normalize(20),
         paddingLeft: normalize(20),
-        paddingTop: normalize(10),
+        paddingTop: normalize(5),
         paddingBottom: normalize(20),
         flexDirection: "row",
         justifyContent: "space-between",
@@ -254,7 +271,8 @@ const settingsCardStyles = StyleSheet.create({
 
 const settingsProfilePic = StyleSheet.create({
     container: {
-        height: normalize(200),
+        // height: normalize(200),
+        padding: normalize(20),
         justifyContent: "center",
         alignItems: "center",
         // borderWidth: 1,
