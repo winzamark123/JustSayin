@@ -343,14 +343,19 @@ exports.getFriends = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     const uid = req.uid;
-
+    console.log("UID:", uid)
     try {
-        const user = await userModel.findOne({ firebaseID: uid });
+        const user = await userModel.findOneAndRemove({ firebaseID: uid });
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        await user.remove();
+        // Remove this user's ObjectId from the friends array of other users
+        await userModel.updateMany(
+            { friends: user._id },
+            { $pull: { friends: user._id } }
+        );
+
         res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
         console.error("Error occurred in deleteUser:", error);

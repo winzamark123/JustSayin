@@ -218,7 +218,7 @@ export const deleteUserFromBackend = async (userID) => {
             }
         });
 
-        // console.log("UserAPI: User Deleted from Backend:", response.data);
+        console.log("UserAPI: User Deleted from Backend:", response.data);
         return response.data;
     } catch (error) {
         console.log("UserAPI: Error Deleting User from Backend", error);

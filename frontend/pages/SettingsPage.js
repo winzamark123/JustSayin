@@ -76,6 +76,7 @@ export default function SettingsPage({ navigation }) {
         const user = auth.currentUser;
 
         try {
+            console.log("UserID", user.uid);
             await deleteUserFromBackend(user.uid);
         } catch (error) {
             console.error("Error deleting user from backend", error);
