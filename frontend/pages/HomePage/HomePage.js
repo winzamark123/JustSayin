@@ -1,6 +1,7 @@
 import React from "react";
 import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, NativeModules } from "react-native";
 import { useEffect, useState } from "react";
+// import messaging from '@react-native-firebase/messaging';
 
 import { useUser } from "../../context/UserContext";
 import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../../api/dailySayingAPI";
@@ -23,6 +24,15 @@ export default function Home() {
 
     const { RNSharedWidget } = NativeModules;
 
+    // async function requestUserPermission() {
+    //     const authStatus = await messaging().requestPermission();
+
+    //     if (authStatus) {
+    //         console.log('Permission status:', authStatus);
+    //     }
+
+    // }
+
     const toggleWidget = () => {
         RNSharedWidget.setData('justSayinWidgetKey', JSON.stringify({
             quote: dailySaying.sayingID.quote ?? "Unknown",
@@ -30,6 +40,8 @@ export default function Home() {
         }), (status) => {
             console.log('Widget status: ', status);
         });
+
+
         // console.log("Widget Toggled!")
     }
 
