@@ -2,6 +2,7 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from 'react';
+import messaging from '@react-native-firebase/messaging';
 import * as Font from 'expo-font';
 
 import HomePage from './pages/HomePage/HomePage';
@@ -22,6 +23,15 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
+  async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+
+    if (authStatus) {
+      console.log('Permission status:', authStatus);
+    }
+
+  }
+
   const loadFonts = async () => {
     try {
       await Font.loadAsync({
@@ -39,6 +49,11 @@ export default function App() {
 
   useEffect(() => {
     loadFonts();
+
+    const setUpCloudMessaging = async () => {
+      await requestUserPermission();
+      
+    }
   }, []);
 
   if (!fontsLoaded) {
