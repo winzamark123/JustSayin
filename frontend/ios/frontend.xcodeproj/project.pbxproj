@@ -10,6 +10,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		292B59662B6F526F00C05C6A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 292B59652B6F526E00C05C6A /* GoogleService-Info.plist */; };
+		292B59692B6F548700C05C6A /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 292B59682B6F548700C05C6A /* FirebaseMessaging */; };
 		294A6E9B2B43E37E008FA4C1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294A6E9A2B43E37E008FA4C1 /* WidgetKit.framework */; };
 		294A6E9D2B43E37E008FA4C1 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294A6E9C2B43E37E008FA4C1 /* SwiftUI.framework */; };
 		294A6EA02B43E37E008FA4C1 /* JustSayinWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294A6E9F2B43E37E008FA4C1 /* JustSayinWidgetBundle.swift */; };
@@ -62,6 +64,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = frontend/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = frontend/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = frontend/main.m; sourceTree = "<group>"; };
+		292B59652B6F526E00C05C6A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		294A6E992B43E37E008FA4C1 /* JustSayinWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = JustSayinWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		294A6E9A2B43E37E008FA4C1 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		294A6E9C2B43E37E008FA4C1 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -92,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				292B59692B6F548700C05C6A /* FirebaseMessaging in Frameworks */,
 				96905EF65AED1B983A6B3ABC /* libPods-frontend.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,6 +174,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				292B59652B6F526E00C05C6A /* GoogleService-Info.plist */,
 				294A6EB02B43E397008FA4C1 /* JustSayinWidgetExtension.entitlements */,
 				13B07FAE1A68108700A75B9A /* frontend */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -251,6 +256,9 @@
 				294A6EAA2B43E380008FA4C1 /* PBXTargetDependency */,
 			);
 			name = frontend;
+			packageProductDependencies = (
+				292B59682B6F548700C05C6A /* FirebaseMessaging */,
+			);
 			productName = frontend;
 			productReference = 13B07F961A680F5B00A75B9A /* frontend.app */;
 			productType = "com.apple.product-type.application";
@@ -298,6 +306,9 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
+			packageReferences = (
+				292B59672B6F548700C05C6A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -318,6 +329,7 @@
 				294A6EBB2B45310C008FA4C1 /* Poppins-Bold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				292B59662B6F526F00C05C6A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,10 +717,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -768,10 +777,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "$(inherited)";
 				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -809,6 +815,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		292B59672B6F548700C05C6A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		292B59682B6F548700C05C6A /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 292B59672B6F548700C05C6A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
 }
