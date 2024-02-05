@@ -242,4 +242,20 @@ export const fetchFriendsFromBackend = async (userID) => {
     }
 }
 
+export const addDeviceTokenToBackend = async (userID, deviceToken) => {
+    try {
+        const idToken = await FIREBASE_AUTH.currentUser.getIdToken();
+
+        const response = await axios.post(`${BASE_URL}/api/users/${userID}/deviceTokens`, {
+            deviceToken
+        }, {
+            headers: {
+                Authorization: `Bearer ${idToken}`
+            }
+        });
+    } catch (error) {
+        console.log("UserAPI: Error Adding Device Token to Backend", error);
+    }
+}
+
 

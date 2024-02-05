@@ -30,4 +30,7 @@ router.get('/:userID/friends/dailySaying', verifyToken, userController.getFriend
 
 router.delete('/:userID/', verifyToken, userController.deleteUser);
 router.delete('/:userID/friends/:friendUsername', verifyToken, userController.deleteFriend);
+
+//add user Device Tokens for Notifications to the User
+router.post('/:userID/deviceTokens', verifyToken, userController.addDeviceToken);
 module.exports = router;

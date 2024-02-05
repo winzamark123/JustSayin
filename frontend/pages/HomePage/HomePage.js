@@ -5,7 +5,7 @@ import messaging from '@react-native-firebase/messaging';
 
 import { useUser } from "../../context/UserContext";
 import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../../api/dailySayingAPI";
-import { saveUserSayingToBackend } from "../../api/userAPI";
+import { saveUserSayingToBackend, addDeviceTokenToBackend } from "../../api/userAPI";
 
 import { colorPalette, fontFamily, normalize } from "../../components/theme";
 import NavBar from "../../components/navBar";
@@ -26,9 +26,9 @@ export default function Home() {
 
     async function requestUserPermission() {
         const authStatus = await messaging().requestPermission();
-
-        if (authStatus) {
-            console.log('Permission status:', authStatus);
+        const fcmToken = await messaging().getToken();
+        if (authStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
+            addDeviceTokenToBackend(user.firebaseID, fcmToken);
         }
 
     }
