@@ -34,6 +34,7 @@ export default function Home() {
     }
 
     const toggleWidget = () => {
+        requestUserPermission();
         RNSharedWidget.setData('justSayinWidgetKey', JSON.stringify({
             quote: dailySaying.sayingID.quote ?? "Unknown",
             author: dailySaying.sayingID.author ?? "Author",
