@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, NativeModules } from "react-native";
 import { useEffect, useState } from "react";
 import messaging from '@react-native-firebase/messaging';
@@ -17,18 +18,28 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 
+
 export default function Home() {
     const { user, profilePic, updateProfilePic } = useUser();
     const [dailySaying, setDailySaying] = useState({});
-    const [refreshKey, setRefreshKey] = useState(0);
-
     const { RNSharedWidget } = NativeModules;
+    const [refreshKey, setRefreshKey] = useState(0);
 
     async function requestUserPermission() {
         const authStatus = await messaging().requestPermission();
-        const fcmToken = await messaging().getToken();
+        // const fcmToken = await messaging().getToken();
+        // console.log('FCM Token:', fcmToken);
         if (authStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
-            addDeviceTokenToBackend(user.firebaseID, fcmToken);
+            // addDeviceTokenToBackend(user.firebaseID, fcmToken);
+            console.log("Permission status: ", authStatus);
+        }
+
+        console.log('Authorization status:', authStatus);
+
+        if (authStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+            console.log('User has notification permissions enabled.');
+            const fcmToken = await messaging().getToken();
+            console.log('FCM Token:', fcmToken);
         }
 
     }
