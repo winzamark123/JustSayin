@@ -389,3 +389,23 @@ exports.deleteFriend = async (req, res) => {
     }
 }
 
+exports.addDeviceToken = async (req, res) => {
+    const uid = req.uid;
+    const { deviceToken } = req.body;
+
+    try {
+        const user = await userModel.findOne({ firebaseID: uid });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.deviceTokens.push(deviceToken);
+        await user.save();
+        return res.status(200).json({ message: "Device token added successfully" });
+
+    } catch (error) {
+        console.error("Error occurred in addDeviceToken:", error);
+        res.status(500).json({ message: "Error adding device token", error: error.message });
+    }
+}
+

@@ -38,6 +38,9 @@ elsif podfile_properties.key?('ios.flipper') then
 end
 
 target 'frontend' do
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
+  
   use_expo_modules!
   config = use_native_modules!
 

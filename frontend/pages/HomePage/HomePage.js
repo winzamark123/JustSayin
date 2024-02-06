@@ -1,10 +1,12 @@
 import React from "react";
+
 import { Dimensions, StyleSheet, Text, View, SafeAreaView, Image, TouchableOpacity, NativeModules } from "react-native";
 import { useEffect, useState } from "react";
+import messaging from '@react-native-firebase/messaging';
 
 import { useUser } from "../../context/UserContext";
 import { fetchDailySayingFromBackend, refreshDailySayingFromBackend } from "../../api/dailySayingAPI";
-import { saveUserSayingToBackend } from "../../api/userAPI";
+import { saveUserSayingToBackend, addDeviceTokenToBackend } from "../../api/userAPI";
 
 import { colorPalette, fontFamily, normalize } from "../../components/theme";
 import NavBar from "../../components/navBar";
@@ -16,20 +18,42 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 
+
 export default function Home() {
     const { user, profilePic, updateProfilePic } = useUser();
     const [dailySaying, setDailySaying] = useState({});
+    const { RNSharedWidget } = NativeModules;
     const [refreshKey, setRefreshKey] = useState(0);
 
-    const { RNSharedWidget } = NativeModules;
+    async function requestUserPermission() {
+        const authStatus = await messaging().requestPermission();
+        // const fcmToken = await messaging().getToken();
+        // console.log('FCM Token:', fcmToken);
+        if (authStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
+            // addDeviceTokenToBackend(user.firebaseID, fcmToken);
+            console.log("Permission status: ", authStatus);
+        }
+
+        console.log('Authorization status:', authStatus);
+
+        if (authStatus === messaging.AuthorizationStatus.AUTHORIZED) {
+            console.log('User has notification permissions enabled.');
+            const fcmToken = await messaging().getToken();
+            console.log('FCM Token:', fcmToken);
+        }
+
+    }
 
     const toggleWidget = () => {
+        requestUserPermission();
         RNSharedWidget.setData('justSayinWidgetKey', JSON.stringify({
             quote: dailySaying.sayingID.quote ?? "Unknown",
             author: dailySaying.sayingID.author ?? "Author",
         }), (status) => {
             console.log('Widget status: ', status);
         });
+
+
         // console.log("Widget Toggled!")
     }
 

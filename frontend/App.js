@@ -21,7 +21,6 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-
   const loadFonts = async () => {
     try {
       await Font.loadAsync({
@@ -34,17 +33,16 @@ export default function App() {
       console.log(e);
       // Handle font loading error, maybe set an error state here
     }
-
   };
 
   useEffect(() => {
     loadFonts();
+
   }, []);
 
   if (!fontsLoaded) {
     return <View><Text>Loading...</Text></View>;
   }
-
 
   return (
     <UserProvider>

@@ -16,3 +16,6 @@ dataProcessing/sayings.json
 # for mongodb memory server testing
 backend/node_modules/.cache/mongodb-memory-server/*
 backend/node_modules/node-cron/node_modules/
+
+# for Apple Google
+frontend/ios/GoogleService-Info.plist

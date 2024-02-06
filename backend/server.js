@@ -9,6 +9,7 @@ const userRouter = require('./routes/userRoutes.js');
 const dailySayingRouter = require('./routes/dailySayingRoutes.js');
 
 const dailySayingController = require('./controllers/dailySayingController.js');
+const { sendDailySayingNotification } = require('./notification.js');
 // require('dotenv').config();
 require('dotenv').config({ path: "../.env.local" });
 const cron = require('node-cron');
@@ -26,6 +27,7 @@ app.use('/api/sayings', sayingRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/dailySayings', dailySayingRouter);
 
+
 //connect to db (mongoose)
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(async () => {
@@ -36,6 +38,11 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         });
         dailySayingController.nodeGenerateForAllUsers();
         console.log("Running the daily saying generation task");
+
+        //cron schedule ever minute
+        // cron.schedule('* * * * *', async () => {
+        //     sendDailySayingNotification();
+        // });
 
 
         cron.schedule('0 0 * * *', async () => {
