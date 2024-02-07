@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const admin = require('firebase-admin');
-const serviceAccount = require('../backend/firebase/serviceAccountKey.json');
 
 const sayingRouter = require('./routes/sayingRoutes.js');
 const categoryRouter = require('./routes/categoryRoutes.js');
@@ -14,8 +13,13 @@ const { sendDailySayingNotification } = require('./notification.js');
 require('dotenv').config({ path: "../.env.local" });
 const cron = require('node-cron');
 
+
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+    credential: admin.credential.cert({
+        projectId: process.env.FIREBASE_SERVICE_ACCOUNT_project_id,
+        privateKey: process.env.FIREBASE_SERVICE_ACCOUNT_private_key.replace(/\\n/g, '\n'),
+        clientEmail: process.env.FIREBASE_SERVICE_ACCOUNT_client_email
+    }),
 });
 const app = express();
 
