@@ -17,5 +17,10 @@ dataProcessing/sayings.json
 backend/node_modules/.cache/mongodb-memory-server/*
 backend/node_modules/node-cron/node_modules/
 
+
+backend/node_modules
+frontend/node_modules 
+
+
 # for Apple Google
 frontend/ios/GoogleService-Info.plist
