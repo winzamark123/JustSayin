@@ -9,8 +9,6 @@ const dailySayingRouter = require('./routes/dailySayingRoutes.js');
 
 const dailySayingController = require('./controllers/dailySayingController.js');
 const { sendDailySayingNotification } = require('./notification.js');
-// require('dotenv').config();
-require('dotenv').config({ path: "../.env.local" });
 const cron = require('node-cron');
 
 
