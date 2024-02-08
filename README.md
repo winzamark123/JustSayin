@@ -63,3 +63,5 @@ Contributions are what make the open source community such an amazing place to l
 - **Developer**: Teeranade Cheng (Win): <a href="https://www.linkedin.com/in/teeranade-cheng/" target = "_blank">LinkedIN</a>
 
 - **Designer**: Khunanya Liu (Yaya): <a href="https://www.linkedin.com/in/khunanya-liu/" target = "_blank"> LinkedIN</a>
+
+
