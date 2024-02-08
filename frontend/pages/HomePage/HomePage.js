@@ -39,7 +39,10 @@ export default function Home() {
         if (authStatus === messaging.AuthorizationStatus.AUTHORIZED) {
             console.log('User has notification permissions enabled.');
             const fcmToken = await messaging().getToken();
-            console.log('FCM Token:', fcmToken);
+            // console.log('FCM Token:', fcmToken);
+            const res = await addDeviceTokenToBackend(fcmToken);
+            console.log("Device Token Added to Backend: ", res);
+
         }
 
     }

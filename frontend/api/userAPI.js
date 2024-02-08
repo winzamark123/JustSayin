@@ -253,6 +253,8 @@ export const addDeviceTokenToBackend = async (userID, deviceToken) => {
                 Authorization: `Bearer ${idToken}`
             }
         });
+        return response.data;
+
     } catch (error) {
         console.log("UserAPI: Error Adding Device Token to Backend", error);
     }
