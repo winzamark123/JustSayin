@@ -46,6 +46,7 @@ export default function CategoryPage({ navigation }) {
                 );
 
                 setSelectedCategories(initialSelectedCategories);
+                setCurNumberSelected(initialSelectedCategories.length);
 
                 // console.log(fetchedCategories);
             } catch (error) {
@@ -74,7 +75,7 @@ export default function CategoryPage({ navigation }) {
 
     const removeSelectedCategory = (item) => {
         setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
-        setCurNumberSelected(curNumberSelected - 1);
+
     }
 
     const toggleCategory = (item) => {
@@ -82,6 +83,7 @@ export default function CategoryPage({ navigation }) {
             // Remove from selected categories
             // setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
             removeSelectedCategory(item);
+            setCurNumberSelected(curNumberSelected - 1);
         } else {
             // Add to selected categories
             if (selectedCategories.length < 4) {
