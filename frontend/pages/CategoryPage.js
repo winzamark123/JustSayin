@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { normalize } from '../components/theme';
 import { StyleSheet, Text, TextInput, View, Dimensions, FlatList, TouchableOpacity } from "react-native";
 import { colorPalette, fontFamily, fontSize } from '../components/theme';
 import { useState } from "react";
@@ -102,11 +104,11 @@ export default function CategoryPage({ navigation }) {
                     <Text style={descrip.counter}>{curNumberSelected} / 4</Text>
                 </View>
                 <View style={searchBar.container}>
-                    <Text style={searchBar.text}>Search Categories</Text>
                     <TextInput style={searchBar.input}
                         value={searchBarText}
                         onChangeText={(text) => setSearchBarText(text)}
                     ></TextInput>
+                    <Icon name="search" size={24} color={colorPalette.mainColor} />
                 </View>
 
                 <FlatList
@@ -114,6 +116,7 @@ export default function CategoryPage({ navigation }) {
                     renderItem={renderCategory}
                     keyExtractor={(item) => item._id}
                     contentContainerStyle={categoryPage.categoriesContainer}
+                    numColumns={2}
                 />
                 <TouchableOpacity style={categoriesContinue.BTN} onPress={() => handleSaveCategories()}></TouchableOpacity>
             </View>
@@ -148,32 +151,34 @@ const categoriesContinue = StyleSheet.create({
 
 const searchBar = StyleSheet.create({
     container: {
-        width: width * 0.9,
-        marginTop: 20,
         alignItems: 'center',
-    },
-    text: {
-        fontFamily: fontFamily.Poppins,
-        fontSize: 16,
-        color: colorPalette.blackColor,
+        marginTop: normalize(15),
+        marginBottom: normalize(15),
+        height: normalize(50),
+        justifyContent: 'center',
+        borderRadius: normalize(11),
+        backgroundColor: 'rgba(39, 39, 50, 0.15)',
+        flexDirection: 'row',
+        padding: normalize(15),
     },
     input: {
-        marginTop: 10,
-        width: width * 0.8,
+        width: width * 0.7,
         height: height * 0.05,
-        borderRadius: 10,
-        backgroundColor: colorPalette.whiteColor,
         fontFamily: fontFamily.Poppins,
-        fontSize: 16,
+        fontSize: normalize(16),
         color: colorPalette.blackColor,
+        justifyContent: 'center',
+        textAlign: 'center',
+        alignItems: 'center',
     },
 });
 
 const title = StyleSheet.create({
     text: {
-        marginTop: 50,
-        fontFamily: fontFamily.Poppins,
-        fontSize: 30,
+        alignSelf: 'flex-start',
+        marginTop: normalize(20),
+        fontFamily: fontFamily.PoppinsBold,
+        fontSize: normalize(24),
         color: colorPalette.mainColor,
     },
 });
@@ -182,8 +187,9 @@ const descrip = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: width * 0.9,
-        marginTop: 20,
+        marginTop: normalize(10),
+        alignSelf: 'flex-start',
+        width: normalize(300),
     },
     text: {
         fontFamily: fontFamily.Poppins,
@@ -191,9 +197,9 @@ const descrip = StyleSheet.create({
         color: colorPalette.blackColor,
     },
     counter: {
-        fontFamily: fontFamily.Poppins,
+        fontFamily: fontFamily.PoppinsBold,
         fontSize: 16,
-        color: colorPalette.mainColor,
+        color: colorPalette.blackColor,
     },
 });
 
@@ -203,33 +209,42 @@ const categoryPage = StyleSheet.create({
         backgroundColor: colorPalette.yellowColor,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingLeft: normalize(30),
+        paddingRight: normalize(30),
     },
+    categoriesContainer: {
+        gap: normalize(10),
+        // justifyContent: 'space-between',
+        alignItems: 'center',
+
+    }
 
 });
 
 const categoryCard = StyleSheet.create({
     card: {
-        flex: 1,
         backgroundColor: colorPalette.whiteColor,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 372,
-        height: 77,
-        borderRadius: 20,
+        width: normalize(140),
+        height: normalize(50),
+        borderRadius: normalize(11),
+        margin: normalize(5),
     },
     selectedCard: {
         flex: 1,
         backgroundColor: colorPalette.forestGreenColor,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 372,
-        height: 77,
         borderRadius: 20,
+        width: normalize(140),
+        height: normalize(50),
+        margin: normalize(5),
 
     },
     cardText: {
         fontFamily: fontFamily.Poppins,
-        fontSize: 16,
+        fontSize: normalize(14),
         color: colorPalette.blackColor,
     },
 
