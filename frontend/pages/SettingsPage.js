@@ -22,6 +22,9 @@ export default function SettingsPage({ navigation }) {
     const goToCategoryPage = () => {
         navigation.navigate("CategoryPage");
     }
+    const goToFriendsPage = () => {
+        navigation.navigate("FriendsPage");
+    }
 
     const handleEditProfilePic = async () => {
         const options = {
@@ -153,7 +156,7 @@ export default function SettingsPage({ navigation }) {
                 <View >
                     <Text style={{ ...textStyles.normal, marginTop: normalize(10), marginBottom: normalize(5) }}>Friends</Text>
                     <View>
-                        <TouchableOpacity style={settingsCardStyles.cardSolo} onPress={goToCategoryPage}>
+                        <TouchableOpacity style={settingsCardStyles.cardSolo} onPress={goToFriendsPage}>
                             <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
                                 <Icon name="group" size={normalize(24)} color="white" />
                                 <Text style={textStyles.normal}>Friends</Text>

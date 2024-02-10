@@ -13,28 +13,9 @@ export default function Landing({ navigation }) {
 
 
     // ... (rest of your functions)
-
-    // Add the fadeIn function
-    // const fadeIn = () => {
-    //     Animated.timing(fadeAnim, {
-    //         fromValue: 0,
-    //         toValue: 1,
-    //         duration: 3000, // Duration in milliseconds
-    //         useNativeDriver: true, // Add this line
-    //     }).start();
-    // };
-
     const goToLogin = () => {
         navigation.navigate("LoginPage");
     }
-
-    // const getPageIndex = (newPageIndex) => {
-    //     console.log(pageIndex);
-    //     setPageIndex(newPageIndex);
-    //     if (newPageIndex === 4) {
-    //         fadeIn();
-    //     }
-    // }
 
     const CustomDot = ({ selected }) => {
         return (
@@ -46,21 +27,6 @@ export default function Landing({ navigation }) {
             />
         );
     };
-
-    // const doneButton = ({ ...props }) => {
-    //     return (
-    //         <Animated.View style={{ opacity: fadeAnim }}>
-    //             <TouchableOpacity
-    //                 style={landing.BTN}
-    //                 {...props}
-    //             >
-    //                 <Text>Done</Text>
-    //             </TouchableOpacity>
-    //         </Animated.View>
-
-    //     )
-    // };
-
 
     return (
         <SafeAreaWrapper color={colorPalette.mainColor} style={{ padding: normalize(30) }}>
@@ -91,7 +57,7 @@ export default function Landing({ navigation }) {
                         backgroundColor: colorPalette.mainColor,
                         image: (
                             <View style={{ top: normalize(150), justifyContent: "center", alignItems: "center" }}>
-                                <Image source={require('../assets/onBoardingPage/onboarding_1.png')} resizeMode='contain' />
+                                <Image source={require('../assets/onBoardingPage/onboarding_1.png')} resizeMode='contain' style={landing.image}/>
                                 <Text style={landing.body}>Choose your own quote categories</Text>
                             </View>
                         )
@@ -100,7 +66,16 @@ export default function Landing({ navigation }) {
                         backgroundColor: colorPalette.mainColor,
                         image: (
                             <View style={{ top: normalize(150), justifyContent: "center", alignItems: "center" }}>
-                                <Image source={require('../assets/onBoardingPage/onboarding_2.png')} resizeMode='contain' />
+                                <Image source={require('../assets/onBoardingPage/onboarding_bell.png')} resizeMode='contain' style={landing.image}/>
+                                <Text style={landing.body}>Allow Notifications for our Widget to work</Text>
+                            </View>
+                        )
+                    },
+                    {
+                        backgroundColor: colorPalette.mainColor,
+                        image: (
+                            <View style={{ top: normalize(150), justifyContent: "center", alignItems: "center" }}>
+                                <Image source={require('../assets/onBoardingPage/onboarding_2.png')} resizeMode='contain' style={landing.image}/>
                                 <Text style={landing.body}>Daily Quote generated on your Widgets!</Text>
                             </View>
                         )
@@ -109,7 +84,7 @@ export default function Landing({ navigation }) {
                         backgroundColor: colorPalette.mainColor,
                         image: (
                             <View style={{ top: normalize(150), justifyContent: "center", alignItems: "center" }}>
-                                <Image source={require('../assets/onBoardingPage/onboarding_3.png')} resizeMode='contain' />
+                                <Image source={require('../assets/onBoardingPage/onboarding_3.png')} resizeMode='contain' style={landing.image}/>
                                 <Text style={landing.body}>Add friends to view theirs!</Text>
                             </View>
                         )
@@ -169,9 +144,13 @@ const landing = StyleSheet.create({
         // borderColor: colorPalette.whiteColor,
 
     },
+    image: {
+        width: normalize(250),
+        height: normalize(250),
+    },
     body: {
         position: 'relative',
-        fontSize: normalize(24),
+        fontSize: normalize(20),
         color: colorPalette.whiteColor,
         fontFamily: fontFamily.PoppinsBold,
         textAlign: 'center',
