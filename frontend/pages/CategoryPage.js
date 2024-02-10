@@ -5,21 +5,14 @@ import { useState } from "react";
 import { fetchAllCategories, saveUserCategories, getUserCatergories } from '../api/categoriesAPI';
 import { useEffect } from 'react';
 import { useUser } from '../context/UserContext';
-
-
-// const categoriesCard = (category) => {
-//     return (
-//         <View style={categoryCard.card}>
-//             <Text style={categoryCard.cardText}>{category}</Text>
-//         </View>
-//     );
-// }
+import Layout from '../components/Layout';
 
 export default function CategoryPage({ navigation }) {
     const [categories, setCategories] = useState([]);
     const [searchBarText, setSearchBarText] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const { user } = useUser();
+    const [curNumberSelected, setCurNumberSelected] = useState(0);
 
 
     const handleSaveCategories = async () => {
@@ -40,7 +33,7 @@ export default function CategoryPage({ navigation }) {
             try {
                 const fetchedCategories = await fetchAllCategories();
                 setCategories(fetchedCategories);
-                
+
                 // Fetch user's saved categories
                 const userCategories = await getUserCatergories(user.firebaseID);
                 console.log('User Categories:', userCategories);
@@ -79,6 +72,7 @@ export default function CategoryPage({ navigation }) {
 
     const removeSelectedCategory = (item) => {
         setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
+        setCurNumberSelected(curNumberSelected - 1);
     }
 
     const toggleCategory = (item) => {
@@ -89,6 +83,7 @@ export default function CategoryPage({ navigation }) {
         } else {
             // Add to selected categories
             if (selectedCategories.length < 4) {
+                setCurNumberSelected(curNumberSelected + 1);
                 setSelectedCategories([...selectedCategories, item]);
             } else {
                 // setSelectedCategories(selectedCategories.filter(category => category._id !== item._id));
@@ -99,30 +94,30 @@ export default function CategoryPage({ navigation }) {
     };
 
     return (
-        <View style={categoryPage.background}>
-            <Text style={title.text}>Choose Categories</Text>
-            <View style={descrip.container}>
-                <Text style={descrip.text}>Choose up to 4</Text>
-                <Text style={descrip.counter}>4 / 4</Text>
+        <Layout bgColor={colorPalette.yellowColor}>
+            <View style={categoryPage.background}>
+                <Text style={title.text}>Choose Categories</Text>
+                <View style={descrip.container}>
+                    <Text style={descrip.text}>Choose up to 4</Text>
+                    <Text style={descrip.counter}>{curNumberSelected} / 4</Text>
+                </View>
+                <View style={searchBar.container}>
+                    <Text style={searchBar.text}>Search Categories</Text>
+                    <TextInput style={searchBar.input}
+                        value={searchBarText}
+                        onChangeText={(text) => setSearchBarText(text)}
+                    ></TextInput>
+                </View>
+
+                <FlatList
+                    data={filteredCategories}
+                    renderItem={renderCategory}
+                    keyExtractor={(item) => item._id}
+                    contentContainerStyle={categoryPage.categoriesContainer}
+                />
+                <TouchableOpacity style={categoriesContinue.BTN} onPress={() => handleSaveCategories()}></TouchableOpacity>
             </View>
-            <View style={searchBar.container}>
-                <Text style={searchBar.text}>Search Categories</Text>
-                <TextInput style={searchBar.input}
-                    value={searchBarText}
-                    onChangeText={(text) => setSearchBarText(text)}
-                ></TextInput>
-            </View>
-
-            <FlatList
-                data={filteredCategories}
-                renderItem={renderCategory}
-                keyExtractor={(item) => item._id}
-                contentContainerStyle={categoryPage.categoriesContainer}
-            />
-
-            <TouchableOpacity style={categoriesContinue.BTN} onPress={() => handleSaveCategories()}></TouchableOpacity>
-
-        </View>
+        </Layout>
     );
 
 }
@@ -155,8 +150,6 @@ const searchBar = StyleSheet.create({
     container: {
         width: width * 0.9,
         marginTop: 20,
-        borderWidth: 2,
-        borderColor: colorPalette.blackColor,
         alignItems: 'center',
     },
     text: {
