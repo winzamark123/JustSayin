@@ -10,7 +10,7 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import ForgotPassword from './pages/ForgotPassword';
 import CategoryPage from './pages/CategoryPage';
-import SettingsPage from './pages/SettingsPage';
+import SettingsPage from './pages/SettingsPage/SettingsPage';
 import FriendsPage from './pages/FriendsPage/FriendsPage';
 
 import { UserProvider } from './context/UserContext';

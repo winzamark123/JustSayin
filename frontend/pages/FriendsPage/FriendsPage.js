@@ -1,6 +1,4 @@
 import { useUser } from '../../context/UserContext';
-import { addFriendToBackend, fetchFriendsFromBackend } from '../../api/userAPI';
-import SafeAreaWrapper from '../../components/SafeAreaWrapper';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Dimensions, Modal } from 'react-native';
 import { colorPalette, fontFamily, normalize } from '../../components/theme';
 import { useState, useEffect } from 'react';

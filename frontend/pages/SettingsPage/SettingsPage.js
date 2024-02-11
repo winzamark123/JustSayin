@@ -3,21 +3,22 @@ import { StyleSheet, Text, View, SafeAreaView, TextInput, Image, TouchableOpacit
 import { useEffect, useState } from "react";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { useUser } from "../context/UserContext";
+import { useUser } from "../../context/UserContext";
 
-import { colorPalette, fontFamily, normalize } from "../components/theme";
+import { colorPalette, fontFamily, normalize } from "../../components/theme";
 import { launchImageLibrary } from 'react-native-image-picker';
 
-import { saveUserProfilePicToBackend, editUsernameToBackend, deleteUserFromBackend } from "../api/userAPI";
+import { saveUserProfilePicToBackend, editUsernameToBackend, deleteUserFromBackend } from "../../api/userAPI";
 import { getAuth, deleteUser, signOut } from "firebase/auth";
 
-import Layout from "../components/Layout";
-
+import Layout from "../../components/Layout";
+import UsernameModal from "./UsernameModal";
 
 export default function SettingsPage({ navigation }) {
     const { user, profilePic, updateUser, updateProfilePic } = useUser();
     const [username, setUsername] = useState(user.username);
     const [curProfilePic, setProfilePic] = useState();
+    const [modalVisible, setModalVisible] = useState(false);
 
     const goToCategoryPage = () => {
         navigation.navigate("CategoryPage");
@@ -60,16 +61,6 @@ export default function SettingsPage({ navigation }) {
             await updateProfilePic();
         } catch (error) {
             console.log("Error saving profile pic to backend", error);
-        }
-    }
-
-    const saveUsername = async () => {
-        try {
-            const response = await editUsernameToBackend(user.firebaseID, username);
-            updateUser();
-            console.log("Username Edited to Backend", response);
-        } catch (error) {
-            console.log("Error editing username to backend", error);
         }
     }
 
@@ -135,7 +126,7 @@ export default function SettingsPage({ navigation }) {
                         </TouchableOpacity>
                     </View>
                     <View>
-                        <TouchableOpacity style={settingsCardStyles.card} onPress={handleEditProfilePic}>
+                        <TouchableOpacity style={settingsCardStyles.card} onPress={() => setModalVisible(!modalVisible)}>
                             <View style={{ flexDirection: "row", gap: normalize(10), justifyContent: "center", alignItems: "center" }}>
                                 <Icon name="edit" size={normalize(24)} color="white" />
                                 <Text style={textStyles.normal}>Edit Username</Text>
@@ -186,6 +177,7 @@ export default function SettingsPage({ navigation }) {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <UsernameModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
             </View>
         </Layout>
 

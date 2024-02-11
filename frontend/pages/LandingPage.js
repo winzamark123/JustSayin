@@ -13,7 +13,7 @@ export default function Landing({ navigation }) {
 
 
     // ... (rest of your functions)
-    const goToLogin = () => {
+const goToLogin = () => {
         navigation.navigate("LoginPage");
     }
 
