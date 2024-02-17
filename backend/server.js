@@ -6,9 +6,9 @@ const sayingRouter = require('./routes/sayingRoutes.js');
 const categoryRouter = require('./routes/categoryRoutes.js');
 const userRouter = require('./routes/userRoutes.js');
 const dailySayingRouter = require('./routes/dailySayingRoutes.js');
+const notificationRouter = require('./routes/notificationRoutes.js');
 
 const dailySayingController = require('./controllers/dailySayingController.js');
-const { sendDailySayingNotification, sendTestNotification } = require('./notification.js');
 const cron = require('node-cron');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -32,6 +32,7 @@ app.use('/api/users', userRouter);
 app.use('/api/sayings', sayingRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/dailySayings', dailySayingRouter);
+app.use('/api/notification', notificationRouter);
 
 //connect to db (mongoose)
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
