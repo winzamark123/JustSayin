@@ -8,6 +8,7 @@ const { getUserCategories, getUserCategoriesInternal } = require('./userControll
 exports.getAllSayings = async (req, res) => {
     // const sayings = await sayingModel.find({}).sort({ createdAt: -1 });
 
+    console.log("GET ALL SAYINGS HIT");
     const sayings = await sayingModel.find({});
     try {
         if (!sayings) {
