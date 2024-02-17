@@ -27,8 +27,8 @@ const app = express();
 
 app.use(express.json());
 
-console.log("privateKEY:", process.env.FIREBASE_SERVICE_ACCOUNT_private_key);
-console.log("clientEmail:", process.env.FIREBASE_SERVICE_ACCOUNT_client_email);
+// console.log("privateKEY:", process.env.FIREBASE_SERVICE_ACCOUNT_private_key);
+// console.log("clientEmail:", process.env.FIREBASE_SERVICE_ACCOUNT_client_email);
 
 //routes 
 app.use('/api/users', userRouter);
