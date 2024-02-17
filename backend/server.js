@@ -32,7 +32,7 @@ app.use('/api/users', userRouter);
 app.use('/api/sayings', sayingRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/dailySayings', dailySayingRouter);
-app.post('/api/test-notification', (req, res) => {
+app.post('/api/testNotification', (req, res) => {
     const {deviceToken} = req.body;
     sendTestNotification(deviceToken);
     res.json({ message: "Test Notification Sent" });
