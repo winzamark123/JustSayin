@@ -26,9 +26,10 @@ export default function Home() {
     const [refreshKey, setRefreshKey] = useState(0);
 
     async function requestUserPermission() {
+        const fcmToken = await messaging().getToken();
+        console.log('FCM Token:', fcmToken);
+        
         const authStatus = await messaging().requestPermission();
-        // const fcmToken = await messaging().getToken();
-        // console.log('FCM Token:', fcmToken);
         if (authStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
             // addDeviceTokenToBackend(user.firebaseID, fcmToken);
             console.log("Permission status: ", authStatus);
