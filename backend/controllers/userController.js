@@ -398,13 +398,16 @@ exports.addDeviceToken = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
-        user.deviceTokens.push(deviceToken);
-
+        console.log("Device Token:", deviceToken)
+        console.log("User", user.username)
+        console.log("User Device Tokens:", user.deviceTokens)
+        
         //check if deviceToken already exists
         if (user.deviceTokens.includes(deviceToken)) {
             return res.status(200).json({ message: "Device token already exists" });
         }
+        user.deviceTokens.push(deviceToken);
+
 
         await user.save();
         return res.status(200).json({ message: "Device token added successfully" });
