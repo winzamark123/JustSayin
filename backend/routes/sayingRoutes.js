@@ -8,13 +8,13 @@ router.get('/', getAllSayings)
 //GET random Saying
 router.get('/random', getRandomSaying);
 
+//POST NOTI TEST
+router.post('/test', sendTestNotification);
+router.get('/test', sendTestNotification);
+
 //GET randomSaying by Categories
 router.get('/:userID', verifyToken, getRandomSayingByCategories);
 
-//POST NOTI TEST
-router.post('/test', sendTestNotification);
-
-router.get('/test', sendTestNotification);
 
 
 
