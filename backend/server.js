@@ -41,10 +41,10 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         dailySayingController.nodeGenerateForAllUsers();
         console.log("Running the daily saying generation task");
 
-        //cron schedule ever minute
-        // cron.schedule('* * * * *', async () => {
-        //     sendDailySayingNotification();
-        // });
+        // cron schedule ever minute
+        cron.schedule('* * * * *', async () => {
+            sendDailySayingNotification();
+        });
 
 
         cron.schedule('0 0 * * *', async () => {

@@ -3,6 +3,7 @@ import { FIREBASE_AUTH } from '../firebaseConfig';
 
 
 const BASE_URL = "http://justsayin-production.up.railway.app";
+// const BASE_URL = "http://localhost:4000";
 
 
 export const saveUserToBackend = async (user, username) => {

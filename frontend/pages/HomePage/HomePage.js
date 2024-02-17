@@ -40,7 +40,7 @@ export default function Home() {
             console.log('User has notification permissions enabled.');
             const fcmToken = await messaging().getToken();
             // console.log('FCM Token:', fcmToken);
-            const res = await addDeviceTokenToBackend(fcmToken);
+            const res = await addDeviceTokenToBackend(user.firebaseID, fcmToken);
             console.log("Device Token Added to Backend: ", res);
 
         }

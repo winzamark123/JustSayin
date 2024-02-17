@@ -400,6 +400,12 @@ exports.addDeviceToken = async (req, res) => {
         }
 
         user.deviceTokens.push(deviceToken);
+
+        //check if deviceToken already exists
+        if (user.deviceTokens.includes(deviceToken)) {
+            return res.status(409).json({ message: "Device token already exists" });
+        }
+        
         await user.save();
         return res.status(200).json({ message: "Device token added successfully" });
 
