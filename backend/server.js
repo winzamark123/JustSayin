@@ -16,7 +16,8 @@ admin.initializeApp({
     credential: admin.credential.cert({
         projectId: process.env.FIREBASE_SERVICE_ACCOUNT_project_id,
         privateKey: process.env.FIREBASE_SERVICE_ACCOUNT_private_key.replace(/\\n/g, '\n'),
-        clientEmail: process.env.FIREBASE_SERVICE_ACCOUNT_client_email
+        clientEmail: process.env.FIREBASE_SERVICE_ACCOUNT_client_email,
+
     }),
 });
 const app = express();
@@ -42,9 +43,9 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         console.log("Running the daily saying generation task");
 
         // cron schedule ever minute
-        cron.schedule('* * * * *', async () => {
-            sendDailySayingNotification();
-        });
+        // cron.schedule('* * * * *', async () => {
+        //     sendDailySayingNotification();
+        // });
 
 
         cron.schedule('0 0 * * *', async () => {

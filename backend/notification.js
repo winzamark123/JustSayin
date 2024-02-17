@@ -14,7 +14,7 @@ exports.sendDailySayingNotification = async () => {
         const userTokens = user.deviceTokens.filter(token => token); // Assuming deviceTokens is an array
         return acc.concat(userTokens);
     }, []).filter(Boolean); // This removes any falsy values including '', null, undefined
-    
+
     console.log("Tokens: ", tokens);
 
     if (tokens.length > 0) {
@@ -24,6 +24,7 @@ exports.sendDailySayingNotification = async () => {
                 body: 'Check out your daily saying!'
             },
             tokens: tokens, // This should be an array of valid tokens
+            
         };
 
         try {
