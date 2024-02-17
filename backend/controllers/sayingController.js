@@ -101,6 +101,7 @@ exports.getRandomSayingByCategories = async (req, res) => {
 
 exports.sendTestNotification = async (req, res) => {
     const { deviceToken } = req.body;
+    console.log("Device Token: ", deviceToken);
 
     const message = {
         notification: {
