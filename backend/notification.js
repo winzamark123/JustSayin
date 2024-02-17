@@ -7,7 +7,14 @@ exports.sendDailySayingNotification = async () => {
     // Get all users
     const users = await User.find({});
     // Filter out any users without a valid firebaseToken
-    const tokens = users.map(user => user.deviceTokens).filter(token => token);
+    // const tokens = users.map(user => user.deviceTokens).filter(token => token);
+
+    // Flatten the array of arrays and filter out null or undefined tokens
+    const tokens = users.reduce((acc, user) => {
+        const userTokens = user.deviceTokens.filter(token => token); // Assuming deviceTokens is an array
+        return acc.concat(userTokens);
+    }, []).filter(Boolean); // This removes any falsy values including '', null, undefined
+    
     console.log("Tokens: ", tokens);
 
     if (tokens.length > 0) {
