@@ -126,7 +126,6 @@ export default function Home() {
                                 style={dailySayingStyles.quote}>
                                 {dailySaying.sayingID ? dailySaying.sayingID.quote : "Loading..."}
                             </Text>
-                            {/* <Text style={dailySayingStyles.category}>{dailySaying.sayingID ? dailySaying.sayingID.category : "Loading..."}</Text> */}
 
                             <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 10 }}>
 
@@ -148,14 +147,12 @@ export default function Home() {
 
                         </View>
                     </View>
-                    {/* <Text>Home Page - UserID: {user.firebaseID}</Text> */}
                     <View style={savedSayings.container}>
                         <Text style={savedSayings.text}>SAVED SAYINGS</Text>
                         <SavedSayings refreshKey={refreshKey} />
                     </View>
                 </View>
             </View>
-            {/* <NavBar curPage="HomePage" iconColor="red" /> */}
         </Layout>
     )
 }

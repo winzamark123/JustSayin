@@ -1,6 +1,8 @@
 const sayingModel = require('../models/sayingModel');
 const { getUserCategories, getUserCategoriesInternal } = require('./userController'); // import the function
 
+//Temporary for TESTING
+const admin = require('firebase-admin');
 
 
 
@@ -8,6 +10,7 @@ const { getUserCategories, getUserCategoriesInternal } = require('./userControll
 exports.getAllSayings = async (req, res) => {
     // const sayings = await sayingModel.find({}).sort({ createdAt: -1 });
 
+    console.log("GET ALL SAYINGS HIT");
     const sayings = await sayingModel.find({});
     try {
         if (!sayings) {
@@ -69,6 +72,7 @@ exports.getRandomSayingByCategoriesInternal = async (uid) => {
         return error;
     }
 }
+
 exports.getRandomSayingByCategories = async (req, res) => {
     try {
         const uid = req.uid;
@@ -97,3 +101,4 @@ exports.getRandomSayingByCategories = async (req, res) => {
         res.status(500).json({ message: "Error getting saying by categories", error: error.message });
     }
 }
+

@@ -6,9 +6,9 @@ const sayingRouter = require('./routes/sayingRoutes.js');
 const categoryRouter = require('./routes/categoryRoutes.js');
 const userRouter = require('./routes/userRoutes.js');
 const dailySayingRouter = require('./routes/dailySayingRoutes.js');
+const notificationRouter = require('./routes/notificationRoutes.js');
 
 const dailySayingController = require('./controllers/dailySayingController.js');
-const { sendDailySayingNotification } = require('./notification.js');
 const cron = require('node-cron');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -21,18 +21,21 @@ admin.initializeApp({
         privateKey: process.env.FIREBASE_SERVICE_ACCOUNT_private_key.replace(/\\n/g, '\n'),
         clientEmail: process.env.FIREBASE_SERVICE_ACCOUNT_client_email,
 
-    }),
+    }), 
 });
 const app = express();
 
 app.use(express.json());
+
+console.log("privateKEY:", process.env.FIREBASE_SERVICE_ACCOUNT_private_key);
+console.log("clientEmail:", process.env.FIREBASE_SERVICE_ACCOUNT_client_email);
 
 //routes 
 app.use('/api/users', userRouter);
 app.use('/api/sayings', sayingRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/dailySayings', dailySayingRouter);
-
+app.use('/api/notification', notificationRouter);
 
 //connect to db (mongoose)
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

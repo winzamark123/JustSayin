@@ -53,8 +53,6 @@ exports.saveUserCategories = async (req, res) => {
     }
 }
 
-
-
 exports.saveUserSaying = async (req, res) => {
     const uid = req.uid;
     const { sayingID } = req.body;
@@ -94,7 +92,6 @@ exports.getUserSayings = async (req, res) => {
         res.status(500).json({ message: "Error getting user sayings", error: error.message });
     }
 }
-
 
 exports.getUser = async (req, res) => {
     const uid = req.uid;
