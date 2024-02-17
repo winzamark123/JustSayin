@@ -8,6 +8,9 @@
     "test": "jest",
     "start": "node server.js"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
