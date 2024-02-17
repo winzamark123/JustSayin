@@ -69,6 +69,7 @@ exports.getRandomSayingByCategoriesInternal = async (uid) => {
         return error;
     }
 }
+
 exports.getRandomSayingByCategories = async (req, res) => {
     try {
         const uid = req.uid;
@@ -96,4 +97,26 @@ exports.getRandomSayingByCategories = async (req, res) => {
         console.error("Error occurred in getSayingByCategories:", error);
         res.status(500).json({ message: "Error getting saying by categories", error: error.message });
     }
+}
+
+exports.sendTestNotification = async (req, res) => {
+    const { deviceToken } = req.body;
+
+    const message = {
+        notification: {
+            title: 'Test Notification',
+            body: 'This is a test notification!'
+        },
+        token: deviceToken
+    };    
+
+    try{
+        const response = await admin.messaging().send(message);
+        console.log('Successfully sent message:', response);
+        res.status(200).json({ message: "Test Notification Sent" });
+    } catch (error) {
+        console.log('Error sending message:', error);
+        res.status(500).json({ message: "Error sending test notification" });
+    }
+
 }

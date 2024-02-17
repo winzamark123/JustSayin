@@ -38,20 +38,3 @@ exports.sendDailySayingNotification = async () => {
     }
 }
 
-exports.sendTestNotification = async (deviceToken) => {
-    const message = {
-        notification: {
-            title: 'Test Notification',
-            body: 'This is a test notification!'
-        },
-        token: deviceToken
-    };    
-
-    try{
-        const response = await admin.messaging().send(message);
-        console.log('Successfully sent message:', response);
-    } catch (error) {
-        console.log('Error sending message:', error);
-    }
-
-}
