@@ -44,8 +44,8 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         dailySayingController.nodeGenerateForAllUsers();
         console.log("Running the daily saying generation task");
 
-        // cron schedule every 10 minute (Widget update every 10 minutes)
-        cron.schedule('*/10 * * * *', async () => {
+        // cron schedule every 15 minute (Widget update every 15 minutes)
+        cron.schedule('*/15 * * * *', async () => {
             console.log("Running the notification task")
             notificationController.sendNotificationTest();
         });
