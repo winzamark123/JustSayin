@@ -14,6 +14,7 @@ import SettingsPage from './pages/SettingsPage/SettingsPage';
 import FriendsPage from './pages/FriendsPage/FriendsPage';
 
 import { UserProvider } from './context/UserContext';
+import messaging from '@react-native-firebase/messaging';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +53,7 @@ export default function App() {
       const dailySaying = JSON.parse(remoteMessage.data.dailySaying);
       const author = JSON.parse(remoteMessage.data.author);
 
+      toggleWidget(dailySaying, author);
 
     });
 

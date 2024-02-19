@@ -35,13 +35,13 @@ RCT_EXPORT_METHOD(setData:(NSString *)key data:(NSString *)data callback:(RCTRes
 
   
   [sharedDefaults setValue:data forKey:key];
-  BOOL success = [sharedDefaults synchronize]; // This will save the changes immediately.
-   
-   if (!success) {
-     NSLog(@"[RNSharedWidget] UserDefaults synchronize failed.");
-     callback(@[@"UserDefaults synchronize failed."]);
-     return;
-   }
+//  BOOL success = [sharedDefaults synchronize]; // This will save the changes immediately.
+//
+//   if (!success) {
+//     NSLog(@"[RNSharedWidget] UserDefaults synchronize failed.");
+//     callback(@[@"UserDefaults synchronize failed."]);
+//     return;
+//   }
 
   
 

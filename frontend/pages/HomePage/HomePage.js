@@ -28,7 +28,7 @@ export default function Home() {
     async function requestUserPermission() {
         const fcmToken = await messaging().getToken();
         console.log('FCM Token:', fcmToken);
-        
+
         const authStatus = await messaging().requestPermission();
         if (authStatus === messaging.AuthorizationStatus.NOT_DETERMINED) {
             // addDeviceTokenToBackend(user.firebaseID, fcmToken);
@@ -56,9 +56,8 @@ export default function Home() {
         }), (status) => {
             console.log('Widget status: ', status);
         });
-
-
-        // console.log("Widget Toggled!")
+        
+        console.log("Widget Toggled", dailySaying.sayingID.quote, dailySaying.sayingID.author);
     }
 
     const loadDailySaying = async () => {
@@ -104,7 +103,7 @@ export default function Home() {
         }
         updateProfilePic();
         loadDailySaying();
-        toggleWidget();
+        // toggleWidget();
     }, [user]);
 
 
