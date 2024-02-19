@@ -8,13 +8,6 @@ router.get('/', getAllSayings)
 //GET random Saying
 router.get('/random', getRandomSaying);
 
-router.post('/NotificationSayingTest', (req, res, next) => {
-    console.log("Sending Test Notification");
-    const { deviceToken } = req.body;
-    console.log("Device Token: ", deviceToken);
-    next();
-}, testNotification);
-
 //GET randomSaying by Categories
 router.get('/:userID', verifyToken, getRandomSayingByCategories);
 
