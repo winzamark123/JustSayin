@@ -6,7 +6,7 @@ exports.verifyToken = async (req, res, next) => {
 
 
     if (!token) {
-        return res.status(401).send('No token provided');
+        return res.status(401).send('Middleware: No token provided');
     }
 
     try {
