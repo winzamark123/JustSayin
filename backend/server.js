@@ -47,7 +47,8 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
         // cron schedule ever minute
         cron.schedule('* * * * *', async () => {
-            notificationController.sendNotifications();
+            console.log("Running the notification task")
+            notificationController.sendNotification();
         });
 
 
@@ -59,5 +60,3 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     .catch((err) => {
         console.log(err);
     })
-
-console.log("ALL SET UP!")
