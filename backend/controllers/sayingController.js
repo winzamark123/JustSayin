@@ -1,11 +1,6 @@
 const sayingModel = require('../models/sayingModel');
 const { getUserCategories, getUserCategoriesInternal } = require('./userController'); // import the function
 
-//Temporary for TESTING
-const admin = require('firebase-admin');
-
-
-
 //GET all sayings
 exports.getAllSayings = async (req, res) => {
     // const sayings = await sayingModel.find({}).sort({ createdAt: -1 });
