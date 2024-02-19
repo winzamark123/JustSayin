@@ -11,5 +11,11 @@ router.get('/random', getRandomSaying);
 //GET randomSaying by Categories
 router.get('/:userID', verifyToken, getRandomSayingByCategories);
 
-router.post('/test', testNotification);
+router.post('/test', (req, res, next) => {
+    console.log("Sending Test Notification");
+    const { deviceToken } = req.body;
+    console.log("Device Token: ", deviceToken);
+    next();
+}, testNotification);
+
 module.exports = router;    
