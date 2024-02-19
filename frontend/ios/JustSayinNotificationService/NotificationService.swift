@@ -35,7 +35,7 @@ class NotificationService: UNNotificationServiceExtension {
         } else {
             print("NotificationService: Failed to extract dailySaying or author from userInfo")
         }
-
+        print("Notification Success")
         // Call the content handler
         contentHandler(request.content)
     }
