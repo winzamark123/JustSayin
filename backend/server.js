@@ -17,7 +17,7 @@ admin.initializeApp({
         privateKey: process.env.FIREBASE_SERVICE_ACCOUNT_private_key.replace(/\\n/g, '\n'),
         clientEmail: process.env.FIREBASE_SERVICE_ACCOUNT_client_email,
 
-    }), 
+    }),
 });
 const app = express();
 
@@ -46,8 +46,8 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
         // cron schedule ever minute
         cron.schedule('* * * * *', async () => {
-            console.log("Running the notification task")
-            notificationController.sendNotificationToAllUsers();
+            // console.log("Running the notification task")
+            // notificationController.sendNotificationToAllUsers();
         });
 
 
