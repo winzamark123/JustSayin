@@ -1,6 +1,7 @@
 const admin = require('firebase-admin');
 
 exports.sendTestNotification = async (req, res) => {
+    console.log("Sending Test Notification")
     const { deviceToken } = req.body;
     console.log("Device Token: ", deviceToken);
 

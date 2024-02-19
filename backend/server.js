@@ -2,11 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const admin = require('firebase-admin');
 
-const sayingRouter = require('./routes/sayingRoutes.js');
-const categoryRouter = require('./routes/categoryRoutes.js');
-const userRouter = require('./routes/userRoutes.js');
-const dailySayingRouter = require('./routes/dailySayingRoutes.js');
-const notificationRouter = require('./routes/notificationRoutes.js');
 const dailySayingController = require('./controllers/dailySayingController.js');
 
 const cron = require('node-cron');
@@ -31,11 +26,12 @@ app.use(express.json());
 // console.log("clientEmail:", process.env.FIREBASE_SERVICE_ACCOUNT_client_email);
 
 //routes 
-app.use('/api/users', userRouter);
-app.use('/api/sayings', sayingRouter);
-app.use('/api/categories', categoryRouter);
-app.use('/api/dailySayings', dailySayingRouter);
-app.use('/api/notification', notificationRouter);
+app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/sayings', require('./routes/sayingRoutes'));
+app.use('/api/categories', require('./routes/categoryRoutes'));
+app.use('/api/dailySayings', require('./routes/dailySayingRoutes'));
+app.use('/api/notification', require('./routes/notificationRoutes'));
+
 
 //connect to db (mongoose)
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -62,3 +58,5 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     .catch((err) => {
         console.log(err);
     })
+
+console.log("ALL SET UP!")
