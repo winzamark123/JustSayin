@@ -31,7 +31,6 @@ app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/sayings', require('./routes/sayingRoutes'));
 app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/dailySayings', require('./routes/dailySayingRoutes'));
-app.use('/api/notification', require('./routes/notificationRoutes'));
 
 
 //connect to db (mongoose)
@@ -46,15 +45,16 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         console.log("Running the daily saying generation task");
 
         // cron schedule ever minute
-        cron.schedule('* * * * *', async () => {
-            // console.log("Running the notification task")
-            // notificationController.sendNotification();
-        });
+        // cron.schedule('* * * * *', async () => {
+        //     console.log("Running the notification task")
+        //     notificationController.sendNotificationToAllUsers();
+        // });
 
 
         cron.schedule('0 0 * * *', async () => {
             console.log("Running the daily saying generation task");
             dailySayingController.nodeGenerateForAllUsers();
+            notificationController.sendNotificationToAllUsers();
         });
     })
     .catch((err) => {
