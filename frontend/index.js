@@ -15,7 +15,8 @@ const toggleWidget = (dailySaying, author) => {
 
 // Register background handler
 messaging().setBackgroundMessageHandler(async remoteMessage => {
-    console.log('Message handled in the background!', remoteMessage);
+    // console.log('Message handled in the background!', remoteMessage);
+    console.log("Background Message Handler Called");
     // Handle your message here
 });
 

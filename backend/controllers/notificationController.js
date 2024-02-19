@@ -42,7 +42,7 @@ exports.sendNotificationTest = async () => {
                             //     body: "Test Test Test",
                             // },
                             'content-available': 1, // Important for iOS background notification
-                            'mutable-content': 1, // Important for iOS background notification
+                            'mutable_content': 1, // Important for iOS background notification
                         },
                     },
                     headers: {
