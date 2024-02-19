@@ -37,12 +37,13 @@ exports.sendNotificationTest = async () => {
                 apns: {
                     payload: {
                         aps: {
-                            // alert: {
-                            //     title: 'Daily JustSayin',
-                            //     body: "Test Test Test",
-                            // },
-                            'content-available': 1, // Important for iOS background notification
-                            'mutable-content': 1, // Important for iOS background notification
+                            alert: {
+                                title: 'Daily JustSayin',
+                                body: "Test Test Test",
+                            },
+                            // 'mutable_content': true,
+                            'content-available': true, // Important for iOS background notification
+                            'mutable-content': true, // Important for iOS background notification
                         },
                     },
                     headers: {
