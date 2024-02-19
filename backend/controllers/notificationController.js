@@ -27,17 +27,23 @@ exports.sendNotificationTest = async () => {
             const message = {
                 notification: {
                     title: 'Daily JustSayin',
-                    body: "Test Test",
+                    body: "Test Test Test",
                 },
                 token: token,
                 data: {
-                    dailySaying: "Init Test",
+                    dailySaying: "Init Test Test Test",
                     author: "Ween Cheng",
                 },
+                mutable_content: true,
                 apns: {
                     payload: {
                         aps: {
+                            // alert: {
+                            //     title: 'Daily JustSayin',
+                            //     body: "Test Test Test",
+                            // },
                             'content-available': 1, // Important for iOS background notification
+                            'mutable-content': 1, // Important for iOS background notification
                         },
                     },
                     headers: {
@@ -92,6 +98,7 @@ exports.sendNotificationToAllUsers = async () => {
                     payload: {
                         aps: {
                             'content-available': 1, // Important for iOS background notification
+                            'mutable-content': 1, // Important for iOS background notification
                         },
                     },
                     headers: {
