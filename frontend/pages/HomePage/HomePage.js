@@ -71,6 +71,7 @@ export default function Home() {
         }
     }
 
+    //button function
     const refreshDaily = async () => {
         console.log("Refreshing Daily Saying: ", user.firebaseID);
         try {
@@ -82,6 +83,7 @@ export default function Home() {
         }
     }
 
+    //button function
     const saveDaily = async () => {
         console.log("Saving Daily Saying: ", user.firebaseID);
         try {
@@ -102,6 +104,7 @@ export default function Home() {
         }
         updateProfilePic();
         loadDailySaying();
+        toggleWidget();
     }, [user]);
 
 

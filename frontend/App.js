@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Text, View, NativeModules } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useState, useEffect } from 'react';
@@ -21,6 +21,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const {RNSharedWidget} = NativeModules;
   const loadFonts = async () => {
     try {
       await Font.loadAsync({
@@ -35,9 +36,26 @@ export default function App() {
     }
   };
 
+  const toggleWidget = (dailySaying, author) => {
+        RNSharedWidget.setData('justSayinWidgetKey', JSON.stringify({
+            quote: dailySaying.sayingID.quote ?? "Unknown",
+            author: dailySaying.sayingID.author ?? "Author",
+        }), (status) => {
+            console.log('Widget status: ', status);
+        });
+  }
+
   useEffect(() => {
     loadFonts();
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      const dailySaying = JSON.parse(remoteMessage.data.dailySaying);
+      const author = JSON.parse(remoteMessage.data.author);
 
+
+    });
+
+    return unsubscribe;
   }, []);
 
   if (!fontsLoaded) {

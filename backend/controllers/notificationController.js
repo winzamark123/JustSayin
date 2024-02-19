@@ -51,10 +51,24 @@ exports.sendNotificationToAllUsers = async () => {
                     body: `"${dailySaying.sayingID.quote}" - ${dailySaying.sayingID.author}`
                 },
                 token: token,
+                data: {
+                    dailySaying: dailySaying.sayingID.quote ?? "Unknown",
+                    author: dailySaying.sayingID.author ?? "Author",
+                },
+                apns: {
+                    payload: {
+                        aps: {
+                            'content-available': 1, // Important for iOS background notification
+                        },
+                    },
+                    headers: {
+                        'apns-priority': '5', // Use priority 5 for background notifications
+                    },
+                },
             };
 
             try {
-                const response = await admin.messaging().send(message);
+                const response = await admin.messaging().send(message)
                 console.log('Successfully sent message:', response);
             } catch (error) {
                 console.log('Error sending message to user:', user.firebaseID, error);
