@@ -1,6 +1,8 @@
 const sayingModel = require('../models/sayingModel');
 const { getUserCategories, getUserCategoriesInternal } = require('./userController'); // import the function
 
+const admin = require('firebase-admin');
+
 //GET all sayings
 exports.getAllSayings = async (req, res) => {
     // const sayings = await sayingModel.find({}).sort({ createdAt: -1 });
@@ -50,7 +52,7 @@ exports.getRandomSaying = async (req, res) => {
 exports.getRandomSayingByCategoriesInternal = async (uid) => {
     try {
         const categoryNames = await getUserCategoriesInternal(uid);
-        
+
         // Find sayings that match the user's categories
         let matchingSayings;
         if (categoryNames.length > 0) {
@@ -97,3 +99,26 @@ exports.getRandomSayingByCategories = async (req, res) => {
     }
 }
 
+//Testing
+exports.testNotification = async (req, res) => {
+    console.log("Sending Test Notification")
+    const { deviceToken } = req.body;
+    console.log("Device Token: ", deviceToken);
+
+    const message = {
+        notification: {
+            title: 'Test Notification',
+            body: 'This is a test notification!'
+        },
+        token: deviceToken
+    };
+
+    try {
+        const response = await admin.messaging().send(message);
+        console.log('Successfully sent message:', response);
+        res.status(200).json({ message: "Test Notification Sent" });
+    } catch (error) {
+        console.log('Error sending message:', error);
+        res.status(500).json({ message: "Error sending test notification" });
+    }
+}
