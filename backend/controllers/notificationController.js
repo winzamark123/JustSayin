@@ -34,7 +34,6 @@ exports.sendNotificationTest = async () => {
                     dailySaying: "Init Test Test Test",
                     author: "Ween Cheng",
                 },
-                mutable_content: true,
                 apns: {
                     payload: {
                         aps: {
