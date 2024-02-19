@@ -18,8 +18,6 @@ import messaging from '@react-native-firebase/messaging';
 
 const Stack = createNativeStackNavigator();
 
-
-
 export default function App() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const {RNSharedWidget} = NativeModules;
