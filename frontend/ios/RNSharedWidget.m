@@ -35,6 +35,9 @@ RCT_EXPORT_METHOD(setData:(NSString *)key data:(NSString *)data callback:(RCTRes
 
   
   [sharedDefaults setValue:data forKey:key];
+  // Attempt to read it back immediately for testing
+  NSString *savedData = [sharedDefaults stringForKey:key];
+  NSLog(@"[RNSharedWidget] Saved Data: %@", savedData);
 //  BOOL success = [sharedDefaults synchronize]; // This will save the changes immediately.
 //
 //   if (!success) {

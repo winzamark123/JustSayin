@@ -22,12 +22,21 @@ struct Provider: IntentTimelineProvider {
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+        print("Widget Called")
+      
         var entries: [SimpleEntry] = []
-        let userDfaults = UserDefaults.init(suiteName: "group.frontend")
-        let jsonText = userDfaults!.value(forKey: "justSayinWidgetKey") as? String
+        let userDefaults = UserDefaults.init(suiteName: "group.frontend")
+        let jsonText = userDefaults!.value(forKey: "justSayinWidgetKey") as? String
         let jsonData = Data(jsonText?.utf8 ?? "".utf8)
         let valuesData = try! JSONDecoder().decode(ValuesData.self, from: jsonData)
+        
+        if let jsonText = userDefaults?.value(forKey: "justSayinWidgetKey") as? String {
+            print("Widget Read Data: \(jsonText)")
+        } else {
+            print("Widget Failed to Read Data")
+        }
 
+        
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
@@ -36,7 +45,8 @@ struct Provider: IntentTimelineProvider {
             entries.append(entry)
         }
 
-        let timeline = Timeline(entries: entries, policy: .atEnd)
+//        let timeline = Timeline(entries: entries, policy: .atEnd)
+        let timeline = Timeline(entries: entries, policy: .never)
         completion(timeline)
     }
 }

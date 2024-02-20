@@ -10,6 +10,7 @@ import WidgetKit
 
 @objcMembers final class WidgetKitHelper: NSObject{
   class func reloadAllTimelines(){
+    print("WidgetKitHelper")
     WidgetCenter.shared.reloadAllTimelines()
   }
 }
