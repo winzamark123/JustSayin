@@ -47,7 +47,8 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
         //Daily notification Test
         cron.schedule('0 0 * * *', async () => {
             console.log("Running the notification task")
-            notificationController.sendNotificationTest();
+            // notificationController.sendNotificationTest();
+            notificationController.sendNotificationToAllUsers();
         });
 
 
