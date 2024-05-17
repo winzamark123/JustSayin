@@ -24,3 +24,6 @@ frontend/node_modules
 
 # for Apple Google
 frontend/ios/GoogleService-Info.plist
+
+#Configs
+JustSayinConfig/*
