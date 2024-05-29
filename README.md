@@ -16,7 +16,9 @@ Still under development~! JustSayin is a mobile applicaton that generates daily 
 
 ## Live Demo
 
-JustSayin is still under development! We are gonna release this app by February 2024, but if you are interested, go ahead and clone/fork the repository.
+The app is currently Live on Testflight! You can check it out [here]([url](https://testflight.apple.com/join/idRhLVdh))! It will be published live on the app store in the coming weeks (Current: May 29th, 2024). 
+
+You can also checkout the app through development using the following method:
 
 1. Navigate into `frontend/` and run React Native frontend by
 
