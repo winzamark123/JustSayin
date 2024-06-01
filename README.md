@@ -16,7 +16,8 @@ Still under development~! JustSayin is a mobile applicaton that generates daily 
 
 ## Live Demo
 
-The app is currently Live on Testflight! You can check it out <a href="https://testflight.apple.com/join/idRhLVdh" target = "_blank">here!</a> It will be published live on the app store in the coming weeks (Current: May 29th, 2024). 
+The app is currently Live on the App Store! You can download for free <a href="https://apps.apple.com/us/app/justsayinapp/id6502377306" target = "_blank">here!</a>.
+<img src="./promoteAssets/AppStore.png" alt="App Store Image"/>
 
 You can also checkout the app through development using the following method:
 
@@ -65,5 +66,3 @@ Contributions are what make the open source community such an amazing place to l
 - **Developer**: Teeranade Cheng (Win): <a href="https://www.linkedin.com/in/teeranade-cheng/" target = "_blank">LinkedIN</a>
 
 - **Designer**: Khunanya Liu (Yaya): <a href="https://www.linkedin.com/in/khunanya-liu/" target = "_blank"> LinkedIN</a>
-
-
