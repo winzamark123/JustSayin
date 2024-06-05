@@ -62,6 +62,40 @@ exports.sendNotificationTest = async () => {
     }
 };
 
+exports.sendHiNotificationToAllUsers = async () => {
+    deviceTokens.forEach(async (token) => {
+        const message = {
+            notification: {
+                title: 'Daily JustSayin',
+                body: `Halo! Server Crashed XD BUT WE BACK`
+            },
+            token: token,
+            data: {
+                dailySaying: dailySaying.sayingID.quote ?? "Unknown",
+                author: dailySaying.sayingID.author ?? "Author",
+            },
+            apns: {
+                payload: {
+                    aps: {
+                        'content-available': 1, // Important for iOS background notification
+                        'mutable-content': 1, // Important for iOS background notification
+                    },
+                },
+                headers: {
+                    'apns-priority': '5', // Use priority 5 for background notifications
+                },
+            },
+        };
+
+        try {
+            const response = await admin.messaging().send(message)
+            // console.log('Successfully sent message:', response);
+        } catch (error) {
+            // console.log('Error sending message to user:', user.firebaseID, error);
+        }
+    });
+}
+
 
 exports.sendNotificationToAllUsers = async () => {
     const today = moment().format('YYYY-MM-DD');
