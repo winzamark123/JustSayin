@@ -18,7 +18,7 @@ exports.sendNotificationTest = async () => {
 
         if (!dailySaying) {
             // Logic to handle if no daily saying is available
-            console.log(`No daily saying available for user ${user.firebaseID}`);
+            // console.log(`No daily saying available for user ${user.firebaseID}`);
             continue; // Skip this iteration
         }
 
@@ -54,9 +54,9 @@ exports.sendNotificationTest = async () => {
 
             try {
                 const response = await admin.messaging().send(message)
-                console.log('Successfully sent message:', response);
+                // console.log('Successfully sent message:', response);
             } catch (error) {
-                console.log('Error sending message to user:', user.firebaseID, error);
+                // console.log('Error sending message to user:', user.firebaseID, error);
             }
         });
     }
@@ -78,7 +78,7 @@ exports.sendNotificationToAllUsers = async () => {
 
         if (!dailySaying) {
             // Logic to handle if no daily saying is available
-            console.log(`No daily saying available for user ${user.firebaseID}`);
+            // console.log(`No daily saying available for user ${user.firebaseID}`);
             continue; // Skip this iteration
         }
 
@@ -109,9 +109,9 @@ exports.sendNotificationToAllUsers = async () => {
 
             try {
                 const response = await admin.messaging().send(message)
-                console.log('Successfully sent message:', response);
+                // console.log('Successfully sent message:', response);
             } catch (error) {
-                console.log('Error sending message to user:', user.firebaseID, error);
+                // console.log('Error sending message to user:', user.firebaseID, error);
             }
         });
     }

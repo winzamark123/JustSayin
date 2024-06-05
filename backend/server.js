@@ -37,12 +37,12 @@ app.use('/api/dailySayings', require('./routes/dailySayingRoutes'));
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(async () => {
         // console.log('Connected to MongoDB');
-        console.log('Connection successful to database:', mongoose.connection.db.databaseName);
+        // console.log('Connection successful to database:', mongoose.connection.db.databaseName);
         app.listen(process.env.PORT, () => {
             console.log(`Server is running on port ${process.env.PORT}`);
         });
         dailySayingController.nodeGenerateForAllUsers();
-        console.log("Running the daily saying generation task");
+        // console.log("Running the daily saying generation task");
 
         //Daily notification Test
         cron.schedule('0 0 * * *', async () => {
@@ -53,7 +53,7 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 
 
         cron.schedule('0 0 * * *', async () => {
-            console.log("Running the daily saying generation task");
+            // console.log("Running the daily saying generation task");
             dailySayingController.nodeGenerateForAllUsers();
             notificationController.sendNotificationToAllUsers();
         });
